@@ -32,7 +32,6 @@ $router->addRoute('GET', '/getuserdata', function () {
 $router->addRoute('POST', '/api/login', function () {
     global $controllersDir;
     require_once($controllersDir . '/login.php');
-
 });
 
 $router->addRoute('POST', '/api/register', function () {
@@ -46,6 +45,10 @@ $router->addRoute('POST', '/api/getuserdata', function () {
     require_once($controllersDir . '/admin.getUserList.php');
 });
 
+$router->addRoute('GET', '/api/logout', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/logout.php');
+});
 
 // Handle the request
 $method = $_SERVER['REQUEST_METHOD'];

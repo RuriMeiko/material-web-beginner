@@ -32,9 +32,9 @@ if (!isset($_COOKIE['session'])) {
         <form class="formInfo">
             <div class='title-profile'>
                 <h1>Xin chào @<?php echo $datanguoidung[0]['username'] ?></h1>
-                <md-icon-button href="https://google.com">
+                <md-filled-tonal-icon-button href="/api/logout">
                     <md-icon>logout</md-icon>
-                </md-icon-button>
+                </md-filled-tonal-icon-button>
             </div>
 
             <div class="avatar-container">

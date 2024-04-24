@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2024 at 09:21 AM
+-- Generation Time: Apr 24, 2024 at 11:34 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,7 +41,18 @@ CREATE TABLE `user_info` (
 --
 
 INSERT INTO `user_info` (`username`, `name`, `birthday`, `gender`, `location`, `avt`) VALUES
-('xa', 'xa', '2024-04-17', 0, 'xa', NULL);
+('admin', 'NGUYEN', '2024-04-03', 1, '753/Tan', NULL),
+('user1', 'User 1', '1990-01-01', 0, 'Location 1', NULL),
+('user10', 'User 10', '1990-10-10', 1, 'Location 10', NULL),
+('user2', 'User 2', '1990-02-02', 1, 'Location 2', NULL),
+('user3', 'User 3', '1990-03-03', 0, 'Location 3', NULL),
+('user4', 'User 4', '1990-04-04', 1, 'Location 4', NULL),
+('user5', 'User 5', '1990-05-05', 2, 'Location 5', NULL),
+('user6', 'User 6', '1990-06-06', 2, 'Location 6', NULL),
+('user7', 'User 7', '1990-07-07', 1, 'Location 7', NULL),
+('user8', 'User 8', '1990-08-08', 0, 'Location 8', NULL),
+('user9', 'User 9', '1990-09-09', 2, 'Location 9', NULL),
+('xa', 'haha', '2014-07-02', 1, 'gần', 'https://p21-ad-sg.ibyteimg.com/obj/ad-site-i18n-sg/202404245d0d17ea1c85fbc14b458efe');
 
 -- --------------------------------------------------------
 
@@ -60,7 +71,18 @@ CREATE TABLE `user_login` (
 --
 
 INSERT INTO `user_login` (`username`, `hashpassword`, `role`) VALUES
-('xa', '$2y$10$HbcyrbMHE/uksfRgssWUGOecaWJYEX8m25txLxiTuhBkRgKRQ.F0a', 1);
+('admin', '$2y$10$uZOcGsRIz1s.986cQrn5CuNgppIwgPEAo2p9Jl7IjxUmZ0/YxPNWm', 0),
+('user1', '$2y$10$8qVtUNyLwWZBKne/YpN/V.f8edFl9owddSxRNHW5jxE6ADr3rGo0a', 1),
+('user10', '$2y$10$koP3EdSwvTtMAnA6LJ0nR.nERsD1/5doLQsHuC5Sz3gwL69kcDAua', 0),
+('user2', '$2y$10$4oqRlZq1eIJwBVy4.XksWubw0noNzCy7V50BbeoC9Y693hvcJZP9G', 0),
+('user3', '$2y$10$J/WQf3LDBEMl7y/rOAsCFu9i2tCqyc7XAL2GQEwCdt8E2Wx1GQ4dK', 0),
+('user4', '$2y$10$U8z0bLi/I/C8oST2g1sWte7LLmGQP2fZKcMcuisWTwl5r.VL0ia7e', 0),
+('user5', '$2y$10$YhKKiV2P7HTATDw8PwSXQe2o10rCPXcCJ1Fqf6ph6VmASgANnvL/q', 1),
+('user6', '$2y$10$70HTiRH6YMQTg5m2p8UzFersnLhLvyB81R3a.ACHHJ3A1GU7bUiHC', 1),
+('user7', '$2y$10$1fObQPWL2N8zAzEebwqFouFm6.Ts5WoSCBphSQ2moRJT6fFoV8R8q', 0),
+('user8', '$2y$10$jp2kNX5rKbO3jjVtaOp0xODwlj6rFz8.EqwpzYXgMn/v3KdJdc4tK', 0),
+('user9', '$2y$10$dRuJyBRuW4rKrPjvUfiH1uBb7UBsEbSaJpy8tswBN7xUxIR7R2eUS', 1),
+('xa', '$2y$10$IBhStNo/mv9EBjZ1gNN9M.NQuYll238zACLbYVwbwjDIpD.B1xmMS', 1);
 
 --
 -- Indexes for dumped tables

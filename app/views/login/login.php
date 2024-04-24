@@ -11,7 +11,7 @@
 
 <body>
 	<div class="box">
-		<md-elevation></md-elevation>
+		
 
 		<md-tabs class="tabbox">
 			<md-secondary-tab>Đăng nhập</md-secondary-tab>
@@ -49,7 +49,7 @@
 			<md-outlined-text-field prefix-text="😎" aria-label="name" required label="Họ và tên" name="name" autocomplete="name" placeholder="Nhập tên của bạn">
 			</md-outlined-text-field>
 			<div class="two-container">
-				<md-outlined-text-field type="date" prefix-text="🗓️" aria-label="birddate" required label="Ngày sinh" autocomplete="bday" placeholder="Nhập ngày sinh của bạn" name="birddate">
+				<md-outlined-text-field type="date" prefix-text="🗓️" aria-label="birthday" required label="Ngày sinh" autocomplete="bday" placeholder="Nhập ngày sinh của bạn" name="birthday">
 				</md-outlined-text-field>
 				<md-outlined-select required label="Giới tính" aria-label="Giới tính" name="gender">
 					<md-select-option selected value="0">

@@ -26,14 +26,14 @@ if (!isset($_COOKIE['session'])) {
     }
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     // Lấy thông tin từ form
     $username = $_POST['username'];
-
     $password = $_POST['password'];
-    $hoten = $_POST['name'];
-    $namsinh = $_POST['birddate'];
-    $gioitinh = $_POST['gender'];
-    $quequan = $_POST['location'];
+    $name = $_POST['name'];
+    $gender = $_POST['gender'];
+    $birthday = $_POST['birthday'];
+    $location = $_POST['location'];
     $imageUrl = '';
     // Lấy thông tin ảnh từ form
     if (isset($_FILES['avatar'])) {
@@ -42,21 +42,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $fileTmpPath = $file['tmp_name'];
         $fileSize = $file['size'];
         $fileError = $file['error'];
-
         $destination = DIR . '/temp/' . $fileName;
+
         if (move_uploaded_file($fileTmpPath, $destination)) {
             // Confirm that the uploaded file is an image
             $imageInfo = getimagesize($destination);
             if ($imageInfo !== false) {
-
+                $uploader = new TiktokUploader('9BrXKhM5zk3UXppyxHP2EtgbdLWZJg9W', '5fff60a14df53716dee76bed468a5ae0');
                 // Upload the image to TikTok
-                $imageUrl = uploadImageToTiktok($destination);
-                if (file_exists($destination)) {
-                    // Delete the uploaded file
-                    unlink($destination);
-                }
+                $imageUrl = $uploader->uploadImage($destination);
+                $uploader->close();
+           
             }
         }
     }
-    updateUser($username, $password, $hoten, $gioitinh, $namsinh, $quequan, $imageUrl);
+    updateUser($username, $password, $name, $gender, $birthday, $location, $imageUrl);
 }

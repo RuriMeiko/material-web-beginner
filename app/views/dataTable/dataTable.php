@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Đăng nhập</title>
+    <title>Admin</title>
     <?php require_once (DIR . '/public/styles/styleGlobal.php'); ?>
 </head>
 
@@ -31,7 +31,7 @@
             <button id="set_role_btn" onclick="setRole()">Set Role</button>
         </div>
     </div>
-    <script src="/public/js/getUserData.js"></script>
+    <script src="/public/js/admin.js"></script>
 
 </body>
 

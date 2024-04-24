@@ -1,5 +1,5 @@
 <?php
-require_once(DIR . '/app/models/profile.php');
+require_once(DIR . '/app/models/admin.php');
 if (isset($_POST)) {
     // Lấy thông tin từ form
     $obset = $_POST['obset'];

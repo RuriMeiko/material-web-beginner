@@ -5,8 +5,8 @@ if (isset($_POST)) {
     $username = $_POST["username"];
     $password = $_POST["password"];
     $name = $_POST["name"];
-    $birddate = $_POST["birddate"];
+    $birthday = $_POST["birthday"];
     $gender = $_POST["gender"];
     $location = $_POST["location"];
-    registerUser($username, $password, $name, $birddate, $gender, $location);
+    registerUser($username, $password, $name, $birthday, $gender, $location);
 }

@@ -50,25 +50,26 @@ $router->addRoute('POST', '/api/register', function () {
 });
 
 
-$router->addRoute('POST', '/api/getuserdata', function () {
-    global $controllersDir;
-    require_once($controllersDir . '/admin.getUserList.php');
-});
-
-$router->addRoute('POST', '/api/changerole', function () {
-    global $controllersDir;
-    require_once($controllersDir . '/admin.changeRole.php');
-});
-
 $router->addRoute('GET', '/api/logout', function () {
     global $controllersDir;
     require_once($controllersDir . '/logout.php');
 });
 
-$router->addRoute('GET', '/api/profile/update', function () {
+$router->addRoute('POST', '/api/profile/update', function () {
     global $controllersDir;
     require_once($controllersDir . '/profile.php');
 });
+
+$router->addRoute('POST', '/api/admin/getuserdata', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/admin/getUserList.php');
+});
+
+$router->addRoute('POST', '/api/admin/changerole', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/admin/changeRole.php');
+});
+
 
 require_once(DIR . '/app/middleware/middleware.php');
 // $router->handleRequest($method, $path);

@@ -26,7 +26,7 @@ function loginUser($username, $password)
 };
 
 
-function registerUser($username, $password, $name, $birddate, $gender, $location)
+function registerUser($username, $password, $name, $birthday, $gender, $location)
 {
     $conn = createConn();
 
@@ -42,8 +42,8 @@ function registerUser($username, $password, $name, $birddate, $gender, $location
             $insertQuery = "INSERT INTO user_login(username,hashpassword) VALUES (?, ?)";
             executeQuery($conn, $insertQuery, [$username, password_hash($password, PASSWORD_DEFAULT)]);
 
-            $insertQuery = "INSERT INTO user_info(username,name,birddate,gender,location) VALUES (?, ?, ?, ?, ?)";
-            executeQuery($conn, $insertQuery, [$username, $name, $birddate, $gender, $location]);
+            $insertQuery = "INSERT INTO user_info(username,name,birthday,gender,location) VALUES (?, ?, ?, ?, ?)";
+            executeQuery($conn, $insertQuery, [$username, $name, $birthday, $gender, $location]);
 
 
             $conn->commit();

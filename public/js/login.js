@@ -33,18 +33,15 @@ $('.eyesToggle').each((index, eye) => {
     });
 });
 
-formLogin.submit(async (e) => {
+formLogin.submit(async function (e) {
     e.preventDefault();
 
-    const formDate = new FormData();
-
-    formDate.append('username', formLogin[0].username.value);
-    formDate.append('password', formLogin[0].password.value);
+    const formData = new FormData(this);
 
     loading.css("display", "block");
     $('#login-btn').prop('disabled', true);
 
-    const res = await fetch('/api/login', { method: 'POST', body: formDate });
+    const res = await fetch('/api/login', { method: 'POST', body: formData });
     loading.css("display", "none");
     $('#login-btn').prop('disabled', false);
     if (res.status === 403) {
@@ -57,21 +54,15 @@ formLogin.submit(async (e) => {
 
 });
 
-formReg.submit(async (e) => {
+formReg.submit(async function (e) {
     e.preventDefault();
 
     if (formReg[0].password.value === formReg[0].repassword.value) {
-        const formDate = new FormData();
+        const formData = new FormData(this);
 
-        formDate.append('username', formReg[0].username.value);
-        formDate.append('password', formReg[0].password.value);
-        formDate.append('name', formReg[0].name.value);
-        formDate.append('birddate', formReg[0].birddate.value);
-        formDate.append('gender', formReg[0].gender.value);
-        formDate.append('location', formReg[0].location.value);
         loading.css("display", "block");
         $('#reg-btn').prop('disabled', true);
-        const res = await fetch('/api/register', { method: 'POST', body: formDate });
+        const res = await fetch('/api/register', { method: 'POST', body: formData });
 
         if (res.status === 200) {
             showToast('✔️ Đăng ký thành công');
@@ -87,6 +78,20 @@ formReg.submit(async (e) => {
         formInfo[0].repassword.supportingText = 'Repassword not match';
         formInfo[0].password.error = true;
         formInfo[0].password.supportingText = 'Repassword not match';
+
+    }
+});
+
+
+$(document).on('keypress', function (e) {
+    if (e.which == 13) {
+        const indexTab = $(".tabbox")[0].activeTabIndex;
+        if (indexTab == 1)
+            $('#reg-btn').click();
+        else
+            $('#login-btn').click();
+
+
 
     }
 });

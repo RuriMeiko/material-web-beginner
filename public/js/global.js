@@ -7,35 +7,31 @@ function showToast(mess) {
     <md-text-button>Ẩn (5s)</md-text-button>
     </div>`;
 
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = divElement;
+    const tempDiv = $('<div></div>').html(divElement);
+    const toast = tempDiv.find('.toast');
+    const btntoast = toast.find('md-text-button');
 
-    const toast = tempDiv.firstChild;
+    $('body').append(toast);
 
-    const btntoast = toast.querySelector('.toast md-text-button');
-    btntoast.addEventListener('click', () => {
-        toast.classList.remove('toastActive');
-        toast.addEventListener('transitionend', () => {
-            document.body.removeChild(toast);
-        });
-    })
+    btntoast.on('click', () => {
+        toast.removeClass('toastActive');
+        toast.slideUp(400, () => { toast.remove() });
 
-    document.body.appendChild(toast);
+    });
+
+
     setTimeout(() => {
-        toast.classList.add('toastActive');
-    }, 300)
+        toast.addClass('toastActive');
+    }, 100);
+
     let timerCout = 4;
     setInterval(() => {
-        btntoast.innerHTML = `Ẩn (${timerCout}s)`;
+        btntoast.text(`Ẩn (${timerCout}s)`);
         timerCout--;
     }, 1000);
 
     setTimeout(() => {
-
-        toast.classList.remove('toastActive');
-        toast.addEventListener('transitionend', () => {
-            document.body.removeChild(toast);
-        });
-
+        toast.removeClass('toastActive');
+        toast.slideUp(400, () => { toast.remove() });
     }, 5000);
 }

@@ -58,16 +58,16 @@ require_once(DIR . '/app/controllers/profile.php');
             <md-outlined-text-field prefix-text="😎" aria-label="name" label="Họ và tên" name="name" autocomplete="name" placeholder="Nhập tên của bạn" value=<?php echo $datanguoidung[0]['name'] ?>>
             </md-outlined-text-field>
             <div class="two-container">
-                <md-outlined-text-field type="date" prefix-text="🗓️" aria-label="birddate" label="Ngày sinh" autocomplete="bday" placeholder="Nhập ngày sinh của bạn" name="birddate" value=<?php echo $datanguoidung[0]['birddate'] ?>>
+                <md-outlined-text-field type="date" prefix-text="🗓️" aria-label="birthday" label="Ngày sinh" autocomplete="bday" placeholder="Nhập ngày sinh của bạn" name="birthday" value=<?php echo $datanguoidung[0]['birthday'] ?>>
                 </md-outlined-text-field>
                 <md-outlined-select label="Giới tính" aria-label="Giới tính" name="gender">
-                    <md-select-option <?php if ($datanguoidung[0]['gender'] === 0) echo 'selected' ?> value="0">
+                    <md-select-option <?php if ($datanguoidung[0]['gender'] == 0) echo 'selected' ?> value="0">
                         <div slot="headline">🤫 Khác</div>
-                    </md-select-option <?php if ($datanguoidung[0]['gender'] === 1) echo 'selected' ?>>
-                    <md-select-option value="1">
+                    </md-select-option>
+                    <md-select-option value="1" <?php if ($datanguoidung[0]['gender'] == 1) echo 'selected' ?>>
                         <div slot="headline">👨 Nam</div>
-                    </md-select-option <?php if ($datanguoidung[0]['gender'] === 2) echo 'selected' ?>>
-                    <md-select-option value="2">
+                    </md-select-option>
+                    <md-select-option value="2" <?php if ($datanguoidung[0]['gender'] == 2) echo 'selected' ?>>
                         <div slot="headline">👩 Nữ</div>
                     </md-select-option>
                 </md-outlined-select>

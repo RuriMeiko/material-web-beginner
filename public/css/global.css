@@ -26,7 +26,7 @@ html {
 }
 .toast {
 	--md-elevation-level: 2;
-	transition: all 0.3s ease-out;
+	transition: all 0.4s ease-out;
 	top: -200px;
 	opacity: 0;
 	max-width: 450px;
@@ -42,6 +42,7 @@ html {
 
 .toastActive {
 	top: 0;
+	transition: all 0.4s ease-out;
 	opacity: 1;
 }
 

@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `user_info` (
   `username` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `birddate` varchar(255) NOT NULL,
+  `birthday` varchar(255) NOT NULL,
   `gender` int(3) NOT NULL,
   `location` varchar(255) NOT NULL,
   `avt` varchar(255) DEFAULT NULL
@@ -40,7 +40,7 @@ CREATE TABLE `user_info` (
 -- Dumping data for table `user_info`
 --
 
-INSERT INTO `user_info` (`username`, `name`, `birddate`, `gender`, `location`, `avt`) VALUES
+INSERT INTO `user_info` (`username`, `name`, `birthday`, `gender`, `location`, `avt`) VALUES
 ('xa', 'xa', '2024-04-17', 0, 'xa', NULL);
 
 -- --------------------------------------------------------

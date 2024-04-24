@@ -2,38 +2,41 @@
 require_once(DIR . '/config/database.php');
 
 
-function updateUser($username, $password, $hoten, $gioitinh, $namsinh, $quequan, $imageUrl)
+function updateUser($username, $password, $name, $gender, $birthday, $location, $imageUrl)
 {
+    if (!isset($_COOKIE['session'])) {
+        http_response_code(403);
+        echo 'SESSION EXPIRED';
+    }
     $conn = createConn();
 
-    if ($password === '' && $imageUrl === '') {
-        $insertQuery = "UPDATE `data` SET `hoten` = ?, `gioitinh` = ?, `namsinh` = ?, `quequan` = ? WHERE username = ?";
-        $insertResult = executeQuery($conn, $insertQuery, [$hoten, $gioitinh, $namsinh, $quequan, $username]);
-    } elseif ($password === '') {
+    try {
+        $conn->begin_transaction();
 
-        $insertQuery = "UPDATE `data` SET `hoten` = ?, `gioitinh` = ?, `namsinh` = ?, `quequan` = ?, `avt` = ? WHERE username = ?";
-        $insertResult = executeQuery($conn, $insertQuery, [$hoten, $gioitinh, $namsinh, $quequan, $imageUrl, $username]);
-    } elseif ($imageUrl === '') {
-
-        $insertQuery = "UPDATE `data` SET `hashpassword` = ?, `hoten` = ?, `gioitinh` = ?, `namsinh` = ?, `quequan` = ? WHERE username = ?";
-        $insertResult = executeQuery($conn, $insertQuery, [password_hash($password, PASSWORD_DEFAULT), $hoten, $gioitinh, $namsinh, $quequan, $username]);
-    } else {
-
-        $insertQuery = "UPDATE `data` SET `hashpassword` = ?, `hoten` = ?, `gioitinh` = ?, `namsinh` = ?, `quequan` = ?, `avt` = ? WHERE username = ?";
-        $insertResult = executeQuery($conn, $insertQuery, [password_hash($password, PASSWORD_DEFAULT), $hoten, $gioitinh, $namsinh, $quequan, $imageUrl, $username]);
-    }
-
-    if ($insertResult) {
+        if ($password === '' && $imageUrl === '') {
+            $updateQuery = "UPDATE `user_info` SET `name` = ?, `gender` = ?, `birthday` = ?, `location` = ? WHERE username = ?";
+            executeQuery($conn, $updateQuery, [$name, $gender, $birthday, $location, $username]);
+        } elseif ($password === '') {
+            $updateQuery = "UPDATE `user_info` SET `name` = ?, `gender` = ?, `birthday` = ?, `location` = ?, `avt` = ? WHERE username = ?";
+            executeQuery($conn, $updateQuery, [$name, $gender, $birthday, $location, $imageUrl, $username]);
+        } elseif ($imageUrl === '') {
+            $updateQuery = "UPDATE `user_info` SET  `name` = ?, `gender` = ?, `birthday` = ?, `location` = ? WHERE username = ?";
+            executeQuery($conn, $updateQuery, [$name, $gender, $birthday, $location, $username]);
+            $updateQuery = "UPDATE `user_login` SET `hashpassword` = ? WHERE username = ?";
+            executeQuery($conn, $updateQuery, [password_hash($password, PASSWORD_DEFAULT), $username]);
+        } else {
+            $updateQuery = "UPDATE `user_info` SET `name` = ?, `gender` = ?, `birthday` = ?, `location` = ?, `avt` = ? WHERE username = ?";
+            executeQuery($conn, $updateQuery, [$name, $gender, $birthday, $location, $imageUrl, $username]);
+            $updateQuery = "UPDATE `user_login` SET `hashpassword` = ? WHERE username = ?";
+            executeQuery($conn, $updateQuery, [password_hash($password, PASSWORD_DEFAULT), $username]);
+        }
+        $conn->commit();
         http_response_code(200);
-        echo "<script>
-        window.alert('Cập nhật thành công!')
-        window.location.href = '/profile';
-      </script>";
-    } else {
+        echo 'OK';
+    } catch (Exception $e) {
+        $conn->rollback();
         http_response_code(500);
-        echo "<script>
-        window.alert('Có lỗi xảy ra!')
-      </script>";
+        echo "Có lỗi xảy ra!" . $e;
     }
 };
 
@@ -52,17 +55,3 @@ function getData($username)
         return false;
     }
 };
-
-function getAllUsers($offset, $limit){
-    $conn = createConn();
-    $getQuery = "SELECT DISTINCT u.username, u.name, u.location, u.gender, u.birddate, ul.role
-    FROM user_info u
-    JOIN user_login ul ON u.username = ul.username
-    LIMIT ? OFFSET ?";
-    $data = executeQuery($conn, $getQuery, [$limit, $offset]);
-    if ($data){
-        return $data;
-    } else {
-        return ["err"];
-    }
-}

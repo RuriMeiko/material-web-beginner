@@ -36,7 +36,6 @@
 }
 
 .box {
-	--md-elevation-level: 1;
 	user-select: none;
 
 	border-radius: 10px;

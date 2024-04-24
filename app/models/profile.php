@@ -36,6 +36,7 @@ function updateUser($username, $password, $hoten, $gioitinh, $namsinh, $quequan,
       </script>";
     }
 };
+
 function getData($username)
 {
     $conn = createConn();

@@ -1,70 +1,85 @@
-const tabs = document.querySelector('.tabbox');
-const formLogin = document.querySelector('.formLogin');
-const formReg = document.querySelector('.formReg');
-const eyes = document.querySelectorAll('.eyesToggle');
-const passwordInput = document.querySelectorAll('.passwordInput');
-const loading = document.querySelector('.loading');
 
-tabs.addEventListener('change', (event) => {
+const formLogin = $('.formLogin');
+const formReg = $('.formReg');
+const eyes = $('.eyesToggle');
+const passwordInput = $('.passwordInput');
+const loading = $('.loading');
+
+
+$('.tabbox').change((event) => {
     if (event.target.activeTabIndex === 1) {
-        formLogin.style.display = 'none';
-        formReg.style.display = 'flex';
-        document.title = 'Đăng ký';
+        formLogin.hide();
+        formReg.css("display","flex");
+        $("head title").text("Đăng ký");
     } else {
-        formLogin.style.display = 'flex';
-        formReg.style.display = 'none';
-        document.title = 'Đăng nhập';
-
-
+        formLogin.css("display","flex");
+        formReg.hide();
+        $("head title").text("Đăng nhập");
     }
 });
 
-eyes.forEach((eye, index) => {
-    eye.addEventListener('click', (event) => {
+
+$('.eyesToggle').each((index, eye) => {
+    $(eye).click((event) => {
         event.preventDefault();
     });
-    eye.addEventListener('change', (event) => {
 
-        if (passwordInput[index].type === 'password' && event.target.selected) {
-            passwordInput[index].type = 'text';
-            eye.setAttribute('aria-label', 'Ẩn mật khẩu');
+    $(eye).change((event) => {
+        if ($('.passwordInput').attr('type') === 'password' && event.target.selected) {
+            $('.passwordInput').attr('type', 'text');
+            $(eye).attr('aria-label', 'Ẩn mật khẩu');
         } else {
-            passwordInput[index].type = 'password';
-            eye.setAttribute('aria-label', 'Hiển thị mật khẩu');
+            $('.passwordInput').attr('type', 'password');
+            $(eye).attr('aria-label', 'Hiển thị mật khẩu');
         }
     });
 });
 
-formLogin.addEventListener('submit', async (e) => {
+formLogin.submit(async (e) => {
     e.preventDefault();
+
     const formDate = new FormData();
-    formDate.append('username', formLogin.username.value);
-    formDate.append('password', formLogin.password.value);
-    loading.style.display = 'block';
+
+    formDate.append('username', formLogin[0].username.value);
+    formDate.append('password', formLogin[0].password.value);
+
+    loading.css("display","block");
+
     const res = await fetch('/api/login', { method: 'POST', body: formDate });
     if (res.status === 403) {
         showToast('Sai thông tin đăng nhập');
     };
-    loading.style.display = 'none';
 
-
+    loading.css("display","none");
 });
 
-formReg.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formDate = new FormData();
-    formDate.append('username', formReg.username.value);
-    formDate.append('password', formReg.password.value);
-    formDate.append('name', formReg.name.value);
-    formDate.append('birddate', formReg.birddate.value);
-    formDate.append('gender', formReg.gender.value);
-    formDate.append('location', formReg.location.value);
-    loading.style.display = 'block';
-    const res = await fetch('/api/register', { method: 'POST', body: formDate });
-    if (res.status === 403) {
-        showToast('Tài khoản đã tồn tại');
-    };
-    loading.style.display = 'none';
+formReg.submit(async (e) => {
+    e.preventDefault(); 
 
+    if (formReg[0].password.value === formReg[0].repassword.value) {
+        const formDate = new FormData();
+    
+        formDate.append('username', formReg[0].username.value);
+        formDate.append('password', formReg[0].password.value);
+        formDate.append('name', formReg[0].name.value);
+        formDate.append('birddate', formReg[0].birddate.value);
+        formDate.append('gender', formReg[0].gender.value);
+        formDate.append('location', formReg[0].location.value);
+        loading.css("display","block");
+    
+        const res = await fetch('/api/register', { method: 'POST', body: formDate });
+    
+        if (res.status === 200) {
+            showToast('✔️ Đăng ký thành công'); 
+            $(".tabbox")[0].activeTabIndex = 0;
+        }else if (res.status === 403) {
+            showToast('❌ Tài khoản đã tồn tại');
+        };
+    
+        loading.css("display","none");
+    } else {
+        formReg[0].repassword.error = true;
+        formReg[0].repassword.supportingText = 'Repassword not match';
 
+    }
 });

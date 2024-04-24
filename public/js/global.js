@@ -5,7 +5,7 @@ function showToast(mess) {
         <p>${mess}</p>
     </div>
     <md-text-button>Ẩn (5s)</md-text-button>
-</div>`;
+    </div>`;
 
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = divElement;

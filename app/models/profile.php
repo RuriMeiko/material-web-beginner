@@ -51,3 +51,14 @@ function getData($username)
         return false;
     }
 };
+
+function getAllUsers($offset, $limit){
+    $conn = createConn();
+    $getQuery = "SELECT * FROM user_info LIMIT ? OFFSET ? ";
+    $data = executeQuery($conn, $getQuery, [$limit, $offset]);
+    if ($data){
+        return $data;
+    } else {
+        return ["err"];
+    }
+}

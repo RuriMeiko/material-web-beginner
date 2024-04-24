@@ -1,6 +1,6 @@
 <?php
 require_once(DIR . '/app/models/profile.php');
-require_once DIR . 'lib/tiktok.php';
+require_once DIR . '/lib/tiktok.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Lấy thông tin từ form

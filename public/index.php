@@ -23,6 +23,11 @@ $router->addRoute('GET', '/profile', function () {
     require($viewsDir . '/profile/profile.php');
 });
 
+$router->addRoute('GET', '/getuserdata', function () {
+    global $viewsDir;
+    require_once($viewsDir . '/dataTable/dataTable.php');
+});
+
 // Add API routes
 $router->addRoute('POST', '/api/login', function () {
     global $controllersDir;
@@ -33,8 +38,15 @@ $router->addRoute('POST', '/api/login', function () {
 $router->addRoute('POST', '/api/register', function () {
     global $controllersDir;
     require_once($controllersDir . '/register.php');
-
 });
+
+
+$router->addRoute('POST', '/api/getuserdata', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/admin.getUserList.php');
+});
+
+
 // Handle the request
 $method = $_SERVER['REQUEST_METHOD'];
 $path = $_SERVER['REQUEST_URI'];

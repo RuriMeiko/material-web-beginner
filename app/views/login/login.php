@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Đăng nhập</title>
 	<?php require_once(DIR . '/public/styles/styleGlobal.php'); ?>
-	<link rel="stylesheet" href="/public/css/login.css" />
+	<link rel="stylesheet" href="/public/css/form.css" />
 </head>
 
 <body>

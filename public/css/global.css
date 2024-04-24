@@ -45,3 +45,7 @@
 .content {
 	overflow-wrap: break-word;
 }
+h1,
+h3 {
+	margin: 0;
+}

@@ -41,7 +41,7 @@ function getData($username)
 {
     $conn = createConn();
 
-    $checkQuery = "SELECT * FROM data WHERE username = ?";
+    $checkQuery = "SELECT user_info.* ,  user_login.role FROM user_info , user_login WHERE user_login.username=user_info.username AND user_login.username = ?";
     $iv = substr(md5(md5('huhu')), 0, 16);
     $decryptedUsername = openssl_decrypt(base64_decode($username), 'AES-256-CBC', md5('haha'), OPENSSL_RAW_DATA, $iv);
     $checkResult = executeQuery($conn, $checkQuery, [$decryptedUsername]);
@@ -52,3 +52,14 @@ function getData($username)
         return false;
     }
 };
+
+function getAllUsers($offset, $limit){
+    $conn = createConn();
+    $getQuery = "SELECT * FROM user_info LIMIT ? OFFSET ? ";
+    $data = executeQuery($conn, $getQuery, [$limit, $offset]);
+    if ($data){
+        return $data;
+    } else {
+        return ["err"];
+    }
+}

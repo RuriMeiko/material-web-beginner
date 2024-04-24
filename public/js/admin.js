@@ -76,10 +76,13 @@ function displayUserData(data) {
         $('#user_data').append(row);
     });
     $('.checkboxAdmin').click(async function (e) {
+        let currentColumn = $(this).closest('td');
+        let previousColumn = currentColumn.prev();
         $('#roleDialog').prop('open', true);
         $('#roleDialog').one('close', async function () {
             const okClicked = this.returnValue === 'ok';
             if (okClicked) {
+                previousColumn.html(`<div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${e.target.checked ? 0 : 1}</div>`);
                 await setRole([e.target.value], e.target.checked);
             } else {
                 e.target.click();

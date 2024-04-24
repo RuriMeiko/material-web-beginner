@@ -55,7 +55,10 @@ function getData($username)
 
 function getAllUsers($offset, $limit){
     $conn = createConn();
-    $getQuery = "SELECT * FROM user_info LIMIT ? OFFSET ? ";
+    $getQuery = "SELECT DISTINCT u.username, u.name, u.location, u.gender, u.birddate, ul.role
+    FROM user_info u
+    JOIN user_login ul ON u.username = ul.username
+    LIMIT ? OFFSET ?";
     $data = executeQuery($conn, $getQuery, [$limit, $offset]);
     if ($data){
         return $data;

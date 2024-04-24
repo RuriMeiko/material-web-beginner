@@ -5,5 +5,4 @@ if (isset($_POST)) {
     $obset = $_POST['obset'];
     $range = $_POST['range'];
     echo json_encode(getAllUsers($obset,$range));
-
 }

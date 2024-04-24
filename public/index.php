@@ -28,6 +28,12 @@ $router->addRoute('GET', '/getuserdata', function () {
     require_once($viewsDir . '/dataTable/dataTable.php');
 });
 
+
+$router->addRoute('GET', '/scoring', function () {
+    global $viewsDir;
+    require_once($viewsDir . '/scoring/scoring.php');
+});
+
 // Add API routes
 $router->addRoute('POST', '/api/login', function () {
     global $controllersDir;
@@ -44,6 +50,11 @@ $router->addRoute('POST', '/api/register', function () {
 $router->addRoute('POST', '/api/getuserdata', function () {
     global $controllersDir;
     require_once($controllersDir . '/admin.getUserList.php');
+});
+
+$router->addRoute('POST', '/api/changerole', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/admin.changeRole.php');
 });
 
 

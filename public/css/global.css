@@ -1,0 +1,47 @@
+:root {
+	/* color */
+	/* --md-sys-color-primary: #272727; */
+	/* --md-sys-color-secondary: blue; */
+	/* divider */
+	/* --md-divider-color: #6f6f6f; */
+	/* tab */
+	/* --md-secondary-tab-container-color: #e6e3d1; */
+	/* loading */
+	--md-linear-progress-track-shape: 8px;
+	/* --md-sys-color-surface-container-highest: #aeac9e; */
+	/* icon */
+	--md-icon-font: "Material Symbols Rounded";
+	background: linear-gradient(
+		90deg,
+		rgba(247, 106, 144, 0.46551120448179273) 0%,
+		rgba(166, 136, 247, 0.47111344537815125) 50%,
+		rgba(247, 106, 144, 0.47) 100%
+	);
+
+	font-family: "Roboto";
+}
+
+.toast {
+	--md-elevation-level: 2;
+	transition: all 0.3s ease-out;
+	top: -200px;
+	opacity: 0;
+	max-width: 450px;
+	max-height: 200px;
+	display: flex;
+	margin-bottom: 10px;
+	position: relative;
+	background-color: #fff;
+	width: fit-content;
+	padding-left: 30px;
+	border-radius: 10px;
+}
+
+.toastActive {
+	top: 0;
+	opacity: 1;
+}
+
+.content {
+	overflow-wrap: break-word;
+}

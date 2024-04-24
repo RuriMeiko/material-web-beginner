@@ -19,7 +19,6 @@ function loginUser($username, $password)
             $iv
         ));
         setcookie("session", $encodeUsername, time() + 3600, "/");
-        header("Location: /profile");
     } else {
         http_response_code(403);
         echo json_encode(["mess" => "failed to login"]);

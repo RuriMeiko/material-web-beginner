@@ -28,7 +28,7 @@
 				</md-icon-button></md-outlined-text-field>
 			<md-divider inset></md-divider>
 
-			<md-filled-button>Đăng nhập</md-filled-button>
+			<md-filled-button id='login-btn'>Đăng nhập</md-filled-button>
 			<md-linear-progress class="loading" indeterminate></md-linear-progress>
 
 		</form>
@@ -49,17 +49,17 @@
 			<md-outlined-text-field prefix-text="😎" aria-label="name" required label="Họ và tên" name="name" autocomplete="name" placeholder="Nhập tên của bạn">
 			</md-outlined-text-field>
 			<div class="two-container">
-				<md-outlined-text-field type="date" prefix-text="🗓️" aria-label="birddate" required label="Ngày sinh" autocomplete="bday" placeholder="Nhập tên đăng nhập của bạn" name="birddate">
+				<md-outlined-text-field type="date" prefix-text="🗓️" aria-label="birddate" required label="Ngày sinh" autocomplete="bday" placeholder="Nhập ngày sinh của bạn" name="birddate">
 				</md-outlined-text-field>
 				<md-outlined-select required label="Giới tính" aria-label="Giới tính" name="gender">
-					<md-select-option selected value="Không tiết lộ">
-						<div slot="headline">🤫Khác</div>
+					<md-select-option selected value="0">
+						<div slot="headline">🤫 Khác</div>
 					</md-select-option>
-					<md-select-option value="Nam">
-						<div slot="headline">👨Nam</div>
+					<md-select-option value="1">
+						<div slot="headline">👨 Nam</div>
 					</md-select-option>
-					<md-select-option value="Nữ">
-						<div slot="headline">👩Nữ</div>	
+					<md-select-option value="2">
+						<div slot="headline">👩 Nữ</div>
 					</md-select-option>
 				</md-outlined-select>
 			</div>
@@ -71,7 +71,7 @@
 				<md-checkbox required aria-label="Agree to terms and conditions"></md-checkbox>
 				Đồng ý <a href="/term">các điều khoản</a> của chúng tôi?
 			</label>
-			<md-filled-button>Đăng ký</md-filled-button>
+			<md-filled-button id='reg-btn'>Đăng ký</md-filled-button>
 			<md-linear-progress class="loading" indeterminate></md-linear-progress>
 		</form>
 

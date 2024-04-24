@@ -26,6 +26,7 @@
 	bottom: -35%;
 	cursor: pointer;
 	user-select: none;
+
 	z-index: 20;
 	transition: all 0.3s ease-out;
 	backdrop-filter: blur(10px);
@@ -56,4 +57,13 @@
 	width: 100%;
 	height: 100%;
 	cursor: pointer;
+}
+
+#title span {
+	color: brown;
+	text-decoration: underline;
+}
+
+#title-divider {
+	--md-divider-thickness: 2px;
 }

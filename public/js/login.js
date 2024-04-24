@@ -1,7 +1,5 @@
-
 const formLogin = $('.formLogin');
 const formReg = $('.formReg');
-const eyes = $('.eyesToggle');
 const passwordInput = $('.passwordInput');
 const loading = $('.loading');
 
@@ -25,11 +23,11 @@ $('.eyesToggle').each((index, eye) => {
     });
 
     $(eye).change((event) => {
-        if ($('.passwordInput').attr('type') === 'password' && event.target.selected) {
-            $('.passwordInput').attr('type', 'text');
+        if ($('.passwordInput').eq(index).attr('type') === 'password' && event.target.selected) {
+            $('.passwordInput').eq(index).attr('type', 'text');
             $(eye).attr('aria-label', 'Ẩn mật khẩu');
         } else {
-            $('.passwordInput').attr('type', 'password');
+            $('.passwordInput').eq(index).attr('type', 'password');
             $(eye).attr('aria-label', 'Hiển thị mật khẩu');
         }
     });
@@ -44,13 +42,19 @@ formLogin.submit(async (e) => {
     formDate.append('password', formLogin[0].password.value);
 
     loading.css("display", "block");
+    $('#login-btn').prop('disabled', true);
 
     const res = await fetch('/api/login', { method: 'POST', body: formDate });
+    loading.css("display", "none");
+    $('#login-btn').prop('disabled', false);
     if (res.status === 403) {
         showToast('Sai thông tin đăng nhập');
+    } else {
+        window.location.href = '/profile'
     };
 
-    loading.css("display", "none");
+
+
 });
 
 formReg.submit(async (e) => {
@@ -66,7 +70,7 @@ formReg.submit(async (e) => {
         formDate.append('gender', formReg[0].gender.value);
         formDate.append('location', formReg[0].location.value);
         loading.css("display", "block");
-
+        $('#reg-btn').prop('disabled', true);
         const res = await fetch('/api/register', { method: 'POST', body: formDate });
 
         if (res.status === 200) {
@@ -77,9 +81,12 @@ formReg.submit(async (e) => {
         };
 
         loading.css("display", "none");
+        $('#reg-btn').prop('disabled', false);
     } else {
-        formReg[0].repassword.error = true;
-        formReg[0].repassword.supportingText = 'Repassword not match';
+        formInfo[0].repassword.error = true;
+        formInfo[0].repassword.supportingText = 'Repassword not match';
+        formInfo[0].password.error = true;
+        formInfo[0].password.supportingText = 'Repassword not match';
 
     }
 });

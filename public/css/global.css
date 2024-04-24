@@ -21,6 +21,9 @@
 	font-family: "Roboto";
 }
 
+html {
+	zoom: 0.8;
+}
 .toast {
 	--md-elevation-level: 2;
 	transition: all 0.3s ease-out;

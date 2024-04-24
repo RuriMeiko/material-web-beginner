@@ -4,6 +4,10 @@ require_once(DIR . '/router.php');
 $viewsDir = DIR . '/app/views';
 $controllersDir = DIR . '/app/controllers';
 
+// Handle the request
+$method = $_SERVER['REQUEST_METHOD'];
+$path = $_SERVER['REQUEST_URI'];
+
 $router = new Router('/');
 
 // Add routes
@@ -50,9 +54,11 @@ $router->addRoute('GET', '/api/logout', function () {
     require_once($controllersDir . '/logout.php');
 });
 
-// Handle the request
-$method = $_SERVER['REQUEST_METHOD'];
-$path = $_SERVER['REQUEST_URI'];
+$router->addRoute('GET', '/api/profile/update', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/profile.php');
+});
 
+require_once(DIR . '/app/middleware/middleware.php');
 // $router->handleRequest($method, $path);
 $router->handleRequest($method, $path);

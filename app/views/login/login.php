@@ -32,6 +32,7 @@
 			<md-linear-progress class="loading" indeterminate></md-linear-progress>
 
 		</form>
+
 		<form class="formReg">
 			<md-outlined-text-field prefix-text="👤" aria-label="Username" required name="username" label="Tên đăng nhập" autocomplete="username" placeholder="Nhập tên đăng nhập của bạn">
 			</md-outlined-text-field>
@@ -41,24 +42,24 @@
 						<md-icon>visibility</md-icon>
 						<md-icon slot="selected">visibility_off</md-icon>
 					</md-icon-button></md-outlined-text-field>
-				<md-outlined-text-field prefix-text="🔐" aria-label="Re-Password" required type="password" autocomplete="off" label="Nhập lại mật khẩu" placeholder="Nhập lại mật khẩu của bạn">
+				<md-outlined-text-field prefix-text="🔐" aria-label="Re-Password" required type="password" name="repassword" autocomplete="off" label="Nhập lại mật khẩu" placeholder="Nhập lại mật khẩu của bạn">
 				</md-outlined-text-field>
 			</div>
 			<md-divider inset></md-divider>
-			<md-outlined-text-field prefix-text="🤔" aria-label="name" required label="Họ và tên" name="name" autocomplete="name" placeholder="Nhập tên của bạn">
+			<md-outlined-text-field prefix-text="😎" aria-label="name" required label="Họ và tên" name="name" autocomplete="name" placeholder="Nhập tên của bạn">
 			</md-outlined-text-field>
 			<div class="two-container">
 				<md-outlined-text-field type="date" prefix-text="🗓️" aria-label="birddate" required label="Ngày sinh" autocomplete="bday" placeholder="Nhập tên đăng nhập của bạn" name="birddate">
 				</md-outlined-text-field>
 				<md-outlined-select required label="Giới tính" aria-label="Giới tính" name="gender">
 					<md-select-option selected value="Không tiết lộ">
-						<div slot="headline">Không tiết lộ</div>
+						<div slot="headline">🤫Khác</div>
 					</md-select-option>
 					<md-select-option value="Nam">
-						<div slot="headline">Nam</div>
+						<div slot="headline">👨Nam</div>
 					</md-select-option>
 					<md-select-option value="Nữ">
-						<div slot="headline">Nữ</div>
+						<div slot="headline">👩Nữ</div>	
 					</md-select-option>
 				</md-outlined-select>
 			</div>

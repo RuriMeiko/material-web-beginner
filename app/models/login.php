@@ -49,7 +49,7 @@ function registerUser($username, $password, $name, $birddate, $gender, $location
 
             $conn->commit();
             http_response_code(200);
-            header("Location: /");
+            echo "Gâu gâu!";
         } catch (Exception $e) {
             $conn->rollback();
             http_response_code(403);

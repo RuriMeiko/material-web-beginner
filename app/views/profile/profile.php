@@ -30,10 +30,13 @@ if (!isset($_COOKIE['session'])) {
 <body>
     <div class="box">
         <form class="formInfo">
-            <h1>Xin chào @<?php echo $datanguoidung[0]['username'] ?></h1>
-            <md-icon-button href="https://google.com">
-                <md-icon>check</md-icon>
-            </md-icon-button>
+            <div class='title-profile'>
+                <h1>Xin chào @<?php echo $datanguoidung[0]['username'] ?></h1>
+                <md-icon-button href="https://google.com">
+                    <md-icon>logout</md-icon>
+                </md-icon-button>
+            </div>
+
             <div class="avatar-container">
                 <div class='avatar-select'>
                     <md-elevation></md-elevation>

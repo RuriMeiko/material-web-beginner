@@ -21,9 +21,6 @@ if (!isset($_COOKIE['session'])) {
     header("Location: /");
 } else {
     $datanguoidung = getData($_COOKIE['session']);
-    if ($datanguoidung[0]['role'] === 0) {
-        header("Location: /admin");
-    }
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 

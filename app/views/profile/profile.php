@@ -15,15 +15,23 @@ require_once(DIR . '/app/controllers/profile.php');
 </head>
 
 <body>
+    <?php echo $datanguoidung[0]['role'] ?>
     <div class="box">
         <form class="formInfo">
-
             <div class='title-profile'>
                 <h1 id='title'>Chào <?php echo checkTime() ?><span>@<?php echo $datanguoidung[0]['username'] ?></span></h1>
                 <input type="text" hidden name='username' value="<?php echo $datanguoidung[0]['username'] ?>">
-                <md-filled-tonal-icon-button href="/api/logout">
-                    <md-icon>logout</md-icon>
-                </md-filled-tonal-icon-button>
+                <div class='title-profile'>
+                    <?php if ($datanguoidung[0]['role'] === 0) echo '
+        <md-filled-tonal-icon-button href="/admin">
+            <md-icon>Admin_Panel_Settings</md-icon>
+        </md-filled-tonal-icon-button>' ?>
+                    <md-filled-tonal-icon-button href="/api/logout">
+                        <md-icon>logout</md-icon>
+                    </md-filled-tonal-icon-button>
+
+                </div>
+
             </div>
             <md-divider inset id='title-divider'></md-divider>
 
@@ -54,7 +62,6 @@ require_once(DIR . '/app/controllers/profile.php');
             </div>
             <md-divider inset></md-divider>
             <h3>Cập nhật thông tin:</h3>
-
             <md-outlined-text-field prefix-text="😎" aria-label="name" label="Họ và tên" name="name" autocomplete="name" placeholder="Nhập tên của bạn" value=<?php echo $datanguoidung[0]['name'] ?>>
             </md-outlined-text-field>
             <div class="two-container">

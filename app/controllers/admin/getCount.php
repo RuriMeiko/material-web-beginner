@@ -2,16 +2,13 @@
 require_once(DIR . '/app/models/admin.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Nhận dữ liệu từ client (danh sách tài khoản và role mới)
-    $accounts = $_POST['accounts'];
-    $newRole = $_POST['newRole'];
 
     // Gọi hàm từ model để cập nhật role cho từng tài khoản
-    $success = updateRoles($accounts, $newRole);
+    $success = getCoutUsers();
 
     if ($success) {
         header('Content-Type: application/json');
-        echo json_encode(['success' => true, 'message' => 'Cập nhật role thành công']);
+        echo json_encode(['success' => true, 'message' => $success[0]['COUNT(*)']]);
     } else {
         // Trả về thông báo lỗi
         header('Content-Type: application/json');

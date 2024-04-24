@@ -45,7 +45,7 @@ formLogin.submit(async function (e) {
     loading.css("display", "none");
     $('#login-btn').prop('disabled', false);
     if (res.status === 403) {
-        showToast('Sai thông tin đăng nhập');
+        showToast('❌ Sai thông tin đăng nhập');
     } else {
         window.location.href = '/profile'
     };

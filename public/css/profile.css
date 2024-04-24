@@ -1,5 +1,6 @@
 .title-profile {
 	display: flex;
+	gap: 20px;
 	justify-content: space-between;
 }
 .avatar-select,
@@ -36,12 +37,10 @@
 	background-color: #ffffff6a;
 }
 .avatar-select:hover {
-
-
 	--md-elevation-level: 2;
 }
 .avatar-select:hover .sellect {
-	box-shadow:inset 0px 0px 10px 10px #000000;
+	box-shadow: inset 0px 0px 10px 10px #000000;
 
 	opacity: 1;
 	--md-elevation-level: 2;

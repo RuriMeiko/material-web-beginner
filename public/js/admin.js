@@ -1,7 +1,11 @@
-$(document).ready(async function () {
+let currentPage = 1;
+let maxPages = 1;
+async function fetctData(obset, range) {
     const formData = new FormData();
-    formData.append('obset', 0);
-    formData.append('range', 100);
+
+
+    formData.append('obset', obset);
+    formData.append('range', range);
 
     const res = await fetch('/api/admin/getuserdata', {
         method: 'POST',
@@ -9,25 +13,20 @@ $(document).ready(async function () {
     });
 
     const data = await res.json();
+    $('.loading').hide();
 
     if (res.status === 403) {
-        showToast('Tải Dữ liệu Thất Bại !');
+        showToast('❌ Tải Dữ liệu Thất Bại!');
     } else {
         displayUserData(data);
     }
-});
-async function setRole() {
-    const selectedAccounts = [];
-    const role = document.getElementById('admin_checkbox').checked ? 1 : 0; // Check if admin checkbox is checked
+}
 
-    // Get selected accounts
-    $('input[type="checkbox"]:checked').each(function () {
-        selectedAccounts.push($(this).closest('tr').find('td:nth-child(2)').text());
-    });
 
+async function setRole(selectedAccounts, isAdmin) {
     const formData = new FormData();
     formData.append('accounts', JSON.stringify(selectedAccounts));
-    formData.append('newRole', role);
+    formData.append('newRole', isAdmin ? 0 : 1);
 
     const res = await fetch('/api/admin/changerole', {
         method: 'POST',
@@ -35,11 +34,10 @@ async function setRole() {
     });
 
     const data = await res.json();
-
-    if (res.status === 200) {
-        showToast('Role updated successfully!');
+    if (data.success) {
+        showToast(`✔️ ${selectedAccounts[0]}'s role updated successfully!`);
     } else {
-        showToast('Failed to update role!');
+        showToast('❌ Failed to update role!');
     }
 }
 
@@ -47,17 +45,84 @@ function displayUserData(data) {
     $('#user_data').empty();
     data.forEach(user => {
         const row = `<tr>
-            <td>${user.name}</td>
-            <td>${user.username}</td>
-            <td>${user.birthday}</td>
-            <td>${user.gender === 0 ? 'Male' : 'Female'}</td>
-            <td>${user.location}</td>
-            <td>${user.role}</td>
-            <td><input type="checkbox"></td>
-        </tr>`;
+        <td class="mdc-data-table__cell">
+        <div class="mdc-data-table__cell-div">
+            <md-checkbox touch-target="wrapper"></md-checkbox>
+            </div>
+        </td>
+        <td class="mdc-data-table__cell">
+            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.name}</div>
+        </td>
+        <td class="mdc-data-table__cell">
+            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.username}</div>
+        </td>
+        <td class="mdc-data-table__cell">
+            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.birthday}</div>
+        </td>
+        <td class="mdc-data-table__cell">
+            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.gender === 0 ? 'Male' : 'Female'}</div>
+        </td>
+        <td class="mdc-data-table__cell">
+            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.location}</div>
+        </td>
+        <td class="mdc-data-table__cell">
+            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.role}</div>
+        </td>
+        <td class="mdc-data-table__cell">
+            <div class="mdc-data-table__cell-div"> <md-checkbox value="${user.username}" class="checkboxAdmin" ${user.role === 0 && 'checked'} touch-target="wrapper"></md-checkbox> </div>
+        </td>
+
+    </tr>`;
         $('#user_data').append(row);
     });
+    $('.checkboxAdmin').click(async function (e) {
+        $('#roleDialog').prop('open', true);
+        $('#roleDialog').one('close', async function () {
+            const okClicked = this.returnValue === 'ok';
+            if (okClicked) {
+                await setRole([e.target.value], e.target.checked);
+            } else {
+                e.target.click();
+                this.returnValue = 'cancel'
+            }
+        });
+    });
 }
-function showToast(message) {
-    alert(message);
+
+async function goToPage(page) {
+    currentPage = page;
+    await fetctData(6 * currentPage - 6, 6 * currentPage);
+
+    updateButtonState();
 }
+
+function updateButtonState() {
+    $('#pageNumbers p').text(currentPage);
+    $('#prevBtn').prop('disabled', currentPage === 1);
+    $('#nextBtn').prop('disabled', currentPage === maxPages);
+}
+
+$('#prevBtn').click(async function () {
+    if (currentPage > 1) {
+        await goToPage(currentPage - 1);
+    }
+});
+
+$('#nextBtn').click(async function () {
+    if (currentPage < maxPages) {
+        await goToPage(currentPage + 1);
+    }
+});
+
+
+$(document).ready(async () => {
+    const res = await fetch('/api/admin/getcount', {
+        method: 'POST',
+    });
+    const count = await res.json();
+    maxPages = Math.round(count.message / 6);
+    updateButtonState();
+    await fetctData(6 * currentPage - 6, 6 * currentPage);
+
+
+});

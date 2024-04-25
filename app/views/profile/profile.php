@@ -15,7 +15,7 @@ require_once (DIR . '/app/controllers/profile.php');
 </head>
 
 <body>
-        <div class="box">
+    <div class="box">
         <form class="formInfo">
             <div class='title-profile'>
                 <h1 id='title'>Chào <?php echo checkTime() ?><span>@<?php echo $datanguoidung[0]['username'] ?></span>
@@ -69,11 +69,11 @@ require_once (DIR . '/app/controllers/profile.php');
                 <md-divider inset></md-divider>
                 <h3>Cập nhật thông tin:</h3>
                 <md-outlined-text-field prefix-text="😎" aria-label="name" label="Họ và tên" name="name" autocomplete="name"
-                    placeholder="Nhập tên của bạn" value=<?php echo $datanguoidung[0]['name'] ?>>
+                    placeholder="Nhập tên của bạn" value="<?php echo $datanguoidung[0]['name'] ?>">
             </md-outlined-text-field>
             <div class="two-container">
                 <md-outlined-text-field type="date" prefix-text="🗓️" aria-label="birthday" label="Ngày sinh"
-                    autocomplete="bday" placeholder="Nhập ngày sinh của bạn" name="birthday" value=<?php echo $datanguoidung[0]['birthday'] ?>>
+                    autocomplete="bday" placeholder="Nhập ngày sinh của bạn" name="birthday" value="<?php echo $datanguoidung[0]['birthday'] ?>">
                 </md-outlined-text-field>
                 <md-outlined-select label="Giới tính" aria-label="Giới tính" name="gender">
                     <md-select-option <?php if ($datanguoidung[0]['gender'] == 0)
@@ -91,7 +91,7 @@ require_once (DIR . '/app/controllers/profile.php');
                     </md-outlined-select>
                 </div>
                 <md-outlined-text-field prefix-text="🏠" aria-label="quê quán" label="Quê quán" name="location"
-                    autocomplete="street-address" placeholder="Nhập tên địa chỉ của bạn" value=<?php echo $datanguoidung[0]['location'] ?>>
+                    autocomplete="street-address" placeholder="Nhập tên địa chỉ của bạn" value="<?php echo $datanguoidung[0]['location'] ?>">
             </md-outlined-text-field>
             <md-divider inset></md-divider>
             <md-filled-button id="save-btn">Lưu</md-filled-button>

@@ -4,8 +4,9 @@ require_once (DIR . '/app/models/login.php');
 if (isset($_POST)) {
     $username = $_POST["username"];
     $password = $_POST["password"];
-    if (loginUser($username, $password)) {
-        setcookie("session", $encodeUsername, time() + 3600, "/");
+    $status = loginUser($username, $password);
+    if ($status) {
+        setcookie("session", $status, time() + 3600, "/");
 
     } else {
         http_response_code(403);

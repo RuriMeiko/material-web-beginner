@@ -20,7 +20,7 @@ function loginUser($username, $password)
                 $iv
             )
         );
-        return true;
+        return $encodeUsername;
     } else {
         return false;
 

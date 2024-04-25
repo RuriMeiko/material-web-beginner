@@ -5,4 +5,4 @@
 - Nguyễn Ngọc Long
 - Nguyễn Bình Minh
 
-![Thư mục giải nén]([https://example.com/git-clone.png](https://i.imgur.com/T3mSiKP.png))
+![Thư mục giải nén]([https://i.imgur.com/T3mSiKP.png](https://i.imgur.com/T3mSiKP.png))

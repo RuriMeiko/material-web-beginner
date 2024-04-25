@@ -69,7 +69,7 @@ function displayUserData(data) {
             <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.role}</div>
         </td>
         <td class="mdc-data-table__cell">
-            <div class="mdc-data-table__cell-div"> <md-checkbox value="${user.username}" class="checkboxAdmin" ${user.role === 0 && 'checked'} touch-target="wrapper"></md-checkbox> </div>
+            <div class="mdc-data-table__cell-div"> <md-checkbox value="${user.username}" class="checkboxAdmin" ${user.role === 0 && 'checked'} ${user.username === myusername && 'disabled'} touch-target="wrapper"></md-checkbox> </div>
         </td>
 
     </tr>`;

@@ -5,12 +5,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin</title>
-    <?php require_once(DIR . '/public/styles/styleGlobal.php'); ?>
+    <?php require_once (DIR . '/app/controllers/profile.php');
+    ?>
+    <?php require_once (DIR . '/public/styles/styleGlobal.php'); ?>
     <link rel="stylesheet" href="/public/css/admin.css" />
 
 </head>
 
 <body>
+    <script> const myusername = "<?php echo $datanguoidung[0]['username'] ?>" </script>
+
     <md-dialog id="roleDialog" type="alert">
         <div slot="headline">Confirm change role</div>
         <form slot="content" id="form-id" method="dialog">
@@ -38,7 +42,8 @@
         <table class="mdc-data-ta ble">
             <thead>
                 <tr>
-                    <th class="mdc-data-table__header-cell"><md-checkbox value='all' touch-target="wrapper"></md-checkbox></th>
+                    <th class="mdc-data-table__header-cell"><md-checkbox value='all'
+                            touch-target="wrapper"></md-checkbox></th>
 
                     <th class="mdc-data-table__header-cell">
                         Name

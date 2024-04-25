@@ -94,7 +94,7 @@ function displayUserData(data) {
 
 async function goToPage(page) {
     currentPage = page;
-    await fetctData(6 * currentPage - 6, 6 * currentPage);
+    await fetctData(6 * currentPage - 6, 6 * currentPage + 1);
 
     updateButtonState();
 }
@@ -125,7 +125,7 @@ $(document).ready(async () => {
     const count = await res.json();
     maxPages = Math.round(count.message / 6);
     updateButtonState();
-    await fetctData(6 * currentPage - 6, 6 * currentPage);
+    await fetctData(6 * currentPage - 6, 6 * currentPage + 1);
 
 
 });

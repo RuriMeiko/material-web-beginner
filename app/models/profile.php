@@ -1,12 +1,11 @@
 <?php
-require_once(DIR . '/config/database.php');
+require_once (DIR . '/config/database.php');
 
 
 function updateUser($username, $password, $name, $gender, $birthday, $location, $imageUrl)
 {
     if (!isset($_COOKIE['session'])) {
-        http_response_code(403);
-        echo 'SESSION EXPIRED';
+        return 'NO_AUTH';
     }
     $conn = createConn();
 
@@ -31,14 +30,14 @@ function updateUser($username, $password, $name, $gender, $birthday, $location, 
             executeQuery($conn, $updateQuery, [password_hash($password, PASSWORD_DEFAULT), $username]);
         }
         $conn->commit();
-        http_response_code(200);
-        echo 'OK';
+        return 'OK';
+
     } catch (Exception $e) {
         $conn->rollback();
-        http_response_code(500);
-        echo "Có lỗi xảy ra!" . $e;
+        return 'FAIL: ' . $e;
     }
-};
+}
+;
 
 function getData($username)
 {
@@ -54,4 +53,5 @@ function getData($username)
     } else {
         return false;
     }
-};
+}
+;

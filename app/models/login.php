@@ -1,5 +1,5 @@
 <?php
-require_once(DIR . '/config/database.php');
+require_once (DIR . '/config/database.php');
 
 function loginUser($username, $password)
 {
@@ -11,19 +11,22 @@ function loginUser($username, $password)
         http_response_code(200);
         $iv = substr(md5(md5('huhu')), 0, 16);
 
-        $encodeUsername = base64_encode(openssl_encrypt(
-            $username,
-            'AES-256-CBC',
-            md5('haha'),
-            OPENSSL_RAW_DATA,
-            $iv
-        ));
-        setcookie("session", $encodeUsername, time() + 3600, "/");
+        $encodeUsername = base64_encode(
+            openssl_encrypt(
+                $username,
+                'AES-256-CBC',
+                md5('haha'),
+                OPENSSL_RAW_DATA,
+                $iv
+            )
+        );
+        return true;
     } else {
-        http_response_code(403);
-        echo json_encode(["mess" => "failed to login"]);
+        return false;
+
     }
-};
+}
+;
 
 
 function registerUser($username, $password, $name, $birthday, $gender, $location)
@@ -34,8 +37,7 @@ function registerUser($username, $password, $name, $birthday, $gender, $location
     $checkResult = executeQuery($conn, $checkQuery, [$username]);
 
     if ($checkResult) {
-        http_response_code(403);
-        echo "Tài khoản đã tồn tại!";
+        return 'DUPLICATE';
     } else {
         try {
             $conn->begin_transaction();
@@ -47,12 +49,12 @@ function registerUser($username, $password, $name, $birthday, $gender, $location
 
 
             $conn->commit();
-            http_response_code(200);
-            echo "Gâu gâu!";
+            return 'OK';
+
         } catch (Exception $e) {
             $conn->rollback();
-            http_response_code(403);
-            echo "Có lỗi xảy ra!" . $e;
+            return 'FAIL: ' . $e;
         }
     }
-};
+}
+;

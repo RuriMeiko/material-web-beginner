@@ -87,4 +87,5 @@
 	height: 60px;
 	border-radius: 100%;
 	position: relative;
+	user-select: none;
 }

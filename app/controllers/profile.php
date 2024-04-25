@@ -1,5 +1,5 @@
 <?php
-require_once(DIR . '/app/models/profile.php');
+require_once (DIR . '/app/models/profile.php');
 require_once DIR . '/lib/tiktok.php';
 function checkTime()
 {
@@ -49,9 +49,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Upload the image to TikTok
                 $imageUrl = $uploader->uploadImage($destination);
                 $uploader->close();
-           
+
             }
         }
     }
-    updateUser($username, $password, $name, $gender, $birthday, $location, $imageUrl);
+    $status = updateUser($username, $password, $name, $gender, $birthday, $location, $imageUrl);
+    switch ($status) {
+        case 'NO_AUTH':
+            http_response_code(403);
+            echo 'SESSION EXPIRED';
+            break;
+        case 'OK':
+            http_response_code(200);
+            echo 'OK';
+            break;
+        default:
+            http_response_code(500);
+            echo "Có lỗi xảy ra!" . $status;
+            break;
+    }
 }

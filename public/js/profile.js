@@ -1,6 +1,16 @@
 const formInfo = $('.formInfo');
 const loading = $('.loading');
 
+$(document).on('click', function (event) {
+    const target = $(event.target);
+    if (!target.closest('.formInfo').length && !target.closest('.toast').length && !target.closest('#openprofile').length) {
+        if ($('.popup').is(':visible')) {
+            $('.popup').fadeOut(250, () => $('.popup').hide()); // 400 là thời gian (milliseconds) để hoàn thành hiệu ứng
+
+        }
+    }
+});
+
 $('.eyesToggle').each((index, eye) => {
     $(eye).click((event) => {
         event.preventDefault();

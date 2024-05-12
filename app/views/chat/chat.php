@@ -11,13 +11,26 @@
     ?>
     <?php require_once(DIR . '/public/styles/styleGlobal.php'); ?>
     <link rel="stylesheet" href="/public/css/chat.css" />
+    <link rel="stylesheet" href="/public/css/form.css" />
 
 </head>
 
 <body>
     <div class="chat">
-        <div class="chatscrene">
 
+        <div class="chatscrene">
+            <div class="title-chat">
+                <md-elevation></md-elevation>
+                <div class='from-user'>
+                    <div class='avatar-select avt avt-title'>
+                        <img id="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+                    </div>
+                </div>
+                <div class="container container-title">
+                    <div class='name-user-title'>hahaha haha</div>
+                    <div class='content-user'>online gần đây</div>
+                </div>
+            </div>
             <div class="chatbox"></div>
 
             <div class="user-chat">
@@ -33,22 +46,14 @@
                 </md-filled-button>
             </div>
         </div>
-        <div class="side-bar">
+        <div class="side-bar-chat">
             <md-elevation></md-elevation>
-            <a href="/profile">
-                <div class='user-info'>
-                    <div class="avatar-container">
-                        <div class='avatar-select'>
-
-                            <img id="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' ?>" />
-                        </div>
-                    </div>
-                    <h1 id='title'>@rurimeiko</span>
-                    </h1>
-                </div>
-            </a>
-            <md-divider class='divider-custom' inset></md-divider>
-
+            <md-outlined-text-field class="search" placeholder="Search for messages">
+                <md-icon slot="leading-icon">search</md-icon>
+            </md-outlined-text-field>
+            <md-fab lowered size="large" id="fab-new-mess" label="Tin nhắn mới" aria-label="Tin nhắn mới">
+                <md-icon slot="icon">edit</md-icon>
+            </md-fab>
             <div class='chatlist'>
                 <div class="item-chat">
                     <md-elevation></md-elevation>
@@ -69,6 +74,9 @@
 
 
                 </div>
+
+                <md-divider class='divider-custom' inset></md-divider>
+
                 <div class="item-chat choosed">
                     <md-elevation></md-elevation>
 
@@ -90,8 +98,26 @@
                 </div>
             </div>
         </div>
-
+        <div class="side-bar">
+            <div class='from-user' id="openprofile">
+                <div class='avatar-select avt'>
+                    <img id="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="profile-popup">
+        <?php
+
+        $viewsDir = DIR . '/app/views';
+
+        require_once($viewsDir . '/profile/profile.php');
+
+        ?>
+    </div>
+    <script src="/public/js/chat.js"></script>
 </body>
+
+
 
 </html>

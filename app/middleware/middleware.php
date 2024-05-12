@@ -2,7 +2,7 @@
 
 require_once (DIR . '/app/models/profile.php');
 if (isset($_COOKIE['session']) && $path === '/') {
-    header('Location: /profile');
+    header('Location: /chat');
 }
 
 if (!isset($_COOKIE['session']) && $path !== '/' && $path !== '/term') {

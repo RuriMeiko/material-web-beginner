@@ -20,13 +20,16 @@
 	width: 500px;
 }
 .formInfo {
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	left: 50%;
 	border-radius: 10px;
 	width: 500px;
 }
 .formInfo .loading {
 	width: 500px;
 	top: 30px;
-
 }
 .loading {
 	position: absolute;
@@ -43,6 +46,21 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+
+	top: 50%;
+	left: 50%;
+	z-index: 999999999999999999999999999999;
+	transform: translate(-50%, -50%);
+}
+
+.popup {
+	border-radius: 0px;
+
+	width: 100%;
+	display: none;
+	height: 100%;
+	background-color: #0a0a0a53;
+	backdrop-filter: blur(10px);
 }
 .tabbox {
 	/* background-color: #fdf6ff; */

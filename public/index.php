@@ -22,11 +22,6 @@ $router->addRoute('GET', '/term', function () {
 });
 
 
-$router->addRoute('GET', '/profile', function () {
-    global $viewsDir;
-    require($viewsDir . '/profile/profile.php');
-});
-
 $router->addRoute('GET', '/admin', function () {
     global $viewsDir;
     require_once($viewsDir . '/admin/admin.php');

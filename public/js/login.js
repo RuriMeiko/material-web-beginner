@@ -47,7 +47,7 @@ formLogin.submit(async function (e) {
     if (res.status === 403) {
         showToast('❌ Sai thông tin đăng nhập');
     } else {
-        window.location.href = '/profile'
+        window.location.href = '/chat'
     };
 
 

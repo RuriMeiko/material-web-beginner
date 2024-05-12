@@ -1,0 +1,133 @@
+.chatscrene {
+	display: flex;
+	flex-direction: column;
+	width: 70%;
+	background: #fae9ff;
+}
+.chatinput {
+	--md-elevation-level: 2;
+	background: #faf2ff;
+	position: relative;
+	width: 100%;
+	border-radius: 8px;
+
+	height: 80%;
+	display: flex;
+	align-items: center;
+}
+.sendBtn {
+	width: 10%;
+	height: 80%;
+	--md-filled-button-container-shape: 8px;
+}
+.user-chat {
+	padding: 20px 20px 10px 20px;
+	height: 10%;
+	gap: 1%;
+	align-items: center;
+	display: flex;
+}
+.chatinput textarea {
+	width: 100%;
+	height: 40%;
+	padding: 20px;
+	border-radius: 8px;
+	background: #faf2ff;
+	outline: none;
+	border: none;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	--md-elevation-level: 2;
+
+	resize: none;
+	font-size: 20px;
+}
+
+.chatbox {
+	width: 100%;
+	height: 100%;
+	background: #f9ebff;
+}
+.chat {
+	display: flex;
+	flex-direction: row-reverse;
+}
+.side-bar {
+	height: 125vh;
+	--md-elevation-level: 2;
+	position: relative;
+
+	width: 30%;
+	background: #fdf6ff;
+}
+body {
+	margin: 0;
+	background: #fdf6ff;
+}
+
+.divider-custom {
+	--md-divider-color: #dfd5ff;
+}
+.item-chat {
+	--md-ripple-hover-color: #c267ff;
+	--md-ripple-pressed-color: #9d00ff;
+	--md-elevation-level: 0;
+	border-radius: 8px;
+	display: flex;
+	padding: 5px;
+	position: relative;
+	user-select: none;
+	cursor: pointer;
+	height: 80px;
+	display: flex;
+	gap: 20px;
+	place-items: center;
+
+	/* background-color: #ede7ff; */
+}
+.item-chat:hover {
+	/* --md-elevation-level: 1; */
+}
+.item-chat:hover ~ .item-chat {
+}
+.choosed {
+	background-color: #eeceff;
+	/* --md-elevation-level: 1; */
+}
+
+.user-info {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	padding: 20px 0 20px 0;
+}
+
+.chatlist {
+	display: flex;
+	gap: 2px;
+	flex-direction: column;
+	height: 90.9vh;
+	overflow-y: auto;
+	padding: 20px 8px 0px 8px;
+}
+.avt,
+.avt > #avatar-preview {
+	width: 70px;
+	height: 70px;
+}
+
+.container {
+	display: flex;
+	height: 100%;
+	flex-direction: column;
+	justify-content: space-around;
+}
+.content-user {
+	width: 22em; /* the element needs a fixed width (in px, em, %, etc) */
+	overflow: hidden; /* make sure it hides the content that overflows */
+	white-space: nowrap; /* don't break the line */
+	text-overflow: ellipsis; /* give the beautiful '...' effect */
+}
+.name-user {
+	font-size: large;
+	font-weight: 600;
+}

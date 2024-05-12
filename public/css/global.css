@@ -10,6 +10,8 @@
 	--md-linear-progress-track-shape: 8px;
 	/* --md-sys-color-surface-container-highest: #aeac9e; */
 	/* icon */
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
 	--md-icon-font: "Material Symbols Rounded";
 	background: linear-gradient(
 		90deg,
@@ -21,6 +23,24 @@
 	font-family: "Roboto";
 }
 
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
 html {
 	zoom: 0.8;
 }

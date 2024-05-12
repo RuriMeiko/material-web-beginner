@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Confirm that the uploaded file is an image
             $imageInfo = getimagesize($destination);
             if ($imageInfo !== false) {
-                $uploader = new TiktokUploader('9BrXKhM5zk3UXppyxHP2EtgbdLWZJg9W', '5fff60a14df53716dee76bed468a5ae0');
+                $uploader = new TiktokUploader('9BrXKhM5zk3UXppyxHP2EtgbdLWZJg9W', '5ca17b36dce64b6d5409402b0ec8db37');
                 // Upload the image to TikTok
                 $imageUrl = $uploader->uploadImage($destination);
                 $uploader->close();

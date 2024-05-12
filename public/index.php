@@ -33,6 +33,11 @@ $router->addRoute('GET', '/admin', function () {
 });
 
 
+$router->addRoute('GET', '/chat', function () {
+    global $viewsDir;
+    require_once($viewsDir . '/chat/chat.php');
+});
+
 
 // Add API routes
 $router->addRoute('POST', '/api/login', function () {

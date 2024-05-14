@@ -33,7 +33,7 @@ require_once(DIR . '/app/controllers/profile.php');
                     <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" onchange="previewAvatar(event)" />
                     Chọn ảnh
                 </div>
-                <img id="avatar-preview" class="avatar-preview mb-4" src="<?php if (isset($datanguoidung[0]['avt']))
+                <img class="avatar-preview" class="avatar-preview mb-4" src="<?php if (isset($datanguoidung[0]['avt']))
                                                                                 echo $datanguoidung[0]['avt'];
                                                                             else
                                                                                 echo '/public/images/defaultAvt.jpg' ?>" />

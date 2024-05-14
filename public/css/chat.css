@@ -7,6 +7,7 @@
 	display: flex;
 	flex-direction: column;
 	width: 70%;
+	height: 125vh;
 	background: #fae9ff;
 }
 .chatinput {
@@ -14,7 +15,7 @@
 
 	background: #faf2ff;
 	position: relative;
-	width: 100%;
+	width: 60%;
 	border-radius: 8px;
 
 	height: 80%;
@@ -31,8 +32,9 @@
 	--md-filled-button-container-shape: 8px;
 }
 .user-chat {
-	padding: 20px 20px 10px 20px;
+	padding: 10px 20px 10px 20px;
 	height: 10%;
+	justify-content: center;
 	gap: 1%;
 	align-items: center;
 	display: flex;
@@ -53,20 +55,110 @@
 }
 
 .chatbox {
+	overflow: auto;
 	width: 100%;
 	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	background: #f9ebff;
+}
+.chatbox-divider {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.chatlayout-divider {
+	width: 75%;
+
+	display: none;
+}
+
+.chatlayout {
+	align-items: flex-start;
+	width: 70%;
+	/* height: 100%; */
+	display: flex;
+	flex-direction: column-reverse;
+}
+
+.mess-self,
+.mess-other {
+	display: flex;
+	width: 95%;
+	flex-direction: column;
+	align-items: flex-end;
+	margin: 10px 0 10px 0;
+}
+.mess-other {
+	align-items: flex-start;
+}
+
+.mess-self .mess-chat {
+	display: flex;
+	gap: 10px;
+	justify-content: flex-end;
+	align-items: flex-end;
+}
+
+.mess-other .mess-chat {
+	display: flex;
+	gap: 10px;
+	flex-direction: row-reverse;
+	justify-content: flex-end;
+	align-items: flex-end;
+}
+.content-chat p {
+	margin: 0;
+	padding: 0;
+}
+
+.content-chat .usermessname {
+	position: absolute;
+	left: 20px;
+	top: 10px;
+	font-weight: 600;
+}
+
+.content-chat .time-chat {
+	position: absolute;
+	right: 10px;
+	bottom: 2px;
+
+	font-size: small;
+	font-weight: 100;
+	color: var(--random-color);
+	margin-bottom: 5px;
+}
+
+.have-name .content-chat {
+	padding: 35px 20px 25px 20px;
+}
+.content-chat {
+	position: relative;
+	background-color: #fdf6ff;
+	max-width: 70%;
+	padding: 20px 20px 25px 20px;
+	border-radius: 16px 16px 2px 16px;
+	height: fit-content;
+	overflow-wrap: break-word;
+}
+.mess-other .content-chat {
+	border-radius: 16px 16px 16px 2px;
 }
 
 .title-chat {
 	padding: 0 30px 0 30px;
 	display: flex;
+	z-index: 20;
 	align-items: center;
 	position: relative;
 	height: 10%;
 	gap: 10px;
 	background: #fdf6ff;
-	--md-elevation-level: ;
+	box-shadow: 0 2px 2px #562f612e;
+	/* --md-elevation-level: 1; */
 }
 /* main */
 .chat {
@@ -160,7 +252,7 @@ body {
 	padding: 20px 8px 0px 8px;
 }
 .avt,
-.avt > #avatar-preview {
+.avt > .avatar-preview {
 	width: 70px;
 	height: 70px;
 }
@@ -190,16 +282,15 @@ body {
 	font-weight: 600;
 }
 
-.name-user-title{
+.name-user-title {
 	font-size: larger;
 }
 
-#openprofile{
+#openprofile {
 	cursor: pointer;
 }
 
-
-.profile-popup{
+.profile-popup {
 	width: 100%;
 	height: 100%;
 	background-color: #000000;

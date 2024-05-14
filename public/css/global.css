@@ -10,6 +10,7 @@
 	--md-linear-progress-track-shape: 8px;
 	/* --md-sys-color-surface-container-highest: #aeac9e; */
 	/* icon */
+
 	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 
 	--md-icon-font: "Material Symbols Rounded";
@@ -59,7 +60,6 @@ html {
 	padding-left: 15px;
 	border-radius: 10px;
 	z-index: 9999999999999999999999999999999;
-
 }
 
 .toastActive {

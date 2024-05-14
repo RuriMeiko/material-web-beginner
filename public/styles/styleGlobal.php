@@ -13,8 +13,9 @@
     import {
         styles as typescaleStyles
     } from "@material/web/typography/md-typescale-styles.js";
-    
+
     document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
 </script>
+
 <script src="/public/js/global.js"></script>
 <link rel="stylesheet" href="/public/css/global.css" />

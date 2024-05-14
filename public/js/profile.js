@@ -30,7 +30,7 @@ let avt = '';
 
 function previewAvatar(event) {
     const input = event.target;
-    const preview = $('#avatar-preview');
+    const preview = $('.avatar-preview');
 
     if (input.files && input.files[0]) {
         const reader = new FileReader();

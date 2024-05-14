@@ -5,7 +5,7 @@
 }
 
 .avatar-select,
-#avatar-preview {
+.avatar-preview {
 	position: relative;
 	border-radius: 100%;
 	vertical-align: middle;
@@ -16,7 +16,7 @@
 	overflow: hidden;
 	--md-elevation-level: 1;
 }
-#avatar-preview {
+.avatar-preview {
 	border-radius: 0%;
 }
 .sellect {

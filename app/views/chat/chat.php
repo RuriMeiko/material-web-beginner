@@ -23,7 +23,7 @@
                 <md-elevation></md-elevation>
                 <div class='from-user'>
                     <div class='avatar-select avt avt-title'>
-                        <img id="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+                        <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
                     </div>
                 </div>
                 <div class="container container-title">
@@ -31,8 +31,72 @@
                     <div class='content-user'>online gần đây</div>
                 </div>
             </div>
-            <div class="chatbox"></div>
+            <div class="chatbox">
+                <div class="chatlayout">
+                    <?php for ($i = 0; $i < 10; $i++) { ?>
 
+                        <div class="mess-self">
+                            <div class="mess-chat">
+                                <div class="content-chat">
+                                    <p>chào cậu nhé hôm nay tôi sẽ đi ăn gà rán tại công viên sông hậu trên con đường quen thuộc vào buổi chiều tàn, với ánh nắng nhẹ nhàng, cùng nhau ăn bánh sầu riêng, ehehe</p>
+                                    <span class="time-chat">20:00</span>
+
+                                </div>
+
+                                <div class='from-user'>
+                                    <div class='avatar-select avt avt-title'>
+                                        <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    <?php } ?>
+
+                    <?php for ($i = 0; $i < 10; $i++) { ?>
+                        <div class="mess-other have-name">
+                            <div class="mess-chat">
+
+                                <div class="content-chat">
+                                    <p class="usermessname">hahaha haha</p>
+
+                                    <p>chào cậu nhé hôm nay tôi sẽ đi ăn gà rán tại công viên sông hậu trên con đường quen thuộc vào buổi chiều tàn, với ánh nắng nhẹ nhàng, cùng nhau ăn bánh sầu riêng, ehehe</p>
+                                    <span class="time-chat">20:00</span>
+
+                                </div>
+
+                                <div class='from-user'>
+                                    <div class='avatar-select avt avt-title'>
+                                        <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    <?php } ?>
+
+                    <div class="mess-self">
+                        <div class="mess-chat">
+                            <div class="content-chat">
+                                <p>chào cậu nhé hôm nay tôi sẽ đi ăn gà rán tại công viên sông hậu trên con đường quen thuộc vào buổi chiều tàn, với ánh nắng nhẹ nhàng, cùng nhau ăn bánh sầu riêng, ehehe</p>
+                                <span class="time-chat">20:00</span>
+
+                            </div>
+
+                            <div class='from-user'>
+                                <div class='avatar-select avt avt-title'>
+                                    <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="chatbox-divider"> <md-divider class='divider-custom chatlayout-divider' inset>
+                </md-divider></div>
+            </md-divider>
             <div class="user-chat">
                 <div class="chatinput">
                     <md-elevation></md-elevation>
@@ -61,7 +125,7 @@
                     <md-ripple></md-ripple>
                     <div class='from-user'>
                         <div class='avatar-select avt'>
-                            <img id="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+                            <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
                         </div>
                     </div>
                     <div class="container">
@@ -69,10 +133,6 @@
                         <div class='name-user'>hahaha haha</div>
                         <div class='content-user'>em oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi day</div>
                     </div>
-
-
-
-
                 </div>
 
                 <md-divider class='divider-custom' inset></md-divider>
@@ -83,7 +143,7 @@
                     <md-ripple></md-ripple>
                     <div class='from-user'>
                         <div class='avatar-select avt'>
-                            <img id="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+                            <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
                         </div>
                     </div>
                     <div class="container">
@@ -91,17 +151,13 @@
                         <div class='name-user'>hahaha haha</div>
                         <div class='content-user'>em oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi day</div>
                     </div>
-
-
-
-
                 </div>
             </div>
         </div>
         <div class="side-bar">
             <div class='from-user' id="openprofile">
                 <div class='avatar-select avt'>
-                    <img id="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+                    <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
                 </div>
             </div>
         </div>

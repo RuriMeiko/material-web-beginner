@@ -120,4 +120,111 @@ $(document).ready(function () {
         console.log(divId);
     });
 
+
+
+    // tạo pòng
+    // const newrom = document.getElementById("fab-new-mess")
+    // newrom.onclick = async function(event){
+    //     event.preventDefault();
+
+
+    //     const formData = new FormData();
+    //     formData.append('user', "hhhh");
+    //     formData.append('admin', "hhhh");
+    //     formData.append('name', "hhhh");
+
+
+    //     const res = await fetch('/api/createchatroom', {
+    //         method: 'POST',
+    //         body: formData
+    //     });
+
+    //     const data = await res.json();
+    //     if (data.success) {
+    //         showToast(`✔️ ${selectedAccounts[0]}'s role updated successfully!`);
+    //     } else {
+    //         showToast('❌ Failed to update role!');
+    //     }
+    // }
+
+    // lấy nhiều user 
+    // const newrom = document.getElementById("fab-new-mess")
+    // newrom.onclick = async function (event) {
+    //     event.preventDefault();
+
+
+    //     const formData = new FormData();
+    //     formData.append('status', "getf");
+    //     formData.append('limit', 5);
+
+
+    //     const res = await fetch('/api/getaccount', {
+    //         method: 'POST',
+    //         body: formData
+    //     });
+
+    //     const data = await res.json();
+
+
+    //     console.log(data.message);
+    //     if (data.message && data.message.length > 0) {
+    //         data.message.forEach(function (user) {
+    //             var newDiv = document.createElement("div");
+    //             newDiv.setAttribute("class", "item-chat");
+    //             newDiv.innerHTML = `
+    //             <md-elevation></md-elevation>
+    //             <md-ripple></md-ripple>
+    //             <div class='from-user'>
+    //                 <div class='avatar-select avt'>
+    //                     <img class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+    //                 </div>
+    //             </div>
+    //             <div class="container">
+    //                 <div class='name-user'>${user.name}</div>
+    //                 <div class='content-user'>em oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi day</div>
+    //             </div>
+    //           `;
+
+    //             // Lấy thẻ cha có class là "chatlist"
+    //             var chatList = document.querySelector(".chatlist");
+
+    //             // Thêm thẻ div mới vào trong thẻ cha
+    //             chatList.appendChild(newDiv);
+    //         });
+    //     }
+
+    //     if (data.success) {
+    //         showToast(`✔️ ${selectedAccounts[0]}'s role updated successfully!`);
+    //     } else {
+    //         showToast('❌ Failed to update role!');
+    //     }
+    // }
+
+    // kết bạn bốn phương
+    const newrom = document.getElementById("fab-new-mess")
+    newrom.onclick = async function (event) {
+        event.preventDefault();
+
+
+        const formData = new FormData();
+        formData.append('status', "addf");
+        formData.append('user_1', "admin");
+        formData.append('user_2', "user1");
+        formData.append('state', 0);
+
+
+        const res = await fetch('/api/addfriend', {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            showToast(`✔️ ${selectedAccounts[0]}'s role updated successfully!`);
+        } else {
+            showToast('❌ Failed to update role!');
+        }
+    }
+
 });

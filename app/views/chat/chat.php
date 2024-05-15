@@ -12,6 +12,7 @@
     <?php require_once(DIR . '/public/styles/styleGlobal.php'); ?>
     <link rel="stylesheet" href="/public/css/chat.css" />
     <link rel="stylesheet" href="/public/css/form.css" />
+    <script src="/public/js/chat.js"></script>
 
 </head>
 
@@ -100,7 +101,7 @@
             <div class="user-chat">
                 <div class="chatinput">
                     <md-elevation></md-elevation>
-                    <textarea rows="20" maxlength="4000" name="message" placeholder="Nhập tin nhắn của bạn..."></textarea>
+                    <textarea id="input-mess" rows="20" maxlength="4000" name="message" placeholder="Nhập tin nhắn của bạn..."></textarea>
                 </div>
                 <md-filled-button class="sendBtn">
                     Gửi
@@ -119,7 +120,7 @@
                 <md-icon slot="icon">edit</md-icon>
             </md-fab>
             <div class='chatlist'>
-                <div class="item-chat">
+                <div id="456" class="item-chat">
                     <md-elevation></md-elevation>
 
                     <md-ripple></md-ripple>
@@ -137,7 +138,7 @@
 
                 <md-divider class='divider-custom' inset></md-divider>
 
-                <div class="item-chat choosed">
+                <div id="123" class="item-chat choosed">
                     <md-elevation></md-elevation>
 
                     <md-ripple></md-ripple>
@@ -171,7 +172,6 @@
 
         ?>
     </div>
-    <script src="/public/js/chat.js"></script>
 </body>
 
 

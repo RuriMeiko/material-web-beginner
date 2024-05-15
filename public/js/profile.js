@@ -73,7 +73,7 @@ formInfo.submit(async function (e) {
 })
 
 $(document).on('keypress', function (e) {
-    if (e.which == 13) {
+    if (e.which == 13 && ($('.popup').is(':visible'))) {
         $('#save-btn').click();
     }
 });

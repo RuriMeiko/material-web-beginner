@@ -71,6 +71,19 @@ $router->addRoute('POST', '/api/admin/getcount', function () {
     require_once($controllersDir . '/admin/getCount.php');
 });
 
+$router->addRoute('POST', '/api/createchatroom', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/chat.php');
+});
+$router->addRoute('POST', '/api/getaccount', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/usergetuser.php');
+});
+$router->addRoute('POST', '/api/addfriend', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/friend.php');
+});
+
 
 require_once(DIR . '/app/middleware/middleware.php');
 // $router->handleRequest($method, $path);

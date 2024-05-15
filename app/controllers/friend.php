@@ -1,11 +1,13 @@
 <?php
-require_once (DIR . '/app/models/chat.php');
+require_once (DIR . '/app/models/friends.php');
 if (isset($_POST)) {
-    if (isset($_POST["admin"])){
-        $amin = $_POST["admin"];
-        $user = $_POST["user"];
-        $name = $_POST["name"];
-        $status = createChatRoom($user, $amin, $name);
+    if(isset($_POST["status"])){
+        if ($_POST["status"]=="addf") {
+            $user_1 = $_POST["user_1"];
+            $user_2 = $_POST["user_2"];
+            $state = $_POST["state"];
+            $status = addfriend($user_1,$user_2,$state);
+        }
         switch ($status) {
             case 'DUPLICATE':
                 http_response_code(403);
@@ -17,9 +19,11 @@ if (isset($_POST)) {
                 break;
             default:
                 http_response_code(500);
-                echo "Có lỗi xảy ra!";
+                echo "Có lỗi xảy ra!" . $status;
                 break;
         }
     }
 
-} 
+}
+
+

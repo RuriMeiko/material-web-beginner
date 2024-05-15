@@ -64,9 +64,22 @@
             </div>
             <div class="chatbox">
                 <div class="chatlayout">
+
+                    <md-menu id="menu-2" positioning="popover" anchor="a-mess2" class="mdc-menu mdc-menu-surface">
+                        <md-menu-item>
+                            <div slot="headline">Apple</div>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <div slot="headline">Banana</div>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <div slot="headline">Cucumber</div>
+                        </md-menu-item>
+                    </md-menu>
                     <?php for ($i = 0; $i < 10; $i++) { ?>
 
                         <div class="mess-self">
+                            
                             <div class="mess-chat">
                                 <div class="content-chat">
                                     <p>chào cậu nhé hôm nay tôi sẽ đi ăn gà rán tại công viên sông hậu trên con đường quen thuộc vào buổi chiều tàn, với ánh nắng nhẹ nhàng, cùng nhau ăn bánh sầu riêng, ehehe</p>

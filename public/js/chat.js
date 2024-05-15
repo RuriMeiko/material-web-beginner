@@ -119,19 +119,18 @@ $(document).ready(function () {
         $(this).addClass('choosed');
         console.log(divId);
     });
+    const menuSurface = document.getElementById('menu-2');
 
-
-    $('.chat').on('contextmenu', function (event) {
-        console.log('haha');
+    $('.mess-other, .mess-self').on('contextmenu', function (event) {
         event.preventDefault();
-        var menu = $('#usage-document');
-        menu.css({
-            left: event.pageX + 'px',
-            top: event.pageY + 'px'
-        });
-        menu.attr('open', 'true');
+        console.log();
+        menuSurface.xOffset =  event.offsetX;
+        menuSurface.yOffset =  event.offsetY;
+
+        menuSurface.open = true;
     });
 
+    
 
     // tạo pòng
     // const newrom = document.getElementById("fab-new-mess")

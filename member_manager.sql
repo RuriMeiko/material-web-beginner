@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2024 at 05:44 PM
+-- Generation Time: May 15, 2024 at 06:57 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -48,7 +48,7 @@ INSERT INTO `chatroom` (`id`, `name`, `created_at`) VALUES
 
 CREATE TABLE `friendship` (
   `id` int(11) NOT NULL,
-  `user1_id` varchar(255) NOT NULL,
+  `user1_id` varchar(255) DEFAULT NULL,
   `user2_id` varchar(255) NOT NULL,
   `status` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -58,7 +58,8 @@ CREATE TABLE `friendship` (
 --
 
 INSERT INTO `friendship` (`id`, `user1_id`, `user2_id`, `status`) VALUES
-(3, 'admin', 'user1', 0);
+(3, 'admin', 'user1', 0),
+(4, 'admin', 'user1', 0);
 
 -- --------------------------------------------------------
 
@@ -106,7 +107,7 @@ CREATE TABLE `user_info` (
 --
 
 INSERT INTO `user_info` (`username`, `name`, `birthday`, `gender`, `location`, `avt`) VALUES
-('admin', 'NGUYEN', '2024-04-03', 1, '753/Tan', NULL),
+('admin', 'NGUYEN TRAN HOANG LONG', '2024-04-03', 1, '753/Tan Phuoc 1', NULL),
 ('user1', 'User 1', '1990-01-01', 0, 'Location 1', NULL),
 ('user10', 'User 10', '1990-10-10', 1, 'Location 10', NULL),
 ('user2', 'User 2', '1990-02-02', 1, 'Location 2', NULL),
@@ -172,7 +173,9 @@ ALTER TABLE `friendship`
 -- Indexes for table `message`
 --
 ALTER TABLE `message`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_userIfoChat` (`sender`),
+  ADD KEY `FK_userIfoChat2` (`receiver`);
 
 --
 -- Indexes for table `room_member`
@@ -208,7 +211,7 @@ ALTER TABLE `chatroom`
 -- AUTO_INCREMENT for table `friendship`
 --
 ALTER TABLE `friendship`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `message`
@@ -230,8 +233,15 @@ ALTER TABLE `room_member`
 -- Constraints for table `friendship`
 --
 ALTER TABLE `friendship`
-  ADD CONSTRAINT `friendship_ibfk_1` FOREIGN KEY (`user1_id`) REFERENCES `user_login` (`username`),
-  ADD CONSTRAINT `friendship_ibfk_2` FOREIGN KEY (`user2_id`) REFERENCES `user_login` (`username`);
+  ADD CONSTRAINT `friendship_ibfk_1` FOREIGN KEY (`user1_id`) REFERENCES `user_info` (`username`),
+  ADD CONSTRAINT `friendship_ibfk_2` FOREIGN KEY (`user2_id`) REFERENCES `user_info` (`username`);
+
+--
+-- Constraints for table `message`
+--
+ALTER TABLE `message`
+  ADD CONSTRAINT `FK_userIfoChat` FOREIGN KEY (`sender`) REFERENCES `user_info` (`username`),
+  ADD CONSTRAINT `FK_userIfoChat2` FOREIGN KEY (`receiver`) REFERENCES `user_info` (`username`);
 
 --
 -- Constraints for table `room_member`

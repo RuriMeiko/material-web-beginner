@@ -121,6 +121,17 @@ $(document).ready(function () {
     });
 
 
+    $('.chat').on('contextmenu', function (event) {
+        console.log('haha');
+        event.preventDefault();
+        var menu = $('#usage-document');
+        menu.css({
+            left: event.pageX + 'px',
+            top: event.pageY + 'px'
+        });
+        menu.attr('open', 'true');
+    });
+
 
     // tạo pòng
     // const newrom = document.getElementById("fab-new-mess")

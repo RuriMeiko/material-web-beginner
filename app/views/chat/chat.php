@@ -17,6 +17,7 @@
 </head>
 
 <body>
+
     <div class="chat">
 
         <div class="chatscrene">
@@ -31,6 +32,35 @@
                     <div class='name-user-title'>hahaha haha</div>
                     <div class='content-user'>online gần đây</div>
                 </div>
+                <div class='menu-title'>
+                    <span>
+                        <md-icon-button id="usage-anchor">
+                            <md-icon>More_Vert</md-icon>
+                        </md-icon-button>
+                        <md-menu id="usage-menu" anchor="usage-anchor">
+                            <md-menu-item>
+                                <div slot="headline">Thêm thành viên</div>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <div slot="headline">Rời khỏi nhóm</div>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <div slot="headline">Xoá nhóm</div>
+                            </md-menu-item>
+                        </md-menu>
+                    </span>
+
+                    <script type="module">
+                        // This example uses anchor as an ID reference
+                        const anchorEl = document.body.querySelector('#usage-anchor');
+                        const menuEl = document.body.querySelector('#usage-menu');
+
+                        anchorEl.addEventListener('click', () => {
+                            menuEl.open = !menuEl.open;
+                        });
+                    </script>
+                </div>
+
             </div>
             <div class="chatbox">
                 <div class="chatlayout">
@@ -148,7 +178,6 @@
                         </div>
                     </div>
                     <div class="container">
-
                         <div class='name-user'>hahaha haha</div>
                         <div class='content-user'>em oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi day</div>
                     </div>

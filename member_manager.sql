@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2024 at 11:34 PM
+-- Generation Time: May 15, 2024 at 05:44 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,71 @@ SET time_zone = "+00:00";
 --
 -- Database: `member_manager`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chatroom`
+--
+
+CREATE TABLE `chatroom` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `chatroom`
+--
+
+INSERT INTO `chatroom` (`id`, `name`, `created_at`) VALUES
+(1, 'hhhh', '2024-05-15 09:13:59');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `friendship`
+--
+
+CREATE TABLE `friendship` (
+  `id` int(11) NOT NULL,
+  `user1_id` varchar(255) NOT NULL,
+  `user2_id` varchar(255) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `friendship`
+--
+
+INSERT INTO `friendship` (`id`, `user1_id`, `user2_id`, `status`) VALUES
+(3, 'admin', 'user1', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `message`
+--
+
+CREATE TABLE `message` (
+  `id` int(11) NOT NULL,
+  `sender` varchar(255) NOT NULL,
+  `receiver` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `room_member`
+--
+
+CREATE TABLE `room_member` (
+  `id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `user_id` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -72,6 +137,7 @@ CREATE TABLE `user_login` (
 
 INSERT INTO `user_login` (`username`, `hashpassword`, `role`) VALUES
 ('admin', '$2y$10$uZOcGsRIz1s.986cQrn5CuNgppIwgPEAo2p9Jl7IjxUmZ0/YxPNWm', 0),
+('dragonccm', '$2y$10$CLqlqDpvG1zuL4VaHqwVjOniOqxznuhCQLaLst1mr4ysNt7/HBY2K', 0),
 ('user1', '$2y$10$8qVtUNyLwWZBKne/YpN/V.f8edFl9owddSxRNHW5jxE6ADr3rGo0a', 1),
 ('user10', '$2y$10$koP3EdSwvTtMAnA6LJ0nR.nERsD1/5doLQsHuC5Sz3gwL69kcDAua', 0),
 ('user2', '$2y$10$4oqRlZq1eIJwBVy4.XksWubw0noNzCy7V50BbeoC9Y693hvcJZP9G', 0),
@@ -89,6 +155,34 @@ INSERT INTO `user_login` (`username`, `hashpassword`, `role`) VALUES
 --
 
 --
+-- Indexes for table `chatroom`
+--
+ALTER TABLE `chatroom`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `friendship`
+--
+ALTER TABLE `friendship`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user1_id` (`user1_id`),
+  ADD KEY `user2_id` (`user2_id`);
+
+--
+-- Indexes for table `message`
+--
+ALTER TABLE `message`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `room_member`
+--
+ALTER TABLE `room_member`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `room_id` (`room_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `user_info`
 --
 ALTER TABLE `user_info`
@@ -101,8 +195,50 @@ ALTER TABLE `user_login`
   ADD PRIMARY KEY (`username`);
 
 --
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `chatroom`
+--
+ALTER TABLE `chatroom`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `friendship`
+--
+ALTER TABLE `friendship`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `message`
+--
+ALTER TABLE `message`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `room_member`
+--
+ALTER TABLE `room_member`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `friendship`
+--
+ALTER TABLE `friendship`
+  ADD CONSTRAINT `friendship_ibfk_1` FOREIGN KEY (`user1_id`) REFERENCES `user_login` (`username`),
+  ADD CONSTRAINT `friendship_ibfk_2` FOREIGN KEY (`user2_id`) REFERENCES `user_login` (`username`);
+
+--
+-- Constraints for table `room_member`
+--
+ALTER TABLE `room_member`
+  ADD CONSTRAINT `room_member_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `chatroom` (`id`),
+  ADD CONSTRAINT `room_member_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user_login` (`username`);
 
 --
 -- Constraints for table `user_info`

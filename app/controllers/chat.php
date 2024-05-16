@@ -1,7 +1,27 @@
 <?php
-require_once (DIR . '/app/models/chat.php');
+require_once(DIR . '/app/models/chat.php');
+if (isset($_COOKIE['session'])) {
+    $listChat = getListChat($_COOKIE['session']);
+    $roommember = getRoomMember($_COOKIE['session']);
+}
+
+$mergedMessages = [];
+
+foreach ($listChat as $message) {
+    if (!isset($mergedMessages[$message['chatId']])) {
+        $mergedMessages[$message['chatId']] = [];
+    }
+    $mergedMessages[$message['chatId']][] = $message;
+}
+
+foreach ($mergedMessages as $name => $messages) {
+    usort($messages, function ($a, $b) {
+        return strtotime($a['timestamp']) - strtotime($b['timestamp']);
+    });
+    $mergedMessages[$name] = $messages;
+}
 if (isset($_POST)) {
-    if (isset($_POST["admin"])){
+    if (isset($_POST["admin"])) {
         $amin = $_POST["admin"];
         $user = $_POST["user"];
         $name = $_POST["name"];
@@ -21,5 +41,4 @@ if (isset($_POST)) {
                 break;
         }
     }
-
-} 
+}

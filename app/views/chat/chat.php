@@ -15,11 +15,17 @@
     <script src="/public/js/chat.js"></script>
 
 </head>
+<?php
+require_once(DIR . '/app/controllers/chat.php');
+print_r($roommember)
+?>
 
 <body>
-
+    <script>
+        const listChat = <?php print_r(json_encode($mergedMessages)) ?>;
+    </script>
     <div class="chat">
-
+        <div class="nullchatscrene"></div>
         <div class="chatscrene">
             <div class="title-chat">
                 <md-elevation></md-elevation>
@@ -60,74 +66,34 @@
                         });
                     </script>
                 </div>
-
             </div>
             <div class="chatbox">
                 <div class="chatlayout">
-
-                    <md-menu id="menu-2" positioning="popover" anchor="a-mess2" class="mdc-menu mdc-menu-surface">
-                        <md-menu-item>
-                            <div slot="headline">Apple</div>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <div slot="headline">Banana</div>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <div slot="headline">Cucumber</div>
-                        </md-menu-item>
-                    </md-menu>
-                    <?php for ($i = 0; $i < 10; $i++) { ?>
-
-                        <div class="mess-self">
-                            
-                            <div class="mess-chat">
-                                <div class="content-chat">
-                                    <p>chào cậu nhé hôm nay tôi sẽ đi ăn gà rán tại công viên sông hậu trên con đường quen thuộc vào buổi chiều tàn, với ánh nắng nhẹ nhàng, cùng nhau ăn bánh sầu riêng, ehehe</p>
-                                    <span class="time-chat">20:00</span>
-
+                    <div class="mess-other">
+                        <div class="mess-chat">
+                            <div class="content-chat">
+                                <md-elevation></md-elevation>
+                                <p>chào cậu nhé hôm nay tôi sẽ đi ăn gà rán tại công viên sông hậu trên con đường quen thuộc vào buổi chiều tàn, với ánh nắng nhẹ nhàng, cùng nhau ăn bánh sầu riêng, ehehe</p>
+                                <span class="time-chat">20:00</span>
+                            </div>
+                            <div class='from-user' id="mess-123">
+                                <div class='avatar-select avt avt-title'>
+                                    <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
                                 </div>
-
-                                <div class='from-user'>
-                                    <div class='avatar-select avt avt-title'>
-                                        <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
-                    <?php } ?>
-
-                    <?php for ($i = 0; $i < 10; $i++) { ?>
-                        <div class="mess-other have-name">
-                            <div class="mess-chat">
-
-                                <div class="content-chat">
-                                    <p class="usermessname">hahaha haha</p>
-
-                                    <p>chào cậu nhé hôm nay tôi sẽ đi ăn gà rán tại công viên sông hậu trên con đường quen thuộc vào buổi chiều tàn, với ánh nắng nhẹ nhàng, cùng nhau ăn bánh sầu riêng, ehehe</p>
-                                    <span class="time-chat">20:00</span>
-
-                                </div>
-
-                                <div class='from-user'>
-                                    <div class='avatar-select avt avt-title'>
-                                        <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    <?php } ?>
-
+                    </div>
                     <div class="mess-self">
                         <div class="mess-chat">
                             <div class="content-chat">
-                                <p>chào cậu nhé hôm nay tôi sẽ đi ăn gà rán tại công viên sông hậu trên con đường quen thuộc vào buổi chiều tàn, với ánh nắng nhẹ nhàng, cùng nhau ăn bánh sầu riêng, ehehe</p>
+                                <md-elevation></md-elevation>
+
+                                <p>c</p>
                                 <span class="time-chat">20:00</span>
 
                             </div>
 
-                            <div class='from-user'>
+                            <div class='from-user' id="mess-444">
                                 <div class='avatar-select avt avt-title'>
                                     <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
                                 </div>
@@ -153,57 +119,59 @@
                     </svg>
                 </md-filled-button>
             </div>
+
+
         </div>
         <div class="side-bar-chat">
             <md-elevation></md-elevation>
-            <md-outlined-text-field class="search" placeholder="Search for messages">
-                <md-icon slot="leading-icon">search</md-icon>
-            </md-outlined-text-field>
+            <div class="top-side-bar-chat">
+                <div>
+                    <md-icon-button class="back_to_mess_icon">
+                        <md-icon>Arrow_Back</md-icon>
+                    </md-icon-button>
+                </div>
+                <div class='from-user' id="openprofile">
+                    <div class='avatar-select avt'>
+                        <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+                    </div>
+                </div>
+                <md-outlined-text-field class="search" placeholder="Tìm kiếm tin nhắn">
+                    <md-icon slot="leading-icon">search</md-icon>
+                </md-outlined-text-field>
+            </div>
             <md-fab lowered size="large" id="fab-new-mess" label="Tin nhắn mới" aria-label="Tin nhắn mới">
                 <md-icon slot="icon">edit</md-icon>
             </md-fab>
+            <div class='listfriend'></div>
             <div class='chatlist'>
-                <div id="456" class="item-chat">
-                    <md-elevation></md-elevation>
+                <?php $count = 0; ?>
+                <?php foreach ($mergedMessages as $id => $messages) {
 
-                    <md-ripple></md-ripple>
-                    <div class='from-user'>
-                        <div class='avatar-select avt'>
-                            <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+                    $lastMessage = end($messages);
+                ?>
+                    <div id="<?php echo $id ?>" class="item-chat">
+                        <md-elevation></md-elevation>
+                        <md-ripple></md-ripple>
+                        <div class='from-user'>
+                            <div class='avatar-select avt'>
+                                <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class='name-user'><?php echo $lastMessage['name'] ?></div>
+                            <div class='content-user'><?php if ($message['fromMe'] == 1) {
+                                                            echo "<strong> Bạn: </strong>";
+                                                        } ?><?php echo $lastMessage['content'] ?></div>
                         </div>
                     </div>
-                    <div class="container">
-
-                        <div class='name-user'>hahaha haha</div>
-                        <div class='content-user'>em oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi day</div>
-                    </div>
-                </div>
-
-                <md-divider class='divider-custom' inset></md-divider>
-
-                <div id="123" class="item-chat choosed">
-                    <md-elevation></md-elevation>
-
-                    <md-ripple></md-ripple>
-                    <div class='from-user'>
-                        <div class='avatar-select avt'>
-                            <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
-                        </div>
-                    </div>
-                    <div class="container">
-                        <div class='name-user'>hahaha haha</div>
-                        <div class='content-user'>em oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi day</div>
-                    </div>
-                </div>
+                    <?php if ($count < count($mergedMessages) - 1) { ?>
+                        <md-divider class='divider-custom' inset></md-divider>
+                    <?php } ?>
+                    <?php $count++; ?>
+                <?php } ?>
             </div>
         </div>
-        <div class="side-bar">
-            <div class='from-user' id="openprofile">
-                <div class='avatar-select avt'>
-                    <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
-                </div>
-            </div>
-        </div>
+
     </div>
     <div class="profile-popup">
         <?php
@@ -214,6 +182,15 @@
 
         ?>
     </div>
+    <md-menu positioning="fixed" id="usage-document" anchor="usage-document-anchor">
+        <md-menu-item class="del-mess">
+            <div slot="headline">Xoá</div>
+        </md-menu-item>
+        <md-menu-item class="re-mess">
+            <div slot="headline">Thu hồi</div>
+        </md-menu-item>
+
+    </md-menu>
 </body>
 
 

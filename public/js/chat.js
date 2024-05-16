@@ -124,13 +124,13 @@ $(document).ready(function () {
     $('.mess-other, .mess-self').on('contextmenu', function (event) {
         event.preventDefault();
         console.log();
-        menuSurface.xOffset =  event.offsetX;
-        menuSurface.yOffset =  event.offsetY;
+        menuSurface.xOffset = event.offsetX;
+        menuSurface.yOffset = event.offsetY;
 
         menuSurface.open = true;
     });
 
-    
+
 
     // tạo pòng
     // const newrom = document.getElementById("fab-new-mess")
@@ -211,19 +211,45 @@ $(document).ready(function () {
     // }
 
     // kết bạn bốn phương
+    //     const newrom = document.getElementById("fab-new-mess")
+    //     newrom.onclick = async function (event) {
+    //         event.preventDefault();
+
+
+    //         const formData = new FormData();
+    //         formData.append('status', "addf");
+    //         formData.append('user_1', "admin");
+    //         formData.append('user_2', "user1");
+    //         formData.append('state', 0);
+
+
+    //         const res = await fetch('/api/addfriend', {
+    //             method: 'POST',
+    //             body: formData
+    //         });
+
+    //         const data = await res.json();
+
+    //         if (data.success) {
+    //             showToast(`✔️ ${selectedAccounts[0]}'s role updated successfully!`);
+    //         } else {
+    //             showToast('❌ Failed to update role!');
+    //         }
+    //     }
+    // gửi mess
     const newrom = document.getElementById("fab-new-mess")
     newrom.onclick = async function (event) {
         event.preventDefault();
 
 
         const formData = new FormData();
-        formData.append('status', "addf");
-        formData.append('user_1', "admin");
-        formData.append('user_2', "user1");
-        formData.append('state', 0);
+        formData.append('sender', "user1");
+        formData.append('receiver', "admin");
+        formData.append('content', "fhsdjkhgfjkdhgjkdfhgkdfhgjkdfghjkfhkxgbghjkdfhgjkdsfhgjksdfhgkjzxhgkjhzsdgjkhzdjkvhzxckjvhzdfjkghzdfjkghsdjkfghdjkfghdfkjghdjkhgkdjsghkzhvdjkfghjkshfzhzsdj,fghj,zdffbjkdszhfgkjdfszhfkj.dszbfgkjsdfg ");
+        formData.append('status', "sendM");
 
 
-        const res = await fetch('/api/addfriend', {
+        const res = await fetch('/api/sendmess', {
             method: 'POST',
             body: formData
         });
@@ -237,4 +263,8 @@ $(document).ready(function () {
         }
     }
 
+
 });
+
+
+

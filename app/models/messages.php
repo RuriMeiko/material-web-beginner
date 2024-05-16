@@ -2,7 +2,7 @@
 require_once(DIR . '/config/database.php');
 
 
-function createChatRoom($amin, $user, $name)
+function createMessage($content, $receiver, $sender)
 {
     if (!isset($_COOKIE['session'])) {
         http_response_code(403);
@@ -11,8 +11,8 @@ function createChatRoom($amin, $user, $name)
     $conn = createConn();
     try {
         $conn->begin_transaction();
-        $getQuery = "INSERT INTO chatroom (name) VALUES (?)";
-        $data = executeQuery($conn, $getQuery, [$amin]);
+        $getQuery = "INSERT INTO message(content,receiver,sender) VALUES (?,?,?)";
+        $data = executeQuery($conn, $getQuery, [$content, $receiver, $sender]);
         $conn->commit();
 
         if ($data) {
@@ -22,9 +22,10 @@ function createChatRoom($amin, $user, $name)
         }
     } catch (Exception $e) {
         $conn->rollback();
+        http_response_code(500);
+        return ["err"];
     }
 }
-
 function deleteChatRoom($id)
 {
     if (!isset($_COOKIE['session'])) {

@@ -84,6 +84,11 @@ $router->addRoute('POST', '/api/addfriend', function () {
     require_once($controllersDir . '/friend.php');
 });
 
+$router->addRoute('POST', '/api/sendmess', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/sendmess.php');
+});
+
 
 require_once(DIR . '/app/middleware/middleware.php');
 // $router->handleRequest($method, $path);

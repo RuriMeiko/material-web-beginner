@@ -1,6 +1,8 @@
 <?php
 require_once(DIR . '/app/models/chat.php');
 $mergedMessages = [];
+$mergedMembers = [];
+
 if (isset($_COOKIE['session'])) {
     $listChat = getListChat($_COOKIE['session']);
     $roommember = getRoomMember($_COOKIE['session']);
@@ -11,6 +13,14 @@ if (isset($_COOKIE['session'])) {
         }
         $mergedMessages[$message['chatId']][] = $message;
     }
+  
+    foreach ($roommember as $member) {
+        if (!isset($mergedMembers[$member['chatId']])) {
+            $mergedMembers[$member['chatId']] = [];
+        }
+        $mergedMembers[$member['chatId']][] = $member;
+    }
+
 }
 
 

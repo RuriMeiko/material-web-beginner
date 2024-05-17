@@ -48,7 +48,7 @@ function executeQuery($conn, $query, $params = array())
             $stmt->bind_param(str_repeat('s', count($params)), ...$params);
         }
         $stmt->execute();
-        return true;
+        return $stmt;
     }
 
     $stmt->close();

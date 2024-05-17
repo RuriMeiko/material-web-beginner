@@ -17,6 +17,12 @@ $(document).ready(function () {
 
             let sessionValue = sessionCookie ? sessionCookie.split('=')[1] : null;
             socket.send(JSON.stringify({ identification: decodeURIComponent(sessionValue) }));
+        } else {
+            if (data.self)
+                appendMessage(data.content, false, data.timestamp, data.id);
+            else
+                appendMessage(data.content, true, data.timestamp, data.id);
+
         }
     };
 
@@ -66,7 +72,7 @@ $(document).ready(function () {
 
                 </div>
 
-                <div class='from-user' id="${you && id}">
+                <div class='from-user' id="${id}">
                     <div class='avatar-select avt avt-title'>
                         <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
                     </div>
@@ -138,8 +144,8 @@ $(document).ready(function () {
 
             let currentTime = new Date();
 
-            socket.send({ room: '', receiver: '', timestamp: currentTime });
-            appendMessage(textContent.val());
+            socket.send(JSON.stringify({ room: currentBox.room, receiver: currentBox.id, timestamp: currentTime, content: textContent.val() }));
+            // appendMessage(textContent.val());
 
             textContent.val('');
         }
@@ -153,7 +159,7 @@ $(document).ready(function () {
         // Thêm class "choosed" vào phần tử .item-chat được nhấp chuột
         $(this).addClass('choosed');
         currentBox.room = divId;
-        // currentBox.id = ; 
+        currentBox.id = listMember[divId].map(item => item.memberId);
         $('.chatlayout').empty();
         listChat[divId].forEach(element => {
             appendMessage(element.content, element.fromMe == 0, element.timestamp, element.id)

@@ -17,12 +17,13 @@
 </head>
 <?php
 require_once(DIR . '/app/controllers/chat.php');
-print_r($roommember)
 ?>
 
 <body>
     <script>
         const listChat = <?php print_r(json_encode($mergedMessages)) ?>;
+        const listMember = <?php print_r(json_encode($mergedMembers)) ?>;
+
     </script>
     <div class="chat">
         <div class="nullchatscrene"></div>

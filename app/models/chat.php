@@ -32,7 +32,6 @@ function getListChat($username)
         http_response_code(403);
         return ["err"];
     }
-
     $conn = createConn();
     try {
         $iv = substr(md5(md5('huhu')), 0, 16);

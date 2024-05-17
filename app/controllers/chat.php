@@ -1,15 +1,16 @@
 <?php
-require_once(DIR . '/app/models/chat.php');
+require_once (DIR . '/app/models/chat.php');
 $mergedMessages = [];
 if (isset($_COOKIE['session'])) {
     $listChat = getListChat($_COOKIE['session']);
     $roommember = getRoomMember($_COOKIE['session']);
-    
-    foreach ($listChat as $message) {
-        if (!isset($mergedMessages[$message['chatId']])) {
-            $mergedMessages[$message['chatId']] = [];
+    if ($listChat[0]!="err") {
+        foreach ($listChat as $message) {
+            if (!isset($mergedMessages[$message['chatId']])) {
+                $mergedMessages[$message['chatId']] = [];
+            }
+            $mergedMessages[$message['chatId']][] = $message;
         }
-        $mergedMessages[$message['chatId']][] = $message;
     }
 }
 
@@ -20,6 +21,7 @@ foreach ($mergedMessages as $name => $messages) {
     });
     $mergedMessages[$name] = $messages;
 }
+
 if (isset($_POST)) {
     if (isset($_POST["admin"])) {
         $amin = $_POST["admin"];
@@ -42,3 +44,6 @@ if (isset($_POST)) {
         }
     }
 }
+
+
+

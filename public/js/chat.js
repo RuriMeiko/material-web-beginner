@@ -66,7 +66,7 @@ $(document).ready(function () {
 
                 </div>
 
-                <div class='from-user' id="${you && id}">
+                <div class='from-user' id="${id}">
                     <div class='avatar-select avt avt-title'>
                         <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
                     </div>
@@ -156,6 +156,7 @@ $(document).ready(function () {
         // currentBox.id = ; 
         $('.chatlayout').empty();
         listChat[divId].forEach(element => {
+            console.log(element);
             appendMessage(element.content, element.fromMe == 0, element.timestamp, element.id)
         });
         $('.chatscrene').css('display', 'flex');
@@ -180,105 +181,36 @@ $(document).ready(function () {
     menuSurface.addEventListener('closing', function (event) {
         $('.mess-other, .mess-self').attr('id', "");
         $('.mess-other, .mess-self').removeClass('mess-chossed');
-
     });
-    $('md-menu-item').on('click', function () {
+    
+    $('.re-mess').on('click', async function () {
         let clickedItem = $(this).attr('class');
         let idclickedItem = $(this).attr('target');
-
         console.log(clickedItem, idclickedItem);
+            const formData = new FormData();
+            formData.append('status', "delM");
+            formData.append('id', idclickedItem);
+            const res = await fetch('/api/delmess', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await res.json();
+            $('md-menu-item').append(data)
+            if (data.success) {
+                showToast(`✔️ ${selectedAccounts[0]}'s message  updated successfully!`);
+            } else {
+                showToast('❌ Failed to update message !');
+            }
     });
 
 
 
-
-    // tạo pòng
-    // const newrom = $("#fab-new-mess")
-    // newrom.click = async function (event) {
-    //     event.preventDefault();
-
-
-    //     const formData = new FormData();
-    //     formData.append('user', "hhhh");
-    //     formData.append('admin', "hhhh");
-    //     formData.append('name', "hhhh");
-
-
-    //     const res = await fetch('/api/createchatroom', {
-    //         method: 'POST',
-    //         body: formData
-    //     });
-
-    //     const data = await res.json();
-    //     if (data.success) {
-    //         showToast(`✔️ ${selectedAccounts[0]}'s role updated successfully!`);
-    //     } else {
-    //         showToast('❌ Failed to update role!');
-    //     }
-    // }
-
-    // lấy nhiều user 
-    // const newrom = document.getElementById("fab-new-mess")
-    // newrom.click = async function (event) {
-    //     event.preventDefault();
-
-
-    //     const formData = new FormData();
-    //     formData.append('status', "getf");
-    //     formData.append('limit', 5);
-
-
-    //     const res = await fetch('/api/getaccount', {
-    //         method: 'POST',
-    //         body: formData
-    //     });
-
-    //     const data = await res.json();
-
-
-    //     console.log(data.message);
-    //     if (data.message && data.message.length > 0) {
-    //         data.message.forEach(function (user) {
-    //             let newDiv = document.createElement("div");
-    //             newDiv.setAttribute("class", "item-chat");
-    //             newDiv.innerHTML = `
-    //             <md-elevation></md-elevation>
-    //             <md-ripple></md-ripple>
-    //             <div class='from-user'>
-    //                 <div class='avatar-select avt'>
-    //                     <img class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
-    //                 </div>
-    //             </div>
-    //             <div class="container">
-    //                 <div class='name-user'>${user.name}</div>
-    //                 <div class='content-user'>em oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi dayem oi anh muon di an gi day</div>
-    //             </div>
-    //           `;
-
-    //             // Lấy thẻ cha có class là "chatlist"
-    //             let chatList = document.querySelector(".chatlist");
-
-    //             // Thêm thẻ div mới vào trong thẻ cha
-    //             chatList.appendChild(newDiv);
-    //         });
-    //     }
-
-    //     if (data.success) {
-    //         showToast(`✔️ ${selectedAccounts[0]}'s role updated successfully!`);
-    //     } else {
-    //         showToast('❌ Failed to update role!');
-    //     }
-    // }
-
-    // kết bạn bốn phương
     const new_mess = $("#fab-new-mess");
     $('.back_to_mess_icon').click(function () {
         $(this).hide();
         $('#openprofile').show();
         $('.listfriend').hide()
-
         $('.chatlist').css('display', 'flex');
-
     });
 
 
@@ -316,31 +248,6 @@ $(document).ready(function () {
             $('.listfriend').append(temnlen);
         });
     });
-    // newrom.click(async function (event) {
-    //     event.preventDefault();
-    //     console.log('haha');
-
-    //     const formData = new FormData();
-    //     formData.append('status', "addf");
-    //     formData.append('user_1', "admin");
-    //     formData.append('user_2', "user1");
-    //     formData.append('state', 0);
-
-
-    //     const res = await fetch('/api/addfriend', {
-    //         method: 'POST',
-    //         body: formData
-    //     });
-
-    //     const data = await res.json();
-
-    //     if (data.success) {
-    //         showToast(`✔️ ${selectedAccounts[0]}'s role updated successfully!`);
-    //     } else {
-    //         showToast('❌ Failed to update role!');
-    //     }
-    // });
-
 });
 
 

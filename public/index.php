@@ -86,7 +86,12 @@ $router->addRoute('POST', '/api/addfriend', function () {
 
 $router->addRoute('POST', '/api/sendmess', function () {
     global $controllersDir;
-    require_once($controllersDir . '/sendmess.php');
+    require_once($controllersDir . '/message.php');
+});
+
+$router->addRoute('POST', '/api/delmess', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/message.php');
 });
 
 

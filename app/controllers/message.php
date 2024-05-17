@@ -21,11 +21,27 @@ if (isset($_POST)) {
                     echo "Có lỗi xảy ra!";
                     break;
             }
+        } else if ($_POST["status"] == "delM") {
+            $id = $_POST["id"];
+            $status = deleteMessage($id);
+            switch ($status) {
+                case 'DUPLICATE':
+                    http_response_code(200);
+                    echo "xoas roi con trai ". $status;
+                    break;
+                case 'OK':
+                    http_response_code(200);
+                    echo "OK";
+                    break;
+                default:
+                    http_response_code(500);
+                    echo "Có lỗi xảy ra!";
+                    break;
+            }
         } else {
             http_response_code(500);
             echo "không xác định được hành vi !";
         }
-    
     } else {
         http_response_code(500);
         echo "không có status";

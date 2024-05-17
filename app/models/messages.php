@@ -26,7 +26,7 @@ function createMessage($content, $receiver, $sender)
         return ["err"];
     }
 }
-function deleteChatRoom($id)
+function deleteMessage($id)
 {
     if (!isset($_COOKIE['session'])) {
         http_response_code(403);
@@ -35,9 +35,8 @@ function deleteChatRoom($id)
     $conn = createConn();
     try {
         $conn->begin_transaction();
-        $getQuery = "DELETE FROM chatroom WHERE id = ?;
-                    DELETE FROM room_member WHERE id = ?";
-        $data = executeQuery($conn, $getQuery, [$id,$id]);
+        $getQuery = "DELETE FROM message WHERE id = ?";
+        $data = executeQuery($conn, $getQuery, [$id]);
         $conn->commit();
 
         if ($data) {
@@ -50,7 +49,7 @@ function deleteChatRoom($id)
     }
 }
 
-function updateChatRoom($name,$id)
+function updateMessage($name,$id)
 {
     if (!isset($_COOKIE['session'])) {
         http_response_code(403);

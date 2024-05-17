@@ -184,9 +184,6 @@ require_once(DIR . '/app/controllers/chat.php');
         ?>
     </div>
     <md-menu positioning="fixed" id="usage-document" anchor="usage-document-anchor">
-        <md-menu-item class="del-mess">
-            <div slot="headline">Xoá</div>
-        </md-menu-item>
         <md-menu-item class="re-mess">
             <div slot="headline">Thu hồi</div>
         </md-menu-item>

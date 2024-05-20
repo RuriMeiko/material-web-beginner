@@ -18,10 +18,21 @@ $(document).ready(function () {
             let sessionValue = sessionCookie ? sessionCookie.split('=')[1] : null;
             socket.send(JSON.stringify({ identification: decodeURIComponent(sessionValue) }));
         } else {
-            if (data.self)
-                appendMessage(data.content, false, data.timestamp, data.id);
-            else
-                appendMessage(data.content, true, data.timestamp, data.id);
+            listChat[data.room].push({
+                chatId: data.room,
+                content: data.content,
+                fromMe: data.self === false ? 1 : 0,
+                id: data.id,
+                name: null,
+                timestamp: data.timestamp,
+            })
+            $(`#chatroom_${data.room} .container .content-user`).html(`${data.self ? "<strong>Bạn: </strong>" : ""}${data.content}`);
+
+            if (currentBox.room === data.room) {
+                appendMessage(data.content, !data.self, data.timestamp, 'mess_' + data.id);
+
+            }
+
 
         }
     };
@@ -153,6 +164,9 @@ $(document).ready(function () {
 
     $('.item-chat').click(function () {
         let divId = $(this).attr("id");
+        const parts = divId.split("_");
+        const result = parts[1];
+        divId = result;
         // Loại bỏ class "choosed" khỏi tất cả các phần tử .item-chat
         $('.item-chat').removeClass('choosed');
 
@@ -162,8 +176,7 @@ $(document).ready(function () {
         currentBox.id = listMember[divId].map(item => item.memberId);
         $('.chatlayout').empty();
         listChat[divId].forEach(element => {
-            console.log(element);
-            appendMessage(element.content, element.fromMe == 0, element.timestamp, element.id)
+            appendMessage(element.content, element.fromMe == 0, element.timestamp, 'mess_' + element.id)
         });
         $('.chatscrene').css('display', 'flex');
         $('.nullchatscrene').hide();
@@ -188,25 +201,25 @@ $(document).ready(function () {
         $('.mess-other, .mess-self').attr('id', "");
         $('.mess-other, .mess-self').removeClass('mess-chossed');
     });
-    
+
     $('.re-mess').on('click', async function () {
-        let clickedItem = $(this).attr('class');
         let idclickedItem = $(this).attr('target');
-        console.log(clickedItem, idclickedItem);
-            const formData = new FormData();
-            formData.append('status', "delM");
-            formData.append('id', idclickedItem);
-            const res = await fetch('/api/delmess', {
-                method: 'POST',
-                body: formData
-            });
-            const data = await res.json();
-            $('md-menu-item').append(data)
-            if (data.success) {
-                showToast(`✔️ ${selectedAccounts[0]}'s message  updated successfully!`);
-            } else {
-                showToast('❌ Failed to update message !');
-            }
+        origin_idclickedItem = idclickedItem.split('_')[1];
+        const formData = new FormData();
+        formData.append('status', "delM");
+        formData.append('id', origin_idclickedItem);
+        const res = await fetch('/api/delmess', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await res.json();
+        console.log(data);
+        if (data.status === 'OK') {
+            $(`#${idclickedItem}`).parent().parent().remove();
+            // socket.send('')
+        } else {
+            showToast('❌ Có lỗi khi thu hồi tin nhắn!');
+        }
     });
 
 

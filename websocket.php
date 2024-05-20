@@ -18,7 +18,6 @@ class ChatServer implements MessageComponentInterface
     {
         $this->clients->attach($connection);
         $connection->send(json_encode(['identification' => true, 'id' => $connection->resourceId]));
-        echo "Kết nối mới đã được thiết lập: {$connection->resourceId}\n";
     }
 
     public function onMessage(ConnectionInterface $from, $message)
@@ -30,6 +29,8 @@ class ChatServer implements MessageComponentInterface
             $iv = substr(md5(md5('huhu')), 0, 16);
             $decryptedUsername = openssl_decrypt(base64_decode($data), 'AES-256-CBC', md5('haha'), OPENSSL_RAW_DATA, $iv);
             $from->username = $decryptedUsername;
+            echo "Kết nối mới đã được thiết lập: {$from->resourceId}, {$decryptedUsername}\n";
+
         } else {
             // Lấy thông tin từ tin nhắn
             $receivers = $data['receiver'];

@@ -23,7 +23,6 @@ require_once(DIR . '/app/controllers/chat.php');
     <script>
         const listChat = <?php print_r(json_encode($mergedMessages)) ?>;
         const listMember = <?php print_r(json_encode($mergedMembers)) ?>;
-
     </script>
     <div class="chat">
         <div class="nullchatscrene"></div>
@@ -150,7 +149,7 @@ require_once(DIR . '/app/controllers/chat.php');
 
                     $lastMessage = end($messages);
                 ?>
-                    <div id="<?php echo $id ?>" class="item-chat">
+                    <div id="chatroom_<?php echo $id ?>" class="item-chat">
                         <md-elevation></md-elevation>
                         <md-ripple></md-ripple>
                         <div class='from-user'>
@@ -160,7 +159,7 @@ require_once(DIR . '/app/controllers/chat.php');
                         </div>
                         <div class="container">
                             <div class='name-user'><?php echo $lastMessage['name'] ?></div>
-                            <div class='content-user'><?php if ($message['fromMe'] == 1) {
+                            <div class='content-user'><?php if ($lastMessage['fromMe'] === 1) {
                                                             echo "<strong> Bạn: </strong>";
                                                         } ?><?php echo $lastMessage['content'] ?></div>
                         </div>
@@ -185,7 +184,7 @@ require_once(DIR . '/app/controllers/chat.php');
     </div>
     <md-menu positioning="fixed" id="usage-document" anchor="usage-document-anchor">
         <md-menu-item class="re-mess">
-            <div slot="headline">Thu hồi</div>
+            <div slot="headline">Xoá</div>
         </md-menu-item>
 
     </md-menu>

@@ -1,11 +1,11 @@
 <?php
-require_once (DIR . '/config/database.php');
+require_once(DIR . '/config/database.php');
 
 function loginUser($username, $password)
 {
     $conn = createConn();
 
-    $checkQuery = "SELECT * FROM user_login WHERE username = ?";
+    $checkQuery = "SELECT * FROM user_login WHERE BINARY username = ?";
     $checkResult = executeQuery($conn, $checkQuery, [$username]);
     if ($checkResult && isset($checkResult[0]['hashpassword']) && password_verify($password, $checkResult[0]['hashpassword'])) {
         http_response_code(200);
@@ -23,17 +23,15 @@ function loginUser($username, $password)
         return $encodeUsername;
     } else {
         return false;
-
     }
-}
-;
+};
 
 
 function registerUser($username, $password, $name, $birthday, $gender, $location)
 {
     $conn = createConn();
 
-    $checkQuery = "SELECT * FROM user_info WHERE username = ?";
+    $checkQuery = "SELECT * FROM user_info WHERE BINARY username = ?";
     $checkResult = executeQuery($conn, $checkQuery, [$username]);
 
     if ($checkResult) {
@@ -50,11 +48,9 @@ function registerUser($username, $password, $name, $birthday, $gender, $location
 
             $conn->commit();
             return 'OK';
-
         } catch (Exception $e) {
             $conn->rollback();
             return 'FAIL: ' . $e;
         }
     }
-}
-;
+};

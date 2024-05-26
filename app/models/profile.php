@@ -1,5 +1,6 @@
 <?php
 require_once(DIR . '/config/database.php');
+require_once('login.php');
 
 
 function updateUser($username, $name, $gender, $birthday, $location, $imageUrl)
@@ -16,8 +17,8 @@ function updateUser($username, $name, $gender, $birthday, $location, $imageUrl)
             $updateQuery = "UPDATE `user_info` SET `name` = ?, `gender` = ?, `birthday` = ?, `location` = ?, `avt` = ? WHERE username = ?";
             executeQuery($conn, $updateQuery, [$name, $gender, $birthday, $location, $imageUrl, $username]);
         } else {
-            $updateQuery = "UPDATE `user_info` SET `name` = ?, `gender` = ?, `birthday` = ?, `location` = ?, `avt` = ? WHERE username = ?";
-            executeQuery($conn, $updateQuery, [$name, $gender, $birthday, $location, $imageUrl, $username]);
+            $updateQuery = "UPDATE `user_info` SET `name` = ?, `gender` = ?, `birthday` = ?, `location` = ? WHERE username = ?";
+            executeQuery($conn, $updateQuery, [$name, $gender, $birthday, $location, $username]);
         }
         $conn->commit();
         return 'OK';
@@ -27,24 +28,27 @@ function updateUser($username, $name, $gender, $birthday, $location, $imageUrl)
     }
 };
 
-function updatePass($username, $password)
+function updatePass($username, $currpassword, $password)
 {
     if (!isset($_COOKIE['session'])) {
         return 'NO_AUTH';
     }
     $conn = createConn();
+    if (loginUser($username, $currpassword))
+        try {
+            if ($currpassword === $password) return 'DUP_PASSWORD';
+            $conn->begin_transaction();
 
-    try {
-        $conn->begin_transaction();
-
-        $updateQuery = "UPDATE `user_login` SET `hashpassword` = ? WHERE username = ?";
-        executeQuery($conn, $updateQuery, [password_hash($password, PASSWORD_DEFAULT), $username]);
-        $conn->commit();
-        return 'OK';
-    } catch (Exception $e) {
-        $conn->rollback();
-        return 'FAIL: ' . $e;
-    }
+            $updateQuery = "UPDATE `user_login` SET `hashpassword` = ? WHERE username = ?";
+            executeQuery($conn, $updateQuery, [password_hash($password, PASSWORD_DEFAULT), $username]);
+            $conn->commit();
+            return 'OK';
+        } catch (Exception $e) {
+            $conn->rollback();
+            return 'FAIL: ' . $e;
+        }
+    else
+        return 'PASSWORDNOTMATCH';
 }
 
 function getData($username)

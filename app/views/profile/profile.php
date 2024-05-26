@@ -18,34 +18,41 @@ require_once(DIR . '/app/controllers/profile.php');
 <body>
     <div class="body-container">
         <?php require_once DIR . "/app/views/component/header.php" ?>
-        <div class="box">
-            <form class="formInfo">
-                <div class='title-profile'>
-                    <h1>Cập nhật thông tin</h1>
-                    <input type="text" hidden name='username' value="<?php echo $datanguoidung[0]['username'] ?>">
-                   
+        <div class="body-container">
+            <div class="box">
+                <form class="formInfo">
+                    <div class='title-profile'>
+                        <h1>Cập nhật thông tin</h1>
+                        <input type="text" hidden name='username' value="<?php echo $datanguoidung[0]['username'] ?>">
+                        <div class='title-profile'>
 
-                </div>
-                <md-divider inset id='title-divider'></md-divider>
+                            <md-filled-tonal-icon-button id="change-password" href="/profile/change_password">
+                                <md-icon>Password</md-icon>
+                            </md-filled-tonal-icon-button>
 
-                <div class="avatar-container">
-                    <div class='avatar-select'>
-                        <md-elevation></md-elevation>
-
-                        <div class='sellect'>
-                            <md-ripple></md-ripple>
-                            <md-elevation></md-elevation>
-                            <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" onchange="previewAvatar(event)" />
-                            Chọn ảnh
                         </div>
-                        <img id="avatar-preview" class="avatar-preview mb-4" src="<?php if (isset($datanguoidung[0]['avt']))
-                                                                                        echo $datanguoidung[0]['avt'];
-                                                                                    else
-                                                                                        echo '/public/images/defaultAvt.jpg' ?>" />
+
                     </div>
-                </div>
-                <!-- <md-divider inset></md-divider> -->
-                <!-- <h3>Cập nhật mật khẩu:</h3>
+                    <md-divider inset id='title-divider'></md-divider>
+
+                    <div class="avatar-container">
+                        <div class='avatar-select'>
+                            <md-elevation></md-elevation>
+
+                            <div class='sellect'>
+                                <md-ripple></md-ripple>
+                                <md-elevation></md-elevation>
+                                <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" onchange="previewAvatar(event)" />
+                                Chọn ảnh
+                            </div>
+                            <img id="avatar-preview" class="avatar-preview mb-4" src="<?php if (isset($datanguoidung[0]['avt']))
+                                                                                            echo $datanguoidung[0]['avt'];
+                                                                                        else
+                                                                                            echo '/public/images/defaultAvt.jpg' ?>" />
+                        </div>
+                    </div>
+                    <!-- <md-divider inset></md-divider> -->
+                    <!-- <h3>Cập nhật mật khẩu:</h3>
                 <div class="two-container">
                     <md-outlined-text-field prefix-text="🔒" aria-label="Password" class="passwordInput" type="password" name="password" autocomplete="new-password" label="Mật khẩu" placeholder="Nhập mật khẩu của bạn">
                         <md-icon-button toggle slot="trailing-icon" class="eyesToggle" aria-label="Hiển thị mật khẩu">
@@ -56,35 +63,37 @@ require_once(DIR . '/app/controllers/profile.php');
                     </md-outlined-text-field>
                 </div>
                 <md-divider inset></md-divider> -->
-                <h3>Cập nhật thông tin:</h3>
-                <md-outlined-text-field prefix-text="😎" aria-label="name" label="Họ và tên" name="name" autocomplete="name" placeholder="Nhập tên của bạn" value="<?php echo $datanguoidung[0]['name'] ?>">
-                </md-outlined-text-field>
-                <div class="two-container">
-                    <md-outlined-text-field type="date" prefix-text="🗓️" aria-label="birthday" label="Ngày sinh" autocomplete="bday" placeholder="Nhập ngày sinh của bạn" name="birthday" value="<?php echo $datanguoidung[0]['birthday'] ?>">
+                    <h3>Cập nhật thông tin:</h3>
+                    <md-outlined-text-field prefix-text="😎" aria-label="name" label="Họ và tên" name="name" autocomplete="name" placeholder="Nhập tên của bạn" value="<?php echo $datanguoidung[0]['name'] ?>">
                     </md-outlined-text-field>
-                    <md-outlined-select label="Giới tính" aria-label="Giới tính" name="gender">
-                        <md-select-option <?php if ($datanguoidung[0]['gender'] == 0)
-                                                echo 'selected' ?> value="0">
-                            <div slot="headline">🤫 Khác</div>
-                        </md-select-option>
-                        <md-select-option value="1" <?php if ($datanguoidung[0]['gender'] == 1)
-                                                        echo 'selected' ?>>
-                            <div slot="headline">👨 Nam</div>
-                        </md-select-option>
-                        <md-select-option value="2" <?php if ($datanguoidung[0]['gender'] == 2)
-                                                        echo 'selected' ?>>
-                            <div slot="headline">👩 Nữ</div>
-                        </md-select-option>
-                    </md-outlined-select>
-                </div>
-                <md-outlined-text-field prefix-text="🏠" aria-label="quê quán" label="Quê quán" name="location" autocomplete="street-address" placeholder="Nhập tên địa chỉ của bạn" value="<?php echo $datanguoidung[0]['location'] ?>">
-                </md-outlined-text-field>
-                <md-divider inset></md-divider>
-                <md-filled-button id="save-btn">Lưu</md-filled-button>
+                    <div class="two-container">
+                        <md-outlined-text-field type="date" prefix-text="🗓️" aria-label="birthday" label="Ngày sinh" autocomplete="bday" placeholder="Nhập ngày sinh của bạn" name="birthday" value="<?php echo $datanguoidung[0]['birthday'] ?>">
+                        </md-outlined-text-field>
+                        <md-outlined-select label="Giới tính" aria-label="Giới tính" name="gender">
+                            <md-select-option <?php if ($datanguoidung[0]['gender'] == 0)
+                                                    echo 'selected' ?> value="0">
+                                <div slot="headline">🤫 Khác</div>
+                            </md-select-option>
+                            <md-select-option value="1" <?php if ($datanguoidung[0]['gender'] == 1)
+                                                            echo 'selected' ?>>
+                                <div slot="headline">👨 Nam</div>
+                            </md-select-option>
+                            <md-select-option value="2" <?php if ($datanguoidung[0]['gender'] == 2)
+                                                            echo 'selected' ?>>
+                                <div slot="headline">👩 Nữ</div>
+                            </md-select-option>
+                        </md-outlined-select>
+                    </div>
+                    <md-outlined-text-field prefix-text="🏠" aria-label="quê quán" label="Quê quán" name="location" autocomplete="street-address" placeholder="Nhập tên địa chỉ của bạn" value="<?php echo $datanguoidung[0]['location'] ?>">
+                    </md-outlined-text-field>
+                    <md-divider inset></md-divider>
+                    <md-filled-button id="save-btn">Lưu</md-filled-button>
 
-                <md-linear-progress class="loading" indeterminate></md-linear-progress>
-            </form>
+                    <md-linear-progress class="loading" indeterminate></md-linear-progress>
+                </form>
+            </div>
         </div>
+
         <script src="/public/js/profile.js"></script>
     </div>
 </body>

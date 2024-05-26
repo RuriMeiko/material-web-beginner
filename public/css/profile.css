@@ -1,6 +1,13 @@
+.box {
+	position: relative;
+	top: unset;
+	left: unset;
+	transform: unset;
+}
 .title-profile {
 	display: flex;
 	gap: 20px;
+	align-items: center;
 	justify-content: space-between;
 }
 
@@ -41,7 +48,7 @@
 	--md-elevation-level: 2;
 }
 .avatar-select:hover .sellect {
-	box-shadow: inset 0px 0px 10px 10px #000000;
+	box-shadow: inset 0px 0px 10px 10px #ff93fa;
 
 	opacity: 1;
 	--md-elevation-level: 2;
@@ -63,11 +70,6 @@
 	width: 100%;
 	height: 100%;
 	cursor: pointer;
-}
-
-#title span {
-	color: brown;
-	text-decoration: underline;
 }
 
 #title-divider {

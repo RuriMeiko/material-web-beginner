@@ -1,13 +1,27 @@
 .header {
-	height: 80px;
-	border-radius: 16px;
+	min-height: 80px;
+	border-radius: 10px;
 	display: flex;
+	width: 96%;
 	position: relative;
 	/* --md-elevation-level: 1; */
-    align-items: center;
-    padding-left: 16px;
-    padding-right: 16px;
- 
-    justify-content: space-between;
-	background-color: white;
+	align-items: center;
+	& h1 {
+		margin-left: 16px;
+	}
+	& .btn-list-header {
+		display: flex;
+		gap: 20px;
+		align-items: center;
+		justify-content: space-between;
+		margin-right: 16px;
+	}
+	margin-bottom: 20px;
+	justify-content: space-between;
+	background-color: #fdf6ff;
+}
+
+#title span {
+	color: brown;
+	text-decoration: underline;
 }

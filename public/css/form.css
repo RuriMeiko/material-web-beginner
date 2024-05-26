@@ -1,6 +1,7 @@
 .formLogin,
 .formReg,
-.formInfo {
+.formInfo,
+.formPassword {
 	display: flex;
 	width: 300px;
 	padding: 60px 100px 60px 100px;
@@ -19,14 +20,15 @@
 .formReg .loading {
 	width: 500px;
 }
-.formInfo {
+.formInfo,
+.formPassword {
 	border-radius: 10px;
 	width: 500px;
 }
-.formInfo .loading {
+.formInfo .loading,
+.formPassword .loading {
 	width: 500px;
 	top: 30px;
-
 }
 .loading {
 	position: absolute;

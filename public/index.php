@@ -27,17 +27,19 @@ $router->addRoute('GET', '/profile', function () {
     require($viewsDir . '/profile/profile.php');
 });
 
-$router->addRoute('GET', '/admin', function () {
+$router->addRoute('GET', '/profile/change_password', function () {
+    global $viewsDir;
+    require($viewsDir . '/profile/password.php');
+});
+
+$router->addRoute('GET', '/admin/usermanager', function () {
     global $viewsDir;
     require_once($viewsDir . '/admin/admin.php');
 });
-
-
-$router->addRoute('GET', '/chat', function () {
+$router->addRoute('GET', '/admin/listmanager', function () {
     global $viewsDir;
-    require_once($viewsDir . '/chat/chat.php');
+    require_once($viewsDir . '/admin/tablemanager.php');
 });
-
 
 // Add API routes
 $router->addRoute('POST', '/api/login', function () {

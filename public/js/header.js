@@ -5,5 +5,8 @@ $(function () {
     tippy('#adminbtn', {
         content: 'Trang admin',
     });
+    tippy('#userbtn', {
+        content: 'Trang profile',
+    });
 });
 

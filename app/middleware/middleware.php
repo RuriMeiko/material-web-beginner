@@ -1,9 +1,10 @@
 <?php
 
-require_once (DIR . '/app/models/profile.php');
+require_once(DIR . '/app/models/profile.php');
 if (isset($_COOKIE['session']) && $path === '/') {
     header('Location: /profile');
 }
+
 
 if (!isset($_COOKIE['session']) && $path !== '/' && $path !== '/term') {
     header('Location: /');

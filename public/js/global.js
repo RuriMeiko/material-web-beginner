@@ -5,8 +5,12 @@ function showToast(mess) {
         <p>${mess}</p>
     </div>
     <md-text-button>Ẩn (5s)</md-text-button>
-    </div>`;
-
+</div>`;
+    const totalToastHeight = $('.toast').map(function () {
+        return $(this).height() + 5;
+    }).get().reduce(function (a, b) {
+        return a + b;
+    }, 0);
     const tempDiv = $('<div></div>').html(divElement);
     const toast = tempDiv.find('.toast');
     const btntoast = toast.find('md-text-button');
@@ -15,13 +19,24 @@ function showToast(mess) {
 
     btntoast.on('click', () => {
         toast.removeClass('toastActive');
-        toast.slideUp(400, () => { toast.remove() });
+        const toastIndex = $('.toast').index(toast);
+        const removedToastHeight = toast.height() + 5;
+        toast.slideUp(400, () => {
+            toast.remove();
+            $('.toast').each(function (index) {
+                if (index >= toastIndex) {
+                    const currentTop = parseFloat($(this).css('top'));
+                    $(this).css('top', `${currentTop - removedToastHeight}px`);
+                }
+            });
+        });
 
     });
 
 
     setTimeout(() => {
         toast.addClass('toastActive');
+        toast.css('top', `${totalToastHeight}px`); // Thiết lập thuộc tính 'top' dựa trên số lượng .toast đã có
     }, 100);
 
     let timerCout = 4;
@@ -32,6 +47,17 @@ function showToast(mess) {
 
     setTimeout(() => {
         toast.removeClass('toastActive');
-        toast.slideUp(400, () => { toast.remove() });
+        const toastIndex = $('.toast').index(toast);
+        const removedToastHeight = toast.height() + 5;
+        toast.slideUp(400, () => {
+            toast.remove();
+            $('.toast').each(function (index) {
+                if (index >= toastIndex) {
+                    const currentTop = parseFloat($(this).css('top'));
+                    $(this).css('top', `${currentTop - removedToastHeight}px`);
+                }
+            });
+        });
+
     }, 5000);
 }

@@ -1,4 +1,19 @@
 
+function previewAvatar(event) {
+    const input = event.target;
+    const preview = $('#avatar-preview');
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            preview.prop('src', e.target.result);
+            avt = e.target.result;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 $(function () {
     const formInfo = $('.formInfo');
     const loading = $('.loading');
@@ -10,21 +25,7 @@ $(function () {
 
 
 
-    function previewAvatar(event) {
-        const input = event.target;
-        const preview = $('#avatar-preview');
 
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-
-            reader.onload = function (e) {
-                preview.prop('src', e.target.result);
-                avt = e.target.result;
-            };
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
 
     formInfo.submit(async function (e) {
         e.preventDefault();

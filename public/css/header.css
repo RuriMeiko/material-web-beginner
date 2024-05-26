@@ -1,0 +1,13 @@
+.header {
+	height: 80px;
+	border-radius: 16px;
+	display: flex;
+	position: relative;
+	/* --md-elevation-level: 1; */
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+ 
+    justify-content: space-between;
+	background-color: white;
+}

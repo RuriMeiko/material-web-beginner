@@ -44,6 +44,11 @@
 html {
 	zoom: 0.8;
 }
+.body-container {
+	display: flex;
+	flex-direction: column;
+}
+
 .toast {
 	--md-elevation-level: 2;
 	transition: all 0.4s ease-out;

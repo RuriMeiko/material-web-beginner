@@ -13,8 +13,10 @@
     import {
         styles as typescaleStyles
     } from "@material/web/typography/md-typescale-styles.js";
-    
+
     document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
 </script>
 <script src="/public/js/global.js"></script>
 <link rel="stylesheet" href="/public/css/global.css" />
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>

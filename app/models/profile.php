@@ -1,8 +1,8 @@
 <?php
-require_once (DIR . '/config/database.php');
+require_once(DIR . '/config/database.php');
 
 
-function updateUser($username, $password, $name, $gender, $birthday, $location, $imageUrl)
+function updateUser($username, $name, $gender, $birthday, $location, $imageUrl)
 {
     if (!isset($_COOKIE['session'])) {
         return 'NO_AUTH';
@@ -12,32 +12,40 @@ function updateUser($username, $password, $name, $gender, $birthday, $location, 
     try {
         $conn->begin_transaction();
 
-        if ($password === '' && $imageUrl === '') {
-            $updateQuery = "UPDATE `user_info` SET `name` = ?, `gender` = ?, `birthday` = ?, `location` = ? WHERE username = ?";
-            executeQuery($conn, $updateQuery, [$name, $gender, $birthday, $location, $username]);
-        } elseif ($password === '') {
+        if ($imageUrl) {
             $updateQuery = "UPDATE `user_info` SET `name` = ?, `gender` = ?, `birthday` = ?, `location` = ?, `avt` = ? WHERE username = ?";
             executeQuery($conn, $updateQuery, [$name, $gender, $birthday, $location, $imageUrl, $username]);
-        } elseif ($imageUrl === '') {
-            $updateQuery = "UPDATE `user_info` SET  `name` = ?, `gender` = ?, `birthday` = ?, `location` = ? WHERE username = ?";
-            executeQuery($conn, $updateQuery, [$name, $gender, $birthday, $location, $username]);
-            $updateQuery = "UPDATE `user_login` SET `hashpassword` = ? WHERE username = ?";
-            executeQuery($conn, $updateQuery, [password_hash($password, PASSWORD_DEFAULT), $username]);
         } else {
             $updateQuery = "UPDATE `user_info` SET `name` = ?, `gender` = ?, `birthday` = ?, `location` = ?, `avt` = ? WHERE username = ?";
             executeQuery($conn, $updateQuery, [$name, $gender, $birthday, $location, $imageUrl, $username]);
-            $updateQuery = "UPDATE `user_login` SET `hashpassword` = ? WHERE username = ?";
-            executeQuery($conn, $updateQuery, [password_hash($password, PASSWORD_DEFAULT), $username]);
         }
         $conn->commit();
         return 'OK';
+    } catch (Exception $e) {
+        $conn->rollback();
+        return 'FAIL: ' . $e;
+    }
+};
 
+function updatePass($username, $password)
+{
+    if (!isset($_COOKIE['session'])) {
+        return 'NO_AUTH';
+    }
+    $conn = createConn();
+
+    try {
+        $conn->begin_transaction();
+
+        $updateQuery = "UPDATE `user_login` SET `hashpassword` = ? WHERE username = ?";
+        executeQuery($conn, $updateQuery, [password_hash($password, PASSWORD_DEFAULT), $username]);
+        $conn->commit();
+        return 'OK';
     } catch (Exception $e) {
         $conn->rollback();
         return 'FAIL: ' . $e;
     }
 }
-;
 
 function getData($username)
 {
@@ -53,5 +61,4 @@ function getData($username)
     } else {
         return false;
     }
-}
-;
+};

@@ -15,15 +15,20 @@ $(document).ready(async function () {
     $('#addtieuchi').click(() => { addNode("Nội dung tiêu chí") });
     $('#deltieuchi').click(deleteNode);
     // Dữ liệu cây
-    function getDataTree() {
+    async function getDataTree() {
+        let haha = await fetch('/api/admin/listmanager', { method: "GET" });
+        console.log(await haha.json());
         let data = [
             {
+
                 text: "Tiêu chuẩn 1 (5 điểm)",
                 icon: '/public/images/tieuchuan.svg',
                 parent: "#",
+                data: { id: 1 },
                 children: [
                     { text: "Tiêu chí 1.1", data: { score: 2, content: 'haha' }, icon: '/public/images/tieuchi.svg' },
                     { text: "Tiêu chí 1.2", data: { score: 3, content: 'hihi' }, icon: '/public/images/tieuchi.svg' }
+
                 ]
             },
         ]
@@ -168,7 +173,6 @@ $(document).ready(async function () {
 
             // Xử lý lại các nút con
             if (node.children.length > 0) {
-                delete node.data;
 
                 getFlatJson(node.children);
             } else {

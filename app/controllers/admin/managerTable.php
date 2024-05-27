@@ -8,19 +8,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Chuyển đổi dữ liệu JSON thành mảng PHP
     $data = json_decode($jsonData, true);
 
-    // Xử lý dữ liệu và trả về phản hồi JSON
-    $response = array('message' => 'Success');
-    echo json_encode($response);
 
     // Gọi hàm từ model để cập nhật role cho từng tài khoản
-    // $success = updateRoles($accounts, $newRole);
+    $success = updateTalbe($jsonData);
 
-    // if ($success) {
-    //     header('Content-Type: application/json');
-    //     echo json_encode(['success' => true, 'message' => 'Cập nhật role thành công']);
-    // } else {
-    //     // Trả về thông báo lỗi
-    //     header('Content-Type: application/json');
-    //     echo json_encode(['success' => false, 'message' => 'Có lỗi xảy ra khi cập nhật role']);
-    // }
+    if ($success) {
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'message' => $success], JSON_UNESCAPED_UNICODE);
+    } else {
+        // Trả về thông báo lỗi
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false, 'message' => 'Có lỗi xảy ra khi cập nhật bảng'], JSON_UNESCAPED_UNICODE);
+    }
+} else 
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $data = getTalbe();
+    if ($data) {
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'message' => $data], JSON_UNESCAPED_UNICODE);
+    } else {
+        // Trả về thông báo lỗi
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false, 'message' => 'Có lỗi xảy ra khi cập nhật bảng'], JSON_UNESCAPED_UNICODE);
+    }
 }

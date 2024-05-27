@@ -56,7 +56,7 @@
 
                             <md-outlined-text-field class="enterscore" label="Điểm" type="number" value="0" prefix-text="💯" suffix-text=".điểm">
                             </md-outlined-text-field>
-                            <md-outlined-text-field class="entercritecontent" type="textarea" label="Nội dung chi tiết" rows="10">>
+                            <md-outlined-text-field class="entercritecontent" maxlength="100" type="textarea" label="Nội dung chi tiết" rows="10">>
                             </md-outlined-text-field>
                         </div>
                     </div>

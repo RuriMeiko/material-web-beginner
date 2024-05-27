@@ -67,3 +67,66 @@ function updateRoles($accounts, $newRole)
 
     return $success;
 }
+
+
+function updateTalbe($data)
+{
+    if (!isset($_COOKIE['session'])) {
+        http_response_code(403);
+        return false;
+    }
+    $conn = createConn();
+
+    try {
+        $conn->begin_transaction();
+        $jsonDecode = json_decode($data, true);
+        foreach ($jsonDecode['data']  as $item) {
+            $updateQuery = "UPDATE `tieu_chuan` SET `content`= ? WHERE `id`= ?";
+            executeQuery($conn, $updateQuery, [$item['text'], $item['data']['id']]);
+            $deleteQuery = "DELETE FROM `tieu_chi` WHERE `loai`=0";
+            executeQuery($conn, $deleteQuery);
+            foreach ($item['children'] as $tieuchi) {
+                $id_tieu_chuan = $item['data']['id'];
+                $content = $tieuchi['data']['content'];
+                $diem = $tieuchi['data']['score'];
+                $username = null;
+                $id = $tieuchi['id'];
+
+                $updateQuery = "INSERT INTO `tieu_chi` (`id_tieu_chuan`, `content`, `diem`, `loai`, `username`, `id`) 
+                                VALUES (?, ?, ?, 0, ?, ?)";
+
+                executeQuery($conn, $updateQuery, [$id_tieu_chuan, $content, $diem, $username, $id]);
+            }
+        }
+        $conn->commit();
+        return true;
+    } catch (Exception $e) {
+        return false;
+
+        $conn->rollback();
+    }
+}
+
+
+function getTalbe()
+{
+    if (!isset($_COOKIE['session'])) {
+        http_response_code(403);
+        return false;
+    }
+    $conn = createConn();
+
+    try {
+        $conn->begin_transaction();
+
+        $updateQuery = "SELECT * FROM `tieu_chuan`";
+        $datatieuchuan = executeQuery($conn, $updateQuery);
+        
+        $conn->commit();
+        return $datatieuchuan;
+    } catch (Exception $e) {
+        return false;
+
+        $conn->rollback();
+    }
+}

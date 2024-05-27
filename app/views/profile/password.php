@@ -19,6 +19,8 @@ require_once(DIR . '/app/controllers/profile.php');
     <div class="body-container">
         <?php require_once DIR . "/app/views/component/header.php" ?>
         <div class="box">
+        <md-elevation></md-elevation>
+
             <form class="formPassword">
                 <div class='title-profile'>
                     <h1>Cập nhật mật khẩu</h1>

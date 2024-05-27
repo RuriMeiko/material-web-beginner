@@ -1,4 +1,6 @@
 <nav class="navbar">
+    <md-elevation></md-elevation>
+
     <div class="sidebarlogo">
         <h1>Admin</h1>
     </div>

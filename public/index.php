@@ -41,6 +41,10 @@ $router->addRoute('GET', '/admin/listmanager', function () {
     require_once($viewsDir . '/admin/tablemanager.php');
 });
 
+$router->addRoute('POST', '/api/admin/listmanager', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/admin/managerTable.php');
+});
 // Add API routes
 $router->addRoute('POST', '/api/login', function () {
     global $controllersDir;

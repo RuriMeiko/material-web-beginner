@@ -1,4 +1,6 @@
 .header {
+	--md-elevation-level: 1;
+
 	min-height: 80px;
 	border-radius: 10px;
 	display: flex;

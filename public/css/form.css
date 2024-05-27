@@ -38,6 +38,8 @@
 }
 
 .box {
+	--md-elevation-level: 3;
+
 	user-select: none;
 
 	border-radius: 10px;

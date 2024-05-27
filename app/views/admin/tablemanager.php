@@ -31,16 +31,37 @@
 
 
             <div class="box">
+                <md-elevation></md-elevation>
+
                 <div class='title-profile'>
                     <h1>Quản lý bảng đánh giá</h1>
                 </div>
                 <div class="scoreManager">
-                    <div id="evaluationTree"> </div>
-                    <div class="score">
-                        <h1>Điểm tiêu chí 1</h1>
-                        <md-outlined-text-field class="enterscore" label="Điểm" type="number" value="0" prefix-text="💯" suffix-text=".điểm">
-                        </md-outlined-text-field>
+
+                    <div class='treetieuchi'>
+
+                        <div class="btnlistandtotal">
+                            <div class="btnlist">
+                                <md-outlined-button id="deltieuchi">Xoá tiêu chí</md-outlined-button>
+                                <md-filled-button id="addtieuchi">Thêm tiêu chí</md-filled-button>
+                            </div>
+                            <h3>Tổng điểm: 0</h3>
+
+                        </div>
+                        <div id="evaluationTree"> </div>
                     </div>
+                    <div class="score">
+                        <h1>Chi tiết tiêu chí 1</h1>
+                        <div class="chitiet-score">
+
+                            <md-outlined-text-field class="enterscore" label="Điểm" type="number" value="0" prefix-text="💯" suffix-text=".điểm">
+                            </md-outlined-text-field>
+                            <md-outlined-text-field class="entercritecontent" type="textarea" label="Nội dung chi tiết" rows="10">>
+                            </md-outlined-text-field>
+                        </div>
+                    </div>
+
+
                 </div>
 
                 <!-- <md-circular-progress indeterminate class='loading'></md-circular-progress> -->

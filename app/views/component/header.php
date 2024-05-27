@@ -1,5 +1,7 @@
 <script src="/public/js/header.js"></script>
 <header class="header">
+<md-elevation></md-elevation>
+
     <md-elevation></md-elevation>
     <h1 id='title'>Chào <?php echo checkTime() ?><span>@<?php echo $datanguoidung[0]['username'] ?></span> </h1>
     <div class='btn-list-header'>

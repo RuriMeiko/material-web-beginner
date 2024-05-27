@@ -38,6 +38,8 @@
 }
 
 .box {
+	--md-elevation-level: 3;
+
 	display: flex;
 	flex-direction: column;
 	position: relative;

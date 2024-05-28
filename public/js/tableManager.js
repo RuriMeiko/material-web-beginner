@@ -16,23 +16,47 @@ $(document).ready(async function () {
     $('#deltieuchi').click(deleteNode);
     // Dữ liệu cây
     async function getDataTree() {
-        let haha = await fetch('/api/admin/listmanager', { method: "GET" });
-        console.log(await haha.json());
-        let data = [
-            {
+        let r = await fetch('/api/admin/listmanager', { method: "GET" });
+        rd = await r.json();
+        const newData = [];
+        rd.message.forEach(function (item) {
+            const key = Object.keys(item)[0];
+            const value = item[key];
 
-                text: "Tiêu chuẩn 1 (5 điểm)",
-                icon: '/public/images/tieuchuan.svg',
-                parent: "#",
-                data: { id: 1 },
-                children: [
-                    { text: "Tiêu chí 1.1", data: { score: 2, content: 'haha' }, icon: '/public/images/tieuchi.svg' },
-                    { text: "Tiêu chí 1.2", data: { score: 3, content: 'hihi' }, icon: '/public/images/tieuchi.svg' }
+            if (value !== null) {
+                let totalScore = 0;
+                const children = value.map(function (tieuchi, index) {
+                    totalScore += parseInt(tieuchi.diem);
+                    return {
+                        text: `Tiêu chí ${key}.${index}`,
+                        data: {
+                            score: tieuchi.diem,
+                            content: tieuchi.content,
+                            index: tieuchi.indexId
 
-                ]
-            },
-        ]
-        return data;
+                        },
+                        icon: '/public/images/tieuchi.svg'
+                    };
+                });
+
+                newData.push({
+                    text: `Tiêu chuẩn ${key} (${totalScore} điểm)`,
+                    icon: '/public/images/tieuchuan.svg',
+                    parent: "#",
+                    data: { id: parseInt(key) },
+                    children: children
+                });
+            } else {
+                newData.push({
+                    text: `Tiêu chuẩn ${key} (${0} điểm)`,
+                    icon: '/public/images/tieuchuan.svg',
+                    parent: "#",
+                    data: { id: parseInt(key) },
+                    children: []
+                });
+            }
+        });
+        return newData;
     }
     function deleteNode() {
         let selectedNodes = $('#evaluationTree').jstree(true).get_selected();
@@ -52,6 +76,7 @@ $(document).ready(async function () {
                     parentNode.children.forEach((item, index) => {
                         const nodechild = $('#evaluationTree').jstree(true).get_node(item);
                         nodechild.text = nodechild.text.replace(/\d+$/, index + 1);
+                        nodechild.data.index = index + 1;
                         $('#evaluationTree').jstree(true).redraw_node(nodechild);
                     });
                 } else showToast('❌ Không thể xoá tiêu chuẩn');
@@ -73,7 +98,7 @@ $(document).ready(async function () {
             }
             let newNode = {
                 text: `Tiêu chí ${number}.${number2 + 1}`,
-                data: { score: 1, content: newNodeText },
+                data: { score: 1, content: newNodeText, index: number2 + 1 },
                 icon: '/public/images/tieuchi.svg'
             };
             $('#evaluationTree').jstree(true).create_node(parentNode, newNode, 'last', function (newNode) {
@@ -95,30 +120,7 @@ $(document).ready(async function () {
                 "themes": { "stripes": true },
                 'data': await getDataTree()
             },
-            "types": {
-                "#": {
-                    "max_children": 91,
-                    "max_depth": 1,
-                    "icon": "/public/images/tieuchuan.svg",
-                    "valid_children": ["root"]
-                },
-                "root": {
-                    "icon": "/public/images/tieuchuan.svg",
-                    "valid_children": ["default"]
-                },
-                "default": {
-                    "icon": "/public/images/tieuchuan.svg",
 
-                    "valid_children": ["default", "file"]
-                },
-                "file": {
-                    "icon": "/public/images/tieuchi.svg",
-                    "valid_children": []
-                }
-            },
-            // "plugins": [
-            //     "state", "types", "wholerow"
-            // ]
         }).on('ready.jstree', function () {
             let dsasadasdsa = tongdiem();
             $('.btnlistandtotal h3').text('Tổng điểm: ' + dsasadasdsa);
@@ -131,7 +133,10 @@ $(document).ready(async function () {
 
                     getFlatJson(jsonData);
                     let re = await fetch('/api/admin/listmanager', { method: "POST", body: JSON.stringify({ data: jsonData, totalScore: tongdiem() }) });
-
+                    let ax = await re.json();
+                    if (ax.success)
+                        return showToast('✔️ Đã lưu bảng');
+                    else return showToast('❌ Có lỗi xảy ra khi lưu bảng');
                 } else {
                     showToast('❌ Tổng điểm phải bằng 100!');
                 }

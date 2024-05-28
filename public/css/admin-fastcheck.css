@@ -1,0 +1,19 @@
+.mdc-data-table__header-cell:first-child {
+	width: 70%;
+}
+.mdc-data-table__header-cell:nth-child(2) {
+	width: 15%;
+}
+
+.mdc-data-table__header-cell:nth-child(3) {
+	width: 15%;
+}
+.mdc-data-table__cell-div {
+	transition: all 0.3s;
+}
+
+.diemhs{
+    padding: 20px;
+    color: #ff6b6b;
+    font-weight: 500;
+}

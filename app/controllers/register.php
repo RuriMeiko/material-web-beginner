@@ -1,7 +1,7 @@
 <?php
-require_once (DIR . '/app/models/login.php');
+require_once(DIR . '/app/models/login.php');
 
-if (isset($_POST)) {
+if (isset($_POST["username"], $_POST["password"], $_POST["name"], $_POST["birthday"], $_POST["gender"], $_POST["location"])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
     $name = $_POST["name"];
@@ -23,5 +23,7 @@ if (isset($_POST)) {
             echo "Có lỗi xảy ra!" . $status;
             break;
     }
-
+} else {
+    http_response_code(500);
+    echo "Có lỗi xảy ra!";
 }

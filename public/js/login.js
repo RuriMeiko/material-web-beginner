@@ -44,11 +44,9 @@ formLogin.submit(async function (e) {
     const res = await fetch('/api/login', { method: 'POST', body: formData });
     loading.css("display", "none");
     $('#login-btn').prop('disabled', false);
-    if (res.status === 403) {
-        showToast('❌ Sai thông tin đăng nhập');
-    } else {
-        window.location.href = '/profile'
-    };
+    if (res.status === 403) return showToast('❌ Sai thông tin đăng nhập');
+    if (res.status === 405) return showToast('❌ Bạn đã bị chặn khỏi trang web!');
+    else window.location.href = '/profile';
 
 
 

@@ -21,5 +21,14 @@
                 <div class="sellect"></div>
             </div>
         </a>
+        <a href="/admin/statistical">
+            <div class="item-navbar <?php if ($_SERVER['REQUEST_URI'] === '/admin/statistical') echo 'choosed' ?>">
+                <div class="content-sidebar">
+                    <md-ripple></md-ripple>
+                    <md-icon>Insert_Chart</md-icon> Thống kê
+                </div>
+                <div class="sellect"></div>
+            </div>
+        </a>
 </nav>
 <script src="/public/js/nav.js"></script>

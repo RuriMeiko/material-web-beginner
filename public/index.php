@@ -20,7 +20,10 @@ $router->addRoute('GET', '/term', function () {
     global $viewsDir;
     require($viewsDir . '/term/term.php');
 });
-
+$router->addRoute('GET', '/fastcheck', function () {
+    global $viewsDir;
+    require($viewsDir . '/fastcheck/fastcheck.php');
+});
 
 $router->addRoute('GET', '/profile', function () {
     global $viewsDir;
@@ -31,7 +34,6 @@ $router->addRoute('GET', '/profile/change_password', function () {
     global $viewsDir;
     require($viewsDir . '/profile/password.php');
 });
-
 $router->addRoute('GET', '/admin/usermanager', function () {
     global $viewsDir;
     require_once($viewsDir . '/admin/admin.php');
@@ -41,15 +43,26 @@ $router->addRoute('GET', '/admin/listmanager', function () {
     require_once($viewsDir . '/admin/tablemanager.php');
 });
 
-$router->addRoute('POST', '/api/admin/listmanager', function () {
-    global $controllersDir;
-    require_once($controllersDir . '/admin/managerTable.php');
+$router->addRoute('GET', '/admin/review/{username}', function ($username) {
+    global $viewsDir;
+    require_once($viewsDir . '/fastcheck/fastcheck.php');
 });
+
+// Add API routes
 $router->addRoute('GET', '/api/admin/listmanager', function () {
     global $controllersDir;
     require_once($controllersDir . '/admin/managerTable.php');
 });
-// Add API routes
+$router->addRoute('POST', '/api/admin/listmanager', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/admin/managerTable.php');
+});
+
+$router->addRoute('POST', '/api/admin/block', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/admin/block.php');
+});
+
 $router->addRoute('POST', '/api/login', function () {
     global $controllersDir;
     require_once($controllersDir . '/login.php');
@@ -60,6 +73,10 @@ $router->addRoute('POST', '/api/register', function () {
     require_once($controllersDir . '/register.php');
 });
 
+$router->addRoute('POST', '/api/fastcheck', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/fastcheck.php');
+});
 
 $router->addRoute('GET', '/api/logout', function () {
     global $controllersDir;

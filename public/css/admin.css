@@ -109,7 +109,10 @@
 .mdc-data-table__header-cell:nth-child(3) {
 	width: 100px;
 }
-.mdc-data-table__header-cell:nth-child(6) {
+.mdc-data-table__header-cell:nth-child(5) {
+	width: 80px;
+}
+.mdc-data-table__header-cell:nth-child(7) {
 	width: 200px;
 }
 .mdc-data-table__cell-div:first-child,
@@ -123,6 +126,8 @@
 }
 
 .mdc-data-table__cell-div {
+	--md-elevation-level: 0;
+
 	& p {
 		max-height: 56px;
 		overflow: auto;

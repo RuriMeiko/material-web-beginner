@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin</title>
+    <title>Quản lý bảng đánh giá</title>
     <?php require_once(DIR . '/app/controllers/profile.php');
     ?>
     <?php require_once(DIR . '/public/styles/styleGlobal.php'); ?>
@@ -42,8 +42,12 @@
 
                         <div class="btnlistandtotal">
                             <div class="btnlist">
-                                <md-outlined-button id="deltieuchi">Xoá tiêu chí</md-outlined-button>
-                                <md-filled-button id="addtieuchi">Thêm tiêu chí</md-filled-button>
+                                <md-outlined-button id="deltieuchi"><svg slot="icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
+                                        <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+                                    </svg>Xoá tiêu chí</md-outlined-button>
+                                <md-filled-button id="addtieuchi"><svg slot="icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                                        <path d="M440-240h80v-120h120v-80H520v-120h-80v120H320v80h120v120ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z" />
+                                    </svg>Thêm tiêu chí</md-filled-button>
                             </div>
                             <h3>Tổng điểm: 0</h3>
 

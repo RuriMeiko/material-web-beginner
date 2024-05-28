@@ -7,7 +7,7 @@ require_once(DIR . '/app/controllers/profile.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thông tin người dùng</title>
+    <title>Đổi mật khẩu</title>
     <?php require_once(DIR . '/public/styles/styleGlobal.php'); ?>
     <link rel="stylesheet" href="/public/css/form.css" />
     <link rel="stylesheet" href="/public/css/profile.css" />

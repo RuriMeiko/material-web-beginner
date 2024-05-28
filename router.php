@@ -12,11 +12,12 @@ class Router
             $this->defaultPath = $defaultPath;
     }
 
-    public function addRoute($method, $path, $callback)
+    public function addRoute($method, $pathPattern, $callback)
     {
-        $path = $this->defaultPath .  $path;
+        $path = $this->defaultPath .  $pathPattern;
         $this->routes[] = [
             'method' => $method,
+            'pathPattern' => $pathPattern,
             'path' => $path,
             'callback' => $callback
         ];
@@ -26,12 +27,12 @@ class Router
     {
         foreach ($this->routes as $route) {
             if ($route['method'] === $method) {
-                $pattern = $this->getPatternFromPath($route['path']);
+                $pattern = $this->getPatternFromPath($route['pathPattern']);
                 if (preg_match($pattern, $path, $matches)) {
                     array_shift($matches); // Remove the full match
                     $callback = $route['callback'];
                     if (is_callable($callback)) {
-                        call_user_func_array($callback, $matches);
+                        call_user_func($callback, $matches);
                         return;
                     }
                 }
@@ -42,9 +43,9 @@ class Router
         echo "404 Not Found";
     }
 
-    private function getPatternFromPath($path)
+    private function getPatternFromPath($pathPattern)
     {
-        $pattern = preg_replace('/\//', '\\/', $path);
+        $pattern = preg_replace('/\//', '\\/', $pathPattern);
         $pattern = preg_replace('/\{([^\/]+)\}/', '(?P<$1>[^\/]+)', $pattern);
         $pattern = '/^' . $pattern . '$/';
         return $pattern;

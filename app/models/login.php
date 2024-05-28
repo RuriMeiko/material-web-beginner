@@ -1,5 +1,5 @@
 <?php
-require_once (DIR . '/config/database.php');
+require_once(DIR . '/config/database.php');
 
 function loginUser($username, $password)
 {
@@ -7,6 +7,7 @@ function loginUser($username, $password)
 
     $checkQuery = "SELECT * FROM user_login WHERE username = ?";
     $checkResult = executeQuery($conn, $checkQuery, [$username]);
+    if ($checkResult[0]['ban'] === 1) return "Ban";
     if ($checkResult && isset($checkResult[0]['hashpassword']) && password_verify($password, $checkResult[0]['hashpassword'])) {
         http_response_code(200);
         $iv = substr(md5(md5('huhu')), 0, 16);
@@ -20,13 +21,16 @@ function loginUser($username, $password)
                 $iv
             )
         );
-        return $encodeUsername;
-    } else {
-        return false;
+        closeConn($conn);
 
+        return $encodeUsername;
     }
-}
-;
+    else {
+        closeConn($conn);
+
+        return "Wrong";
+    }
+};
 
 
 function registerUser($username, $password, $name, $birthday, $gender, $location)
@@ -49,12 +53,14 @@ function registerUser($username, $password, $name, $birthday, $gender, $location
 
 
             $conn->commit();
-            return 'OK';
+            closeConn($conn);
 
+            return 'OK';
         } catch (Exception $e) {
+            
             $conn->rollback();
+            closeConn($conn);
             return 'FAIL: ' . $e;
         }
     }
-}
-;
+};

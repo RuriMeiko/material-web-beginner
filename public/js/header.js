@@ -8,5 +8,9 @@ $(function () {
     tippy('#userbtn', {
         content: 'Trang profile',
     });
+    tippy('#tablecheck', {
+        content: 'Trang chấm điểm',
+    });
+    
 });
 

@@ -27,7 +27,6 @@ let listCheck = [];
 $('#toadminbtn').click(function () {
     if (listCheck.length > 0) {
         setRole(listCheck, true);
-        $('.checkboxAdmin').prop('checked', true);
     }
     else showToast('❌ Vui lòng chọn user');
 });
@@ -35,28 +34,120 @@ $('#toadminbtn').click(function () {
 $('#deleteadmin').click(function () {
     if (listCheck.length > 0) {
         setRole(listCheck, false);
-        $('.checkboxAdmin').prop('checked', false);
+    }
+    else showToast('❌ Vui lòng chọn user');
+});
+
+
+$('#block').click(function () {
+    if (listCheck.length > 0) {
+        setBlock(listCheck, true);
+    }
+    else showToast('❌ Vui lòng chọn user');
+});
+
+$('#unblock').click(function () {
+    if (listCheck.length > 0) {
+        setBlock(listCheck, false);
     }
     else showToast('❌ Vui lòng chọn user');
 });
 
 async function setRole(selectedAccounts, isAdmin) {
-    const formData = new FormData();
-    formData.append('accounts', JSON.stringify(selectedAccounts));
-    formData.append('newRole', isAdmin ? 0 : 1);
+    $('#roleDialog').prop('open', true);
+    $('#roleDialog div').eq(0).text(`Xác nhận cập nhật quyền`);
 
-    const res = await fetch('/api/admin/changerole', {
-        method: 'POST',
-        body: formData
+    $('#roleDialog').one('close', async function () {
+        const okClicked = this.returnValue === 'ok';
+        if (okClicked) {
+            $('.checkboxAdmin').each(function () {
+                if (selectedAccounts.includes($(this).val()))
+                    $(this).prop('checked', isAdmin);
+            });
+            $('.xembtn').each(function () {
+                if (selectedAccounts.includes($(this).prop('id')))
+                    $(this).prop('disabled', isAdmin);
+            });
+            $('.checkboxBan').each(async function () {
+                if (selectedAccounts.includes($(this).val())) {
+                    $(this).prop('disabled', isAdmin);
+                    $(this).prop('checked', false);
+                    const formData = new FormData();
+                    formData.append('accounts', JSON.stringify(selectedAccounts));
+                    formData.append('block', 0);
+
+                    await fetch('/api/admin/block', {
+                        method: 'POST',
+                        body: formData
+                    });
+                }
+            });
+            const formData = new FormData();
+            formData.append('accounts', JSON.stringify(selectedAccounts));
+            formData.append('newRole', isAdmin ? 0 : 1);
+
+            const res = await fetch('/api/admin/changerole', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                showToast(`✔️ Quyền của ${selectedAccounts.join(', ')} đã cập nhật thành công!`);
+            } else {
+                showToast('❌ Lỗi khi cập nhật quyền!');
+            }
+        } else {
+            $('.checkboxAdmin').each(function () {
+                if (selectedAccounts.includes($(this).val()))
+                    $(this).prop('checked', !isAdmin);
+            });
+        }
+        this.returnValue = 'cancel';
+
     });
-
-    const data = await res.json();
-    if (data.success) {
-        showToast(`✔️ Quyền của ${selectedAccounts.join(', ')} đã cập nhật thành công!`);
-    } else {
-        showToast('❌ Lỗi khi cập nhật quyền!');
-    }
 }
+async function setBlock(selectedAccounts, isBlock) {
+    $('#roleDialog').prop('open', true);
+    $('#roleDialog div').eq(0).text(`Xác nhận ${isBlock ? "chặn" : "bỏ chặn"} người dùng!`);
+
+    $('#roleDialog').one('close', async function () {
+        const okClicked = this.returnValue === 'ok';
+        if (okClicked) {
+
+            $('.checkboxBan').each(function () {
+                if (selectedAccounts.includes($(this).val()))
+                    $(this).prop('checked', isBlock);
+
+            });
+            const formData = new FormData();
+            formData.append('accounts', JSON.stringify(selectedAccounts));
+            formData.append('block', isBlock ? 1 : 0);
+
+            const res = await fetch('/api/admin/block', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                showToast(`✔️ Trạng thái của ${selectedAccounts.join(', ')} đã cập nhật thành công!`);
+            } else {
+                showToast('❌ Lỗi khi cập nhật trạng thái!');
+            }
+        } else {
+            $('.checkboxBan').each(function () {
+                if (selectedAccounts.includes($(this).val()))
+                    $(this).prop('checked', !isBlock);
+            });
+        }
+        this.returnValue = 'cancel';
+
+    });
+}
+
+
 let checkall = false
 function displayUserData(data) {
     $('#user_data').empty();
@@ -64,12 +155,16 @@ function displayUserData(data) {
         const row = `<tr>
         <td class="mdc-data-table__cell">
         <div class="mdc-data-table__cell-div">
-            <md-checkbox class="${user.username !== myusername && 'checkboxitem'}" ${user.username === myusername && 'checked'} ${user.username === myusername && 'disabled'} value="${user.username}" ${checkall && 'checked'} touch-target="wrapper"></md-checkbox>
+            <md-checkbox class="${user.username !== myusername && 'checkboxitem'}" ${user.username === myusername && 'disabled'} value="${user.username}" ${checkall && 'checked'} touch-target="wrapper"></md-checkbox>
             </div>
         </td>
         <td class="mdc-data-table__cell">
             <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation><p>${user.name}</p></div>
         </td>
+        <td class="mdc-data-table__cell">
+        <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation><md-text-button class="xembtn" ${user.role === 0 && "disabled"} id="${user.username}">Xem</md-text-button>
+        </div>
+    </td>
         <td class="mdc-data-table__cell">
             <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation><p>${user.username}</p></div>
         </td>
@@ -83,29 +178,20 @@ function displayUserData(data) {
             <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation><p>${user.location}</p></div>
         </td>
         <td class="mdc-data-table__cell">
-            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation><p>${user.role}</div>
+        <div class="mdc-data-table__cell-div"> <md-checkbox value="${user.username}" ${user.role === 0 && "disabled"} class="${user.username !== myusername && 'checkboxBan'}" ${user.ban !== 0 && 'checked'} ${user.username === myusername && 'disabled'} touch-target="wrapper"></md-checkbox> </div>
         </td>
         <td class="mdc-data-table__cell">
-            <div class="mdc-data-table__cell-div"> <md-checkbox value="${user.username}" class="checkboxAdmin" ${user.role === 0 && 'checked'} ${user.username === myusername && 'disabled'} touch-target="wrapper"></md-checkbox> </div>
+            <div class="mdc-data-table__cell-div"> <md-checkbox value="${user.username}" class="${user.username !== myusername && 'checkboxAdmin'}" ${user.role === 0 && 'checked'} ${user.username === myusername && 'disabled'} touch-target="wrapper"></md-checkbox> </div>
         </td>
 
     </tr>`;
         $('#user_data').append(row);
     });
     $('.checkboxAdmin').click(async function (e) {
-        let currentColumn = $(this).closest('td');
-        let previousColumn = currentColumn.prev();
-        $('#roleDialog').prop('open', true);
-        $('#roleDialog').one('close', async function () {
-            const okClicked = this.returnValue === 'ok';
-            if (okClicked) {
-                previousColumn.html(`<div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${e.target.checked ? 0 : 1}</div>`);
-                await setRole([e.target.value], e.target.checked);
-            } else {
-                e.target.checked = false;
-                this.returnValue = 'cancel'
-            }
-        });
+        await setRole([e.target.value], !e.target.checked);
+    });
+    $('.checkboxBan').click(async function (e) {
+        await setBlock([e.target.value], !e.target.checked);
     });
 
     $('.checkboxitem').click(function (e) {
@@ -118,10 +204,10 @@ function displayUserData(data) {
             }
         }
         $('.checkall').prop('indeterminate', true);
-
-
     });
-
+    $('.xembtn').click(function () {
+        window.location.href = "/admin/review/" + $(this).prop('id');
+    });
 
 
 

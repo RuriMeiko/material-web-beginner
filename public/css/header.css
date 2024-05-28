@@ -1,12 +1,11 @@
 .header {
-	--md-elevation-level: 3;
 
 	min-height: 80px;
 	border-radius: 10px;
 	display: flex;
 	width: 96%;
 	position: relative;
-	/* --md-elevation-level: 1; */
+	--md-elevation-level: 3;
 	align-items: center;
 	& h1 {
 		margin-left: 16px;

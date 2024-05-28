@@ -1,7 +1,7 @@
 <?php
 require_once(DIR . '/app/models/login.php');
 
-if (isset($_POST) && $_POST["username"] && $_POST["password"]) {
+if (isset($_POST) && isset($_POST["username"]) && isset($_POST["password"])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
     $status = loginUser($username, $password);

@@ -1,7 +1,7 @@
 <?php
 require_once(DIR . '/app/models/admin.php');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['accounts'] && $_POST['block']) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accounts']) && isset($_POST['block'])) {
     // Nhận dữ liệu từ client (danh sách tài khoản và role mới)
     $accounts = $_POST['accounts'];
     $block = $_POST['block'];
@@ -19,5 +19,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['accounts'] && $_POST['block
     }
 } else {
     header('Content-Type: application/json');
-    echo json_encode(['success' => false, 'message' => 'Có lỗi xảy ra khi cập nhật role']);
+    echo json_encode(['success' => false, 'message' => 'Có lỗi xảy ra khi cập nhật trạng thái']);
 }

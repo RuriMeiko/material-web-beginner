@@ -120,6 +120,15 @@ async function setBlock(selectedAccounts, isBlock) {
                     $(this).prop('checked', isBlock);
 
             });
+            $('.checkboxAdmin').each(function () {
+                if ($(this).prop('checked')) {
+                    const index = selectedAccounts.indexOf(5);
+                    if (index > -1) { // only splice array when item is found
+                        selectedAccounts.splice(index, 1); // 2nd parameter means remove one item only
+                    }
+                }
+
+            });
             const formData = new FormData();
             formData.append('accounts', JSON.stringify(selectedAccounts));
             formData.append('block', isBlock ? 1 : 0);
@@ -162,7 +171,7 @@ function displayUserData(data) {
             <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation><p>${user.name}</p></div>
         </td>
         <td class="mdc-data-table__cell">
-        <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation><md-text-button class="xembtn" ${user.role === 0 && "disabled"} id="${user.username}">Xem</md-text-button>
+        <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation><md-text-button class="xembtn" ${user.role === 0 && "disabled"} ${user.hasReview === 0 && "disabled"} id="${user.username}">Xem</md-text-button>
         </div>
     </td>
         <td class="mdc-data-table__cell">

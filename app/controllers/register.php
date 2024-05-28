@@ -1,7 +1,7 @@
 <?php
 require_once(DIR . '/app/models/login.php');
 
-if (isset($_POST["username"], $_POST["password"], $_POST["name"], $_POST["birthday"], $_POST["gender"], $_POST["location"])) {
+if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["name"]) && isset($_POST["birthday"]) && isset($_POST["gender"]) && isset($_POST["location"])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
     $name = $_POST["name"];

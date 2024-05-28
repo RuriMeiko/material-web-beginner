@@ -1,7 +1,7 @@
 <?php
 require_once(DIR . '/app/models/admin.php');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $accounts = $_POST['accounts'] && $newRole = $_POST['newRole']) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['accounts']) && isset($_POST['newRole'])) {
     // Nhận dữ liệu từ client (danh sách tài khoản và role mới)
     $accounts = $_POST['accounts'];
     $newRole = $_POST['newRole'];

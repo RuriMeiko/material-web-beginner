@@ -14,7 +14,7 @@ function getAllUsers($offset, $limit)
         return ["err"];
     }
     $conn = createConn();
-    $getQuery = "SELECT user_info.*, user_login.role, user_login.ban  FROM user_info, user_login WHERE user_info.username = user_login.username LIMIT ? OFFSET ? ";
+    $getQuery = "SELECT user_info.*, user_login.role, user_login.ban, (tieu_chi.username IS NOT NULL) AS hasReview FROM user_info JOIN user_login ON user_info.username = user_login.username LEFT JOIN tieu_chi ON tieu_chi.username = user_info.username GROUP BY user_info.username LIMIT ? OFFSET ? ";
     $data = executeQuery($conn, $getQuery, [$limit, $offset]);
     closeConn($conn);
     if ($data) {
@@ -112,7 +112,6 @@ function updateBlock($accounts, $ban)
         foreach ($accounts as $account) {
             $updateQuery = "UPDATE user_login SET ban = ? WHERE username = ?";
             $updateResult = executeQuery($conn, $updateQuery, [$ban, $account]);
-
             if (!$updateResult) {
                 $success = false;
                 break;
@@ -143,7 +142,7 @@ function updateTalbe($data)
     try {
         $conn->begin_transaction();
         $jsonDecode = json_decode($data, true);
-        $deleteQuery = "DELETE FROM `tieu_chi` WHERE `loai`=0";
+        $deleteQuery = "DELETE FROM `tieu_chi`";
         executeQuery($conn, $deleteQuery);
         foreach ($jsonDecode['data']  as $item) {
             $updateQuery = "UPDATE `tieu_chuan` SET `content`= ? WHERE `id`= ?";
@@ -166,7 +165,6 @@ function updateTalbe($data)
         closeConn($conn);
         return true;
     } catch (Exception $e) {
-        
         $conn->rollback();
         closeConn($conn);
         return false;

@@ -25,9 +25,9 @@ function updateUser($username, $name, $gender, $birthday, $location, $imageUrl)
 
         return 'OK';
     } catch (Exception $e) {
-        closeConn($conn);
-
+        
         $conn->rollback();
+        closeConn($conn);
         return 'FAIL: ' . $e;
     }
 };
@@ -50,9 +50,9 @@ function updatePass($username, $currpassword, $password)
 
             return 'OK';
         } catch (Exception $e) {
-            closeConn($conn);
-
+            
             $conn->rollback();
+            closeConn($conn);
             return 'FAIL: ' . $e;
         }
     else {

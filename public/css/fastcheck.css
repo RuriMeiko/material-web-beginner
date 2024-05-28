@@ -122,3 +122,22 @@
 .body-container{
     width: 100%;
 }
+
+.diemhs{
+    padding: 20px;
+    color: #ff6b6b;
+    font-weight: 500;
+}
+
+
+.tongdiem{
+	padding: 20px;
+    color: #ff6b6b;
+    font-weight: 600;
+	font-size: larger;
+}
+
+.ok {
+	color: #1dde1d;
+
+}

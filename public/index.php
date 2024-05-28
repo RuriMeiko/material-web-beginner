@@ -42,7 +42,10 @@ $router->addRoute('GET', '/admin/listmanager', function () {
     global $viewsDir;
     require_once($viewsDir . '/admin/tablemanager.php');
 });
-
+$router->addRoute('GET', '/admin/statistical', function () {
+    global $viewsDir;
+    require_once($viewsDir . '/admin/statistical.php');
+});
 $router->addRoute('GET', '/admin/review/{username}', function ($username) {
     global $viewsDir;
     require_once($viewsDir . '/fastcheck/fastcheck.php');
@@ -53,9 +56,17 @@ $router->addRoute('GET', '/api/admin/listmanager', function () {
     global $controllersDir;
     require_once($controllersDir . '/admin/managerTable.php');
 });
+$router->addRoute('POST', '/api/admin/fastcheck', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/admin/fastcheck.php');
+});
 $router->addRoute('POST', '/api/admin/listmanager', function () {
     global $controllersDir;
     require_once($controllersDir . '/admin/managerTable.php');
+});
+$router->addRoute('GET', '/api/admin/statistical', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/admin/getStatistical.php');
 });
 
 $router->addRoute('POST', '/api/admin/block', function () {

@@ -24,7 +24,6 @@ function getAllUsers($offset, $limit)
 
         return ["err"];
     }
-    
 }
 
 
@@ -44,7 +43,7 @@ function getCoutUsers()
     closeConn($conn);
 
     if ($data) {
-        
+
         return $data;
     } else {
         return false;
@@ -84,7 +83,6 @@ function updateRoles($accounts, $newRole)
     } catch (Exception $e) {
         $conn->rollback();
         return false;
-
     }
     closeConn($conn);
 
@@ -168,9 +166,7 @@ function updateTalbe($data)
         $conn->rollback();
         closeConn($conn);
         return false;
-
     }
-
 }
 
 
@@ -206,6 +202,109 @@ function getTalbe()
         closeConn($conn);
 
         return false;
+    }
+}
 
+
+
+function checkVail($value, $conn)
+{
+    try {
+        foreach ($value as $index => $item) {
+            if (!isset($item['oritieuchiid']) || !isset($item['idtieuchi']) || !isset($item['diem'])) return false;
+            $oritieuchiid = $item['oritieuchiid'];
+
+            $diem = $item['diem'];
+
+            $checkQuery = "SELECT * FROM `tieu_chi` WHERE `id` = ?";
+            $data = executeQuery($conn, $checkQuery, [$oritieuchiid]);
+            if (!$data) {
+                return false;
+            }
+            if ($diem > $data[0]['diem'] || $diem < 0) {
+                return false;
+            };
+            return true;
+        }
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+
+function reviewTable($data)
+{
+    if (!isset($_COOKIE['session'])) {
+        if (getData($_COOKIE['session'])['role'] !== 0) {
+            http_response_code(403);
+            return false;
+        }
+        http_response_code(403);
+        return false;
+    }
+    $conn = createConn();
+    $iv = substr(md5(md5('huhu')), 0, 16);
+    $decryptedUsername = openssl_decrypt(base64_decode($_COOKIE['session']), 'AES-256-CBC', md5('haha'), OPENSSL_RAW_DATA, $iv);
+    try {
+        $conn->begin_transaction();
+        $jsonDecode = json_decode($data, true);
+        if (!isset($jsonDecode['dataSend']) || !isset($jsonDecode['status'])) {
+            closeConn($conn);
+            return false;
+        }
+        if (!checkVail($jsonDecode['dataSend'], $conn)) {
+            closeConn($conn);
+            return false;
+        }
+        $deleteQuery = "DELETE FROM `tieu_chi` WHERE `username`= ?";
+        executeQuery($conn, $deleteQuery, [$decryptedUsername]);
+        foreach ($jsonDecode['dataSend'] as $index => $item) {
+            $diem = $item['diem'];
+            $id = $item['idtieuchi'];
+
+            $updateQuery = "UPDATE `tieu_chi` SET `diem`= ?, `reviewUsername`= ?,`isGood`= ? WHERE `id`= ?";
+
+            executeQuery($conn, $updateQuery, [$diem, $decryptedUsername, $jsonDecode['status'] ? 1 : 0, $id]);
+        }
+        $conn->commit();
+        closeConn($conn);
+
+        return true;
+    } catch (Exception $e) {
+        $conn->rollback();
+        closeConn($conn);
+
+        return false;
+    }
+}
+
+
+function statistical()
+{
+    if (!isset($_COOKIE['session'])) {
+        if (getData($_COOKIE['session'])['role'] !== 0) {
+            http_response_code(403);
+            return false;
+        }
+        http_response_code(403);
+        return false;
+    }
+    $conn = createConn();
+
+    try {
+        $conn->begin_transaction();
+        $qr = "SELECT COUNT(DISTINCT username) AS count
+        FROM tieu_chi WHERE isGood = 0";
+        $notOK  = executeQuery($conn, $qr);
+        $qr = "SELECT COUNT(DISTINCT username) AS count
+        FROM tieu_chi WHERE isGood = 1";
+        $ok  = executeQuery($conn, $qr);
+
+        return ["good" => $ok[0]['count'], "notgood" => $notOK[0]['count']];
+    } catch (Exception $e) {
+        $conn->rollback();
+        closeConn($conn);
+
+        return false;
     }
 }

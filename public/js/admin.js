@@ -26,14 +26,14 @@ let listCheck = [];
 
 $('#toadminbtn').click(function () {
     if (listCheck.length > 0) {
-        setRole(listCheck, true);
+        setRole(listCheck, true, false);
     }
     else showToast('❌ Vui lòng chọn user');
 });
 
 $('#deleteadmin').click(function () {
     if (listCheck.length > 0) {
-        setRole(listCheck, false);
+        setRole(listCheck, false, false);
     }
     else showToast('❌ Vui lòng chọn user');
 });
@@ -41,19 +41,19 @@ $('#deleteadmin').click(function () {
 
 $('#block').click(function () {
     if (listCheck.length > 0) {
-        setBlock(listCheck, true);
+        setBlock(listCheck, true, false);
     }
     else showToast('❌ Vui lòng chọn user');
 });
 
 $('#unblock').click(function () {
     if (listCheck.length > 0) {
-        setBlock(listCheck, false);
+        setBlock(listCheck, false, false);
     }
     else showToast('❌ Vui lòng chọn user');
 });
 
-async function setRole(selectedAccounts, isAdmin) {
+async function setRole(selectedAccounts, isAdmin, one = true) {
     $('#roleDialog').prop('open', true);
     $('#roleDialog div').eq(0).text(`Xác nhận cập nhật quyền`);
 
@@ -71,9 +71,10 @@ async function setRole(selectedAccounts, isAdmin) {
             $('.checkboxBan').each(async function () {
                 if (selectedAccounts.includes($(this).val())) {
                     $(this).prop('disabled', isAdmin);
-                    $(this).prop('checked', false);
+                    if (isAdmin)
+                        $(this).prop('checked', false);
                     const formData = new FormData();
-                    formData.append('accounts', JSON.stringify(selectedAccounts));
+                    formData.append('accounts', JSON.stringify([$(this).val()]));
                     formData.append('block', 0);
 
                     await fetch('/api/admin/block', {
@@ -98,39 +99,41 @@ async function setRole(selectedAccounts, isAdmin) {
                 showToast('❌ Lỗi khi cập nhật quyền!');
             }
         } else {
-            $('.checkboxAdmin').each(function () {
-                if (selectedAccounts.includes($(this).val()))
-                    $(this).prop('checked', !isAdmin);
-            });
+            if (one)
+                $('.checkboxAdmin').each(function () {
+                    if (selectedAccounts.includes($(this).val()))
+                        $(this).prop('checked', !isAdmin);
+                });
         }
         this.returnValue = 'cancel';
 
     });
 }
-async function setBlock(selectedAccounts, isBlock) {
+async function setBlock(selectedAccounts, isBlock, one = true) {
+    const selectedAccountsShadow = selectedAccounts.slice();
     $('#roleDialog').prop('open', true);
     $('#roleDialog div').eq(0).text(`Xác nhận ${isBlock ? "chặn" : "bỏ chặn"} người dùng!`);
 
     $('#roleDialog').one('close', async function () {
         const okClicked = this.returnValue === 'ok';
         if (okClicked) {
-
-            $('.checkboxBan').each(function () {
-                if (selectedAccounts.includes($(this).val()))
-                    $(this).prop('checked', isBlock);
-
-            });
-            $('.checkboxAdmin').each(function () {
+            $('.checkboxAdmin').each(async function () {
                 if ($(this).prop('checked')) {
-                    const index = selectedAccounts.indexOf(5);
+                    const index = selectedAccountsShadow.indexOf($(this).val());
                     if (index > -1) { // only splice array when item is found
-                        selectedAccounts.splice(index, 1); // 2nd parameter means remove one item only
+                        selectedAccountsShadow.splice(index, 1); // 2nd parameter means remove one item only
                     }
                 }
 
             });
+            $('.checkboxBan').each(function () {
+                if (selectedAccountsShadow.includes($(this).val()))
+                    $(this).prop('checked', isBlock);
+
+            });
+
             const formData = new FormData();
-            formData.append('accounts', JSON.stringify(selectedAccounts));
+            formData.append('accounts', JSON.stringify(selectedAccountsShadow));
             formData.append('block', isBlock ? 1 : 0);
 
             const res = await fetch('/api/admin/block', {
@@ -141,15 +144,17 @@ async function setBlock(selectedAccounts, isBlock) {
             const data = await res.json();
 
             if (data.success) {
-                showToast(`✔️ Trạng thái của ${selectedAccounts.join(', ')} đã cập nhật thành công!`);
+                showToast(`✔️ Trạng thái của ${selectedAccountsShadow.join(', ')} đã cập nhật thành công!`);
             } else {
                 showToast('❌ Lỗi khi cập nhật trạng thái!');
             }
+
         } else {
-            $('.checkboxBan').each(function () {
-                if (selectedAccounts.includes($(this).val()))
-                    $(this).prop('checked', !isBlock);
-            });
+            if (one)
+                $('.checkboxBan').each(function () {
+                    if (selectedAccountsShadow.includes($(this).val()))
+                        $(this).prop('checked', !isBlock);
+                });
         }
         this.returnValue = 'cancel';
 

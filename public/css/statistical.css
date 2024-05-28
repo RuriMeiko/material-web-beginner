@@ -1,0 +1,11 @@
+.statistical {
+	width: 600px;
+	height: 600px;
+}
+.statistical_wapper {
+    height: 100%;
+    width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

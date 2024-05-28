@@ -17,3 +17,7 @@
     color: #ff6b6b;
     font-weight: 500;
 }
+
+.sendBtn{
+	gap: 20px;
+}

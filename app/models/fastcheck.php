@@ -15,30 +15,33 @@ function generateUUID()
     );
 }
 
-function checkVail($value)
+function checkVail($value, $conn)
 {
-    $conn = createConn();
+    try {
+        foreach ($value as $index => $item) {
+            if (!isset($item['idtieuchuan']) || !isset($item['idtieuchi']) || !isset($item['diem'])) return false;
+            $id_tieu_chuan = $item['idtieuchuan'];
+            $id_tieu_chi = $item['idtieuchi'];
 
-    foreach ($value as $index => $item) {
-        $id_tieu_chuan = $item['idtieuchuan'];
-        $id_tieu_chi = $item['idtieuchi'];
+            $diem = $item['diem'];
 
-        $diem = $item['diem'];
-
-        $checkQuery = "SELECT * FROM `tieu_chuan` WHERE `id` =  ?";
-        $data = executeQuery($conn, $checkQuery, [$id_tieu_chuan]);
-        if (!$data) {
-            return false;
+            $checkQuery = "SELECT * FROM `tieu_chuan` WHERE `id` =  ?";
+            $data = executeQuery($conn, $checkQuery, [$id_tieu_chuan]);
+            if (!$data) {
+                return false;
+            }
+            $checkQuery = "SELECT * FROM `tieu_chi` WHERE `id` = ?";
+            $data = executeQuery($conn, $checkQuery, [$id_tieu_chi]);
+            if (!$data) {
+                return false;
+            }
+            if ($diem > $data[0]['diem'] || $diem < 0) {
+                return false;
+            };
+            return true;
         }
-        $checkQuery = "SELECT * FROM `tieu_chi` WHERE `id` = ?";
-        $data = executeQuery($conn, $checkQuery, [$id_tieu_chi]);
-        if (!$data) {
-            return false;
-        }
-        if ($diem > $data[0]['diem'] || $diem < 0) {
-            return false;
-        };
-        return true;
+    } catch (Exception $e) {
+        return false;
     }
 }
 
@@ -54,7 +57,7 @@ function updateTalbe($data)
     try {
         $conn->begin_transaction();
         $jsonDecode = json_decode($data, true);
-        if (!checkVail($jsonDecode)) {
+        if (!checkVail($jsonDecode, $conn)) {
             closeConn($conn);
             return false;
         }

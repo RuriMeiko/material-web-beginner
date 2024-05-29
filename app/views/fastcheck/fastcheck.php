@@ -50,7 +50,7 @@ require_once(DIR . '/app/controllers/fastcheck.php');
                                         <td class="mdc-data-table__cell tieu-chuan">
                                             <div class="mdc-data-table__cell-div">
                                                 <md-elevation></md-elevation>
-                                                <p>Tiêu chuẩn <?php echo (key($tieuchuan)) ?>:</p>
+                                                <p><?php echo $tieuchuan[key($tieuchuan)][0]['tentieuchuan'] ?>:</p>
                                             </div>
                                         </td>
 

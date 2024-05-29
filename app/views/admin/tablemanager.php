@@ -64,6 +64,13 @@
                             </md-outlined-text-field>
                         </div>
                     </div>
+                    <div class="scoreTC">
+                        <h1>Chi tiết tiêu chuẩn 1</h1>
+                        <div class="chitiet-score">
+                            <md-outlined-text-field class="enterChitietcontent" maxlength="20" type="textarea" label="Nội dung chi tiết" rows="10">>
+                            </md-outlined-text-field>
+                        </div>
+                    </div>
 
 
                 </div>

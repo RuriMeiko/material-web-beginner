@@ -6,6 +6,37 @@ $(document).ready(async function () {
         calculateScores();
 
     });
+    $('.enterChitietcontent').on('change', function () {
+        const sellect = $('#evaluationTree').jstree(true).get_selected(true);
+        const dataNode = $('#evaluationTree').jstree(true).get_node(sellect[0]);
+        let str = dataNode.text.split(":");
+        if (str.length > 1) {
+
+
+            let regex = /^(.*?)\s*\((.*?)\)$/;
+
+            let matches = str[1].match(regex);
+            let standard = matches[1].trim();
+            let score = matches[2].trim();
+            $('.scoreTC h1').text('Chi tiết ' + `${str[0]}${str[0] && ':'} ${$(this).val()} (${score})`)
+
+            dataNode.text = `${str[0]}${str[0] && ':'} ${$(this).val()} (${score})`;
+            $('#evaluationTree').jstree(true).redraw_node(dataNode);
+        } else {
+            let regex = /^(.*?)\s*\((.*?)\)$/;
+
+            let matches = dataNode.text.match(regex);
+            let standard = matches[1].trim();
+            let score = matches[2].trim();
+            $('.scoreTC h1').text('Chi tiết ' + `${standard}${standard && ':'} ${$(this).val()} (${score})`)
+
+            dataNode.text = `${standard}${standard && ':'} ${$(this).val()} (${score})`;
+            $('#evaluationTree').jstree(true).redraw_node(dataNode);
+        }
+
+
+    });
+
     $('.entercritecontent').on('change', function () {
         const sellect = $('#evaluationTree').jstree(true).get_selected(true);
 
@@ -39,7 +70,7 @@ $(document).ready(async function () {
                 });
 
                 newData.push({
-                    text: `Tiêu chuẩn ${key} (${totalScore} điểm)`,
+                    text: value[0]['tentieuchuan'],
                     icon: '/public/images/tieuchuan.svg',
                     parent: "#",
                     data: { id: parseInt(key), version: value[0]['version'] },
@@ -47,7 +78,7 @@ $(document).ready(async function () {
                 });
             } else {
                 newData.push({
-                    text: `Tiêu chuẩn ${key} (${0} điểm)`,
+                    text: value[0]['tentieuchuan'],
                     icon: '/public/images/tieuchuan.svg',
                     parent: "#",
                     data: { id: parseInt(key), version: value[0]['version'] },
@@ -157,11 +188,26 @@ $(document).ready(async function () {
     $('#evaluationTree').on('changed.jstree', function (e, data) {
         if (data.node.parent !== '#') {
             $('.score').css('display', 'flex');
+            $('.scoreTC').hide();
+
             $('.score h1').text('Chi tiết ' + data.node.text)
             $('.enterscore').val(data.node.data.score);
             $('.entercritecontent').val(data.node.data.content);
         } else {
             $('.score').hide();
+            $('.enterChitietcontent').val("")
+
+            $('.scoreTC').css('display', 'flex');
+            $('.scoreTC h1').text('Chi tiết ' + data.node.text)
+            const coreStr = data.node.text.split(":");
+            let str = coreStr[1];
+
+            let regex = /^(.*?)\s*\((.*?)\)$/;
+
+            let matches = str.match(regex);
+            let standard = matches[1].trim();
+            $('.enterChitietcontent').val(standard)
+
         }
         calculateScores();
 

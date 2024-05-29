@@ -9,7 +9,6 @@
 	align-items: center;
 	height: 480px;
 	overflow: auto;
-	
 }
 #evaluationTree {
 	overflow: auto;
@@ -24,7 +23,7 @@
 	display: flex;
 	flex-direction: column;
 }
-.btnlistandtotal{
+.btnlistandtotal {
 	display: flex;
 	padding: 0 20px 0 0;
 	justify-content: space-between;
@@ -34,7 +33,8 @@
 	display: flex;
 	gap: 20px;
 }
-.score {
+.score,
+.scoreTC {
 	.chitiet-score {
 		display: flex;
 		gap: 30px;
@@ -48,7 +48,7 @@
 	align-items: center;
 }
 
-.entercritecontent {
+.entercritecontent,.enterChitietcontent {
 	resize: none;
 	width: 500px;
 }

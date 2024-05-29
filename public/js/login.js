@@ -35,6 +35,13 @@ $('.eyesToggle').each((index, eye) => {
 
 formLogin.submit(async function (e) {
     e.preventDefault();
+    if (!formLogin[0].password || !formLogin[0].username) {
+
+        formLogin[0].username.error = true;
+        formLogin[0].username.supportingText = 'Username is required';
+        formLogin[0].password.error = true;
+        return formLogin[0].password.supportingText = 'Password is required';
+    }
 
     const formData = new FormData(this);
 
@@ -72,10 +79,10 @@ formReg.submit(async function (e) {
         loading.css("display", "none");
         $('#reg-btn').prop('disabled', false);
     } else {
-        formInfo[0].repassword.error = true;
-        formInfo[0].repassword.supportingText = 'Repassword not match';
-        formInfo[0].password.error = true;
-        formInfo[0].password.supportingText = 'Repassword not match';
+        formReg[0].repassword.error = true;
+        formReg[0].repassword.supportingText = 'Repassword not match';
+        formReg[0].password.error = true;
+        formReg[0].password.supportingText = 'Repassword not match';
 
     }
 });

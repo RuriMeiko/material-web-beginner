@@ -186,7 +186,7 @@ function displayUserData(data) {
             <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation>${user.birthday}</div>
         </td>
         <td class="mdc-data-table__cell">
-            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.gender === 0 ? 'Male' : 'Female'}</div>
+            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.gender === 1 ? 'Nam' : 'Nữ'}</div>
         </td>
         <td class="mdc-data-table__cell">
             <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation><p>${user.location}</p></div>

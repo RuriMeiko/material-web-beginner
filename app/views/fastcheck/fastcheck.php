@@ -94,7 +94,7 @@ require_once(DIR . '/app/controllers/fastcheck.php');
                                                         <?php } else { ?>
                                                             <md-filled-select required menu-positioning="fixed">
                                                                 <?php for ($i = 0; $i <= $tieuchi['diem']; $i++) { ?>
-                                                                    <md-select-option value="<?php echo (key($tieuchuan) . "|" . $tieuchi['id'] . "|" . $i) ?>" <?php if ($value === $i) echo "selected" ?>>
+                                                                    <md-select-option value="<?php echo (key($tieuchuan) . "|" . $tieuchi['id'] . "|" . $i . "|" . $tieuchi['version']) ?>" <?php if ($value === $i) echo "selected" ?>>
                                                                         <div slot="headline"><?php echo $i ?></div>
                                                                     </md-select-option>
                                                                 <?php } ?>
@@ -113,10 +113,11 @@ require_once(DIR . '/app/controllers/fastcheck.php');
                                                         $subArray = $data['DataReturn'][$index1][key($tieuchuan)];
                                                         $value = isset($subArray[$index2]['diem']) ? $subArray[$index2]['diem'] : 0;
                                                         ?>
+                                                        <?php if (!isset($subArray[$index2])) echo "<script>window.location.href = '/admin/usermanager'</script>" ?>
                                                         <md-elevation></md-elevation>
                                                         <md-filled-select required menu-positioning="fixed">
                                                             <?php for ($i = 0; $i <= $tieuchi['diem']; $i++) { ?>
-                                                                <md-select-option value="<?php echo ($tieuchi['id'] . "|" . $subArray[$index2]['id'] . "|" . $i) ?>" <?php if ($value === $i) echo "selected" ?>>
+                                                                <md-select-option value="<?php echo ($tieuchi['id'] . "|" . $subArray[$index2]['id'] . "|" . $i . "|" . $tieuchi['version'] . "|" . key($tieuchuan)) ?>" <?php if ($value === $i) echo "selected" ?>>
                                                                     <div slot="headline"><?php echo $i ?></div>
                                                                 </md-select-option>
                                                             <?php } ?>

@@ -22,12 +22,16 @@ function checkVail($value, $conn)
             if (!isset($item['idtieuchuan']) || !isset($item['idtieuchi']) || !isset($item['diem'])) return false;
             $id_tieu_chuan = $item['idtieuchuan'];
             $id_tieu_chi = $item['idtieuchi'];
+            $version = $item['version'];
 
             $diem = $item['diem'];
 
             $checkQuery = "SELECT * FROM `tieu_chuan` WHERE `id` =  ?";
             $data = executeQuery($conn, $checkQuery, [$id_tieu_chuan]);
             if (!$data) {
+                return false;
+            }
+            if ($data[0]['version'] !== $version) {
                 return false;
             }
             $checkQuery = "SELECT * FROM `tieu_chi` WHERE `id` = ?";
@@ -38,8 +42,8 @@ function checkVail($value, $conn)
             if ($diem > $data[0]['diem'] || $diem < 0) {
                 return false;
             };
-            return true;
         }
+        return true;
     } catch (Exception $e) {
         return false;
     }
@@ -102,7 +106,7 @@ function getTalbe($username)
         $updateQuery = "SELECT * FROM `tieu_chuan`";
         $datatieuchuan = executeQuery($conn, $updateQuery);
         foreach ($datatieuchuan as $tieuchuan) {
-            $updateQuery = "SELECT `tieu_chi`.*, `tieu_chuan`.content AS 'tentieuchuan' FROM `tieu_chi`, `tieu_chuan` WHERE `tieu_chuan`.id = `tieu_chi`.id_tieu_chuan AND loai = 0 AND `tieu_chuan`.id = ? ORDER BY `tieu_chi`.`indexId`";
+            $updateQuery = "SELECT `tieu_chi`.*, `tieu_chuan`.content AS 'tentieuchuan', `tieu_chuan`.version FROM `tieu_chi`, `tieu_chuan` WHERE `tieu_chuan`.id = `tieu_chi`.id_tieu_chuan AND loai = 0 AND `tieu_chuan`.id = ? ORDER BY `tieu_chi`.`indexId`";
             $datatieuchuan = executeQuery($conn, $updateQuery, [$tieuchuan['id']]);
             $updateQueryP2 = "SELECT `tieu_chi`.*, `tieu_chuan`.content AS 'tentieuchuan' FROM `tieu_chi`, `tieu_chuan` WHERE `tieu_chuan`.id = `tieu_chi`.id_tieu_chuan AND loai = 1 AND `tieu_chuan`.id = ? AND `tieu_chi`.username = ? ORDER BY `tieu_chi`.`indexId`";
             $datatieuchuanP2 = executeQuery($conn, $updateQueryP2, [$tieuchuan['id'], $username[0]]);

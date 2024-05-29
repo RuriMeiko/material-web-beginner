@@ -8,6 +8,8 @@ $('.reviewBtn').click(async function (e) {
             oritieuchiid: parts[0],
             idtieuchi: parts[1],
             diem: parts[2],
+            version: parts[3],
+            idtieuchuan: parts[4],
 
         });
     });

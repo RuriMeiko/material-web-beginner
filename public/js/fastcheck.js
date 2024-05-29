@@ -8,7 +8,7 @@ $('.sendBtntoAdmin').click(async function (e) {
             idtieuchuan: parts[0],
             idtieuchi: parts[1],
             diem: parts[2],
-
+            version: parts[3],
         });
     });
     const data = await fetch('/api/fastcheck', { method: 'POST', body: JSON.stringify(dataSend) });

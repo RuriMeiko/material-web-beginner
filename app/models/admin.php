@@ -211,11 +211,21 @@ function checkVail($value, $conn)
 {
     try {
         foreach ($value as $index => $item) {
-            if (!isset($item['oritieuchiid']) || !isset($item['idtieuchi']) || !isset($item['diem'])) return false;
+            if (!isset($item['oritieuchiid']) || !isset($item['idtieuchi']) || !isset($item['idtieuchuan']) || !isset($item['diem'])) return false;
             $oritieuchiid = $item['oritieuchiid'];
-
+            $version = $item['version'];
+            $id_tieu_chuan = $item['idtieuchuan'];
             $diem = $item['diem'];
 
+            $checkQuery = "SELECT * FROM `tieu_chuan` WHERE `id` =  ?";
+            $data = executeQuery($conn, $checkQuery, [$id_tieu_chuan]);
+            if (!$data) {
+                return false;
+            }
+            $diem = $item['diem'];
+            if ($data[0]['version'] !== $version) {
+                return false;
+            }
             $checkQuery = "SELECT * FROM `tieu_chi` WHERE `id` = ?";
             $data = executeQuery($conn, $checkQuery, [$oritieuchiid]);
             if (!$data) {
@@ -224,8 +234,8 @@ function checkVail($value, $conn)
             if ($diem > $data[0]['diem'] || $diem < 0) {
                 return false;
             };
-            return true;
         }
+        return true;
     } catch (Exception $e) {
         return false;
     }

@@ -89,7 +89,7 @@ require_once(DIR . '/app/controllers/fastcheck.php');
 
                                                     ?>
                                                     <?php if (!str_starts_with($path, '/admin/review/')) {
-                                                        if (isset($subArray[$index2]['isGood'])) { ?>
+                                                        if (isset($subArray[$index2]['isGood']) && $subArray[$index2]['isGood'] === 1) { ?>
                                                             <p class="diemhs <?php if ($subArray[$index2]['isGood'] === 1) echo 'ok' ?>"> <?php echo $value . " điểm" ?></p>
                                                         <?php } else { ?>
                                                             <md-filled-select required menu-positioning="fixed">
@@ -183,7 +183,14 @@ require_once(DIR . '/app/controllers/fastcheck.php');
                                         <path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z" />
                                     </svg>
                                 </md-filled-button>
-                        <?php }
+                            <?php } else if ($subArray[$index2]['isGood'] === 0) { ?>
+                                <md-filled-button class="sendBtntoAdmin">
+                                    Gửi lại bảng đánh giá
+                                    <svg slot="icon" viewBox="0 0 48 48">
+                                        <path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z" />
+                                    </svg>
+                                </md-filled-button>
+                        <?php  }
                         } ?>
 
                     </div>

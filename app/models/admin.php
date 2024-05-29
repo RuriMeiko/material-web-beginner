@@ -143,7 +143,7 @@ function updateTalbe($data)
         $deleteQuery = "DELETE FROM `tieu_chi`";
         executeQuery($conn, $deleteQuery);
         foreach ($jsonDecode['data']  as $item) {
-            $updateQuery = "UPDATE `tieu_chuan` SET `content`= ? WHERE `id`= ?";
+            $updateQuery = "UPDATE `tieu_chuan` SET `content`= ?, `version` = CURRENT_TIMESTAMP WHERE `id`= ?";
             executeQuery($conn, $updateQuery, [$item['text'], $item['data']['id']]);
 
             foreach ($item['children'] as $tieuchi) {
@@ -188,7 +188,7 @@ function getTalbe()
         $updateQuery = "SELECT * FROM `tieu_chuan`";
         $datatieuchuan = executeQuery($conn, $updateQuery);
         foreach ($datatieuchuan as $tieuchuan) {
-            $updateQuery = "SELECT `tieu_chi`.*, `tieu_chuan`.content AS 'tentieuchuan' FROM `tieu_chi`, `tieu_chuan` WHERE `tieu_chuan`.id = `tieu_chi`.id_tieu_chuan AND loai = 0 AND `tieu_chuan`.id = ? ORDER BY `tieu_chi`.`indexId`";
+            $updateQuery = "SELECT `tieu_chi`.*, `tieu_chuan`.content AS 'tentieuchuan',`tieu_chuan`.version FROM `tieu_chi`, `tieu_chuan` WHERE `tieu_chuan`.id = `tieu_chi`.id_tieu_chuan AND loai = 0 AND `tieu_chuan`.id = ? ORDER BY `tieu_chi`.`indexId`";
             $datatieuchuan = executeQuery($conn, $updateQuery, [$tieuchuan['id']]);
             array_push($dataReturn, [$tieuchuan['id'] => $datatieuchuan]);
         }

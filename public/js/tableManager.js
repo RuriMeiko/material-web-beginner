@@ -22,7 +22,6 @@ $(document).ready(async function () {
         rd.message.forEach(function (item) {
             const key = Object.keys(item)[0];
             const value = item[key];
-
             if (value !== null) {
                 let totalScore = 0;
                 const children = value.map(function (tieuchi, index) {
@@ -43,7 +42,7 @@ $(document).ready(async function () {
                     text: `Tiêu chuẩn ${key} (${totalScore} điểm)`,
                     icon: '/public/images/tieuchuan.svg',
                     parent: "#",
-                    data: { id: parseInt(key) },
+                    data: { id: parseInt(key), version: value[0]['version'] },
                     children: children
                 });
             } else {
@@ -51,7 +50,7 @@ $(document).ready(async function () {
                     text: `Tiêu chuẩn ${key} (${0} điểm)`,
                     icon: '/public/images/tieuchuan.svg',
                     parent: "#",
-                    data: { id: parseInt(key) },
+                    data: { id: parseInt(key), version: value[0]['version'] },
                     children: []
                 });
             }

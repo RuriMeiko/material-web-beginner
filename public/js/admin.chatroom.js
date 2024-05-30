@@ -86,7 +86,7 @@ function displayUserData(data) {
 async function goToPage(page) {
     currentPage = page;
     console.log(currentPage)
-    await fetctData(currentPage - 1, 5);
+    await fetctData(5 * (currentPage - 1), 5);
     updateButtonState();
 }
 

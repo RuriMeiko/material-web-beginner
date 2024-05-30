@@ -17,7 +17,7 @@
     <md-dialog id="roleDialog" type="alert">
         <div slot="headline">Confirm change State</div>
         <form slot="content" id="form-id" method="dialog">
-           Hành Động Này Đồng Nghĩa Chặn Toàn Bộ Truy Cập Của User Vào Phòng Chat Bạn có chắc chắn chứ?
+            Hành Động Này Đồng Nghĩa Chặn Toàn Bộ Truy Cập Của User Vào Phòng Chat Bạn có chắc chắn chứ?
         </form>
         <div slot="actions">
             <md-text-button form="form-id" value="cancel">Huỷ</md-text-button>
@@ -29,6 +29,9 @@
 
             <h1>Quản lý người dùng</h1>
             <div class='btn-profile'>
+                <md-filled-tonal-icon-button href="/admin">
+                    <md-icon>Admin_Panel_Settings</md-icon>
+                </md-filled-tonal-icon-button>
                 <md-filled-tonal-icon-button href="/chat">
                     <md-icon>Person</md-icon>
                 </md-filled-tonal-icon-button>
@@ -42,7 +45,8 @@
             <thead>
                 <tr>
                     <th class="mdc-data-table__header-cell">
-                    <md-checkbox value='all'touch-target="wrapper"></md-checkbox></th>
+                        <md-checkbox value='all' touch-target="wrapper"></md-checkbox>
+                    </th>
                     <th class="mdc-data-table__header-cell">chat room name</th>
                     <th class="mdc-data-table__header-cell">count user</th>
                     <th class="mdc-data-table__header-cell">Current State</th>

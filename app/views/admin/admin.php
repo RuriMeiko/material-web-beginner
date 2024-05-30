@@ -30,6 +30,9 @@
 
             <h1>Quản lý người dùng</h1>
             <div class='btn-profile'>
+                <md-filled-tonal-icon-button href="/chatroom">
+                    <md-icon>Admin_Panel_Settings</md-icon>
+                </md-filled-tonal-icon-button>
                 <md-filled-tonal-icon-button href="/chat">
                     <md-icon>Person</md-icon>
                 </md-filled-tonal-icon-button>

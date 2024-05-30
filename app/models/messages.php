@@ -11,8 +11,10 @@ function deleteMessage($id)
     $conn = createConn();
     try {
         $conn->begin_transaction();
-        $getQuery = "DELETE FROM message WHERE id = ?";
-        $data = executeQuery($conn, $getQuery, [$id]);
+        foreach (json_decode($id) as $key => $value) {
+            $getQuery = "DELETE FROM message WHERE id = ?";
+            $data = executeQuery($conn, $getQuery, [$value]);
+        }
         $conn->commit();
 
         return 'OK';

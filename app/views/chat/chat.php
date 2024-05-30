@@ -9,6 +9,7 @@
 
     <?php require_once(DIR . '/app/controllers/chat/chat.php');
     ?>
+
     <?php require_once(DIR . '/public/styles/styleGlobal.php'); ?>
     <link rel="stylesheet" href="/public/css/chat.css" />
     <link rel="stylesheet" href="/public/css/form.css" />
@@ -17,6 +18,17 @@
 </head>
 
 <body>
+
+    <md-dialog id="outDialog" type="alert">
+        <div slot="headline">Xác nhận thoát nhóm!</div>
+        <form slot="content" id="form-id" method="dialog">
+            Bạn có chắc chắn chứ?
+        </form>
+        <div slot="actions">
+            <md-text-button form="form-id" value="cancel">Huỷ</md-text-button>
+            <md-text-button form="form-id" value="ok">Chơi!</md-text-button>
+        </div>
+    </md-dialog>
     <script>
         const listChat = <?php print_r(json_encode($mergedMessages)) ?>;
         const listMember = <?php print_r(json_encode($mergedMembers)) ?>;
@@ -38,7 +50,7 @@
                 </div>
                 <div class="container container-title">
                     <div class='name-user-title'>hahaha haha</div>
-                    <div class='content-user'>online gần đây</div>
+                    <div class='content-user'></div>
                 </div>
                 <div class='menu-title'>
                     <span>
@@ -47,12 +59,12 @@
                         </md-icon-button>
                         <md-menu id="usage-menu" anchor="usage-anchor">
                             <md-menu-item>
-                                <div slot="headline">Thêm thành viên</div>
+                                <div class="addmbroomchat" slot="headline">Thêm thành viên</div>
                             </md-menu-item>
                             <md-menu-item>
-                                <div slot="headline">Rời khỏi nhóm</div>
+                                <div class="outroomchat" slot="headline">Rời khỏi nhóm</div>
                             </md-menu-item>
-                          
+
                         </md-menu>
                     </span>
 
@@ -142,7 +154,7 @@
                             </md-filled-tonal-icon-button>
                             <md-menu x-offset="-40" id="menu_chat_item_<?php echo $id ?>" anchor="info_<?php echo $id ?>">
                                 <md-menu-item>
-                                    <div slot="headline">Rời khỏi</div>
+                                    <div class="outroomchat" slot="headline">Rời khỏi</div>
                                 </md-menu-item>
 
                             </md-menu>

@@ -29,9 +29,9 @@ if (isset($_POST)) {
         }
     }
 
-    var_dump($imageUrl);
-
-    $status = createRoom($room_name, json_decode($members, true), $imageUrl);
+    // var_dump($imageUrl);
+    $drmb = json_decode($members, true);
+    $status = createRoom($room_name, $drmb , $imageUrl);
 
     if ($status['success']) {
         http_response_code(200);

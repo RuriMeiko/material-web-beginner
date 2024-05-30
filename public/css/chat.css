@@ -402,3 +402,7 @@ body {
 	height: 100%;
 	background-color: #000000;
 }
+#f-newroom-btn,
+#add-curr-btn {
+	display: none;
+}

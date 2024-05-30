@@ -19,7 +19,20 @@ class ChatServer implements MessageComponentInterface
         $this->clients->attach($connection);
         $connection->send(json_encode(['identification' => true, 'id' => $connection->resourceId]));
     }
-
+    private function generateUUID()
+    {
+        return sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0fff) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff)
+        );
+    }
     public function onMessage(ConnectionInterface $from, $message)
     {
 
@@ -37,13 +50,14 @@ class ChatServer implements MessageComponentInterface
             $room = $data['room'];
             $content = $data['content'];
             $insertIdsAndReceivers = [];
-
+            
             try {
                 $conn = createConn();
                 $conn->begin_transaction();
+                $id_messs = $this->generateUUID();
                 foreach ($receivers as $receiver) {
-                    $getQuery = "INSERT INTO message (`sender`, `receiver`, `content`,`room_id`,`timestamp`) VALUES (?, ?, ?,?,?)";
-                    $data = executeQuery($conn, $getQuery, [$from->username, $receiver, $content, $room, $timestamp]);
+                    $getQuery = "INSERT INTO message (`id_mess`,`sender`, `receiver`, `content`,`room_id`,`timestamp`) VALUES (?,?, ?, ?,?,?)";
+                    $data = executeQuery($conn, $getQuery, [$id_messs, $from->username, $receiver, $content, $room, $timestamp]);
                     $insertIdsAndReceivers[] = array(
                         'insert_id' => $data->insert_id,
                         'receiver' => $receiver
@@ -51,6 +65,7 @@ class ChatServer implements MessageComponentInterface
                 }
                 $conn->commit();
             } catch (Exception $e) {
+                var_dump($e->getMessage());
                 $conn->rollback();
             }
             // Gửi tin nhắn cho người nhận và phòng chat

@@ -3,8 +3,8 @@ require_once (DIR . '/app/models/chat.php');
 
 if (isset($_POST)) {
     $room_id = $_POST["room_id"];
-    $user_id = $_POST["user_id"];
-    $status = addMember($room_id, $user_id);
+    $members = $_POST["members"];
+    $status = addMember($room_id, json_decode($members, true));
     
     if ($status['success']) {
         http_response_code(200);

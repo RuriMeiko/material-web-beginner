@@ -1,3 +1,4 @@
+let currentBox = { room: '', id: '' };
 
 $(document).ready(function () {
     let identification = null;
@@ -5,7 +6,6 @@ $(document).ready(function () {
     socket.onopen = function () {
         console.log('Kết nối WebSocket đã được thiết lập.');
     };
-    let currentBox = { room: '', id: '' };
     socket.onmessage = function (event) {
         let data = JSON.parse(event.data); // Nhận mã id định danh từ server
         if (data.identification) {
@@ -229,7 +229,7 @@ $(document).ready(function () {
         origin_idclickedItem = idclickedItem.split('_')[1].split('|');
         const formData = new FormData();
         formData.append('status', "delM");
-        formData.append('id', origin_idclickedItem);
+        formData.append('id', JSON.stringify(origin_idclickedItem));
         const res = await fetch('/api/delmess', {
             method: 'POST',
             body: formData
@@ -255,6 +255,10 @@ $(document).ready(function () {
     new_mess.click(async function () {
         $('.item-user').removeClass('choosed');
         $('#nameroomchat').val("");
+        $('#newroom-member').removeClass('dingu');
+
+        $('#add-curr-btn').hide();
+
         $('#newroom-info').css('display', 'flex');
         $('#newroom-member').hide();
         $('.popupnewfriend').fadeIn(250, () => $('.popupnewfriend').show()); // 400 là thời gian (milliseconds) để hoàn thành hiệu ứng
@@ -264,15 +268,42 @@ $(document).ready(function () {
 
     $(document).on('click', function (event) {
         const target = $(event.target);
-        if (!target.closest('.formInfo').length && !target.closest('.toast').length && !target.closest('#fab-new-mess').length) {
+        if (!target.closest('.formInfo').length && !target.closest('.toast').length && !target.closest('#fab-new-mess').length && !target.closest('.addmbroomchat').length) {
             if ($('.popupnewfriend').is(':visible')) {
-   
+
                 $('.popupnewfriend').fadeOut(250, () => $('.popupnewfriend').hide()); // 400 là thời gian (milliseconds) để hoàn thành hiệu ứng
 
             }
         }
     });
 
+
+
+
+    ///
+
+    $('.outroomchat').click(function () {
+        $('#outDialog').prop('open', true);
+        $('#outDialog').one('close', async function () {
+            const okClicked = this.returnValue === 'ok';
+            if (okClicked) {
+                const a = new FormData();
+                a.append('room_id', currentBox.room);
+                const d = await fetch('/api/outroom', { method: 'POST', body: a });
+                window.location.reload();
+
+            }
+            this.returnValue = 'cancel'
+        });
+    });
+    $('.addmbroomchat').click(function () {
+        $('#newroom-info').hide();
+        $('#newroom-member').css('display', 'flex');
+        $('#newroom-member').addClass('dingu');
+
+        $('.popupnewfriend').fadeIn(250, () => $('.popupnewfriend').show()); // 400 là thời gian (milliseconds) để hoàn thành hiệu ứng
+
+    });
 });
 
 

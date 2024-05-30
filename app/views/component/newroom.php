@@ -41,26 +41,36 @@ require_once(DIR . '/app/controllers/profile.php');
         <!-- <md-divider inset></md-divider> -->
         <h3>Chọn thành viên:</h3>
         <div class="member-container">
-            <?php foreach ($mergedMessages as $id => $messages) {
-                $lastMessage = end($messages);
-            ?>
-                <div id="member_<?php echo $id ?>" class="item-user">
-                    <md-elevation></md-elevation>
-                    <md-ripple></md-ripple>
-                    <div class='from-user'>
-                        <div class='avatar-select avt'>
-                            <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+            <md-outlined-text-field id="find-newroom" required prefix-text="😎" aria-label="name" label="Tìm kiếm tên người dùng" name="cretaName" autocomplete="name" placeholder="Nhập tên người dùng">
+
+            </md-outlined-text-field>
+            <?php if (count($allContacts) > 0) { ?>
+                <?php foreach ($allContacts as $id => $messages) {
+                    $lastMessage = end($messages);
+                ?>
+                    <div id="member_<?php echo $id ?>" class="item-user">
+                        <md-elevation></md-elevation>
+                        <md-ripple></md-ripple>
+                        <div class='from-user'>
+                            <div class='avatar-select avt'>
+                                <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class='name-user'><?php echo $lastMessage['name'] ?></div>
                         </div>
                     </div>
-                    <div class="container">
-                        <div class='name-user'><?php echo $lastMessage['name'] ?></div>
-                    </div>
-                </div>
-            <?php } ?>
+            <?php }
+            }  ?>
+
 
         </div>
         <md-divider inset></md-divider>
-        <md-filled-button id="f-newroom-btn">Tiếp</md-filled-button>
+        
+        <md-filled-button id="find-newroom-btn">Tìm</md-filled-button>
+        
+        <md-filled-button id="f-newroom-btn">Tạo</md-filled-button>
+        <md-filled-button id="add-curr-btn">Thêm</md-filled-button>
 
         <md-linear-progress class="loading" indeterminate></md-linear-progress>
     </form>

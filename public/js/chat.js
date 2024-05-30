@@ -59,7 +59,6 @@ $(document).ready(function () {
 
     chatbox.scrollTop(chatbox.prop('scrollHeight'));
     function appendMessage(content, you = false, time = null, id = '') {
-        console.log(you);
         function getCurrentTime() {
             let currentTime = new Date();
             if (time) {
@@ -75,9 +74,9 @@ $(document).ready(function () {
             return formattedTime;
         }
 
-       
-        if (content) {
-            const formatContent =  content.replace(/\n/g, '<br>');
+
+        if (content !== null) {
+            const formatContent = content.replace(/\n/g, '<br>');
             const message = `
             <div class="${you ? 'mess-other' : 'mess-self'}">
                 <div class="mess-chat">
@@ -182,11 +181,12 @@ $(document).ready(function () {
 
         // Thêm class "choosed" vào phần tử .item-chat được nhấp chuột
         $(this).addClass('choosed');
-        currentBox.room = divId;
-        currentBox.id = listMember[divId].map(item => item.memberId);
         $('.chatlayout').empty();
-        console.log( listChat[divId]);
-        listChat[divId].forEach((element,index) => {
+        
+        currentBox.room = divId;
+        if (!listMember[divId]) return;
+        currentBox.id = listMember[divId].map(item => item.memberId);
+        listChat[divId].forEach((element, index) => {
             appendMessage(element.content, element.fromMe == 0, element.timestamp, 'mess_' + element.id)
         });
         $('.nullchatscrene').hide();
@@ -198,7 +198,7 @@ $(document).ready(function () {
         chatbox.scrollTop(chatbox.prop('scrollHeight'));
 
     });
-    
+
     const menuSurface = document.getElementById('usage-document');
 
     function messClick(event) {
@@ -250,54 +250,21 @@ $(document).ready(function () {
 
 
     new_mess.click(async function () {
-        $('.chatlist').hide();
-        $('.search').attr('placeholder', 'Tìm kiếm người dùng');
-        $('.back_to_mess_icon').show();
-        $('#openprofile').hide();
-        $('.listfriend').css('display', 'flex');
-        $('.search').focus();
+        $('.popupnewfriend').fadeIn(250, () => $('.popupnewfriend').show()); // 400 là thời gian (milliseconds) để hoàn thành hiệu ứng
 
-        const formData = new FormData();
-        
-        formData.append('status', "delM");
-        formData.append('id', origin_idclickedItem);
 
-        // const res = await fetch('/api/get', {
-        //     method: 'POST',
-        //     body: formData
-        // });
-
-        const listFriends = await res.json();
-        // const listFriends = [{
-        //     name: 'rurimeko',
-        //     avt: '/public/images/defaultAvt.jpg',
-        //     time: 'online gần đây'
-        // }];
-
-        listFriends.forEach((item) => {
-            const temnlen = `
-              <div id="456" class="item-chat">
-                <md-elevation></md-elevation>
-                <md-ripple></md-ripple>
-                <div class='from-user'>
-                  <div class='avatar-select avt'>
-                    <img class="avatar-preview" class="avatar-preview mb-4" src='${item.avt}' />
-                  </div>
-                </div>
-                <div class="container">
-                  <div class='name-user'>${item.name}</div>
-                  <div class='content-user'>${item.time}</div>
-                </div>
-              </div>`;
-            $('.listfriend').append(temnlen);
-        });
     });
 
+    $(document).on('click', function (event) {
+        const target = $(event.target);
+        if (!target.closest('.formInfo').length && !target.closest('.toast').length && !target.closest('#fab-new-mess').length) {
+            if ($('.popupnewfriend').is(':visible')) {
+                $('.popupnewfriend').fadeOut(250, () => $('.popupnewfriend').hide()); // 400 là thời gian (milliseconds) để hoàn thành hiệu ứng
 
-    // add new group
-    $('.add-group').click(async function () {
-        
-    })
+            }
+        }
+    });
+
 });
 
 

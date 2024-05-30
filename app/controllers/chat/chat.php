@@ -2,11 +2,21 @@
 require_once (DIR . '/app/models/chat.php');
 $mergedMessages = [];
 $mergedMembers = [];
-$allFriends = [];
+$allContacts = [];
 
 if (isset($_COOKIE['session'])) {
     $listChat = getListChat($_COOKIE['session']);
     $roommember = getRoomMember($_COOKIE['session']);
+    $contacts = getAllContact($_COOKIE['session']);
+
+    if ($contacts[0]!="err") {
+        foreach ($contacts as $contact) {
+            if (!isset($allContacts[$contact['username']])) {
+                $allContacts[$contact['username']] = [];
+            }
+            $allContacts[$contact['username']][] = $contact;
+        }
+    }
 
     if ($listChat[0]!="err") {
         foreach ($listChat as $message) {

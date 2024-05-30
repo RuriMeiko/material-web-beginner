@@ -153,6 +153,12 @@ $router->addRoute('POST', '/api/outroom', function () {
     require_once($controllersDir . '/chat/outRoom.php');
 });
 
+$router->addRoute('POST', '/api/searchuser', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/chat/searchUser.php');
+});
+
+
 require_once(DIR . '/app/middleware/middleware.php');
 // $router->handleRequest($method, $path);
 $router->handleRequest($method, $path);

@@ -67,8 +67,10 @@ function getRoomMember($username)
           SELECT room_id 
           FROM room_member 
           WHERE user_id = (?)
-        )";
-        $data = executeQuery($conn, $getQuery, [$decryptedUsername]);
+        ) 
+        AND room_member.user_id != (?)
+        ";
+        $data = executeQuery($conn, $getQuery, [$decryptedUsername, $decryptedUsername]);
 
         if ($data) {
             return $data;
@@ -90,7 +92,7 @@ function deleteChatRoom($id)
         $conn->begin_transaction();
         $getQuery = "DELETE FROM chatroom WHERE id = ?;
                     DELETE FROM room_member WHERE id = ?";
-        $data = executeQuery($conn, $getQuery, [$id,$id]);
+        $data = executeQuery($conn, $getQuery, [$id, $id]);
         $conn->commit();
 
         if ($data) {
@@ -103,7 +105,7 @@ function deleteChatRoom($id)
     }
 }
 
-function updateChatRoom($name,$id)
+function updateChatRoom($name, $id)
 {
     if (!isset($_COOKIE['session'])) {
         http_response_code(403);
@@ -113,7 +115,7 @@ function updateChatRoom($name,$id)
     try {
         $conn->begin_transaction();
         $getQuery = "UPDATE chat_rooms SET name = ? WHERE id = ?;";
-        $data = executeQuery($conn, $getQuery, [$name,$id]);
+        $data = executeQuery($conn, $getQuery, [$name, $id]);
         $conn->commit();
 
         if ($data) {

@@ -1,5 +1,6 @@
 <?php
 require 'vendor/autoload.php';
+require_once(__DIR__ . '/config/database.php');
 
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
@@ -17,7 +18,6 @@ class ChatServer implements MessageComponentInterface
     {
         $this->clients->attach($connection);
         $connection->send(json_encode(['identification' => true, 'id' => $connection->resourceId]));
-        echo "Kết nối mới đã được thiết lập: {$connection->resourceId}\n";
     }
 
     public function onMessage(ConnectionInterface $from, $message)
@@ -29,20 +29,44 @@ class ChatServer implements MessageComponentInterface
             $iv = substr(md5(md5('huhu')), 0, 16);
             $decryptedUsername = openssl_decrypt(base64_decode($data), 'AES-256-CBC', md5('haha'), OPENSSL_RAW_DATA, $iv);
             $from->username = $decryptedUsername;
+            echo "Kết nối mới đã được thiết lập: {$from->resourceId}, {$decryptedUsername}\n";
+
         } else {
             // Lấy thông tin từ tin nhắn
-            $receiver = $data['receiver'];
+            $receivers = $data['receiver'];
             $timestamp = $data['timestamp'];
             $room = $data['room'];
+            $content = $data['content'];
+            $insertIdsAndReceivers = [];
 
-            // Xử lý tin nhắn ở đây
-
+            try {
+                $conn = createConn();
+                $conn->begin_transaction();
+                foreach ($receivers as $receiver) {
+                    $getQuery = "INSERT INTO message (`sender`, `receiver`, `content`,`room_id`,`timestamp`) VALUES (?, ?, ?,?,?)";
+                    $data = executeQuery($conn, $getQuery, [$from->username, $receiver, $content, $room, $timestamp]);
+                    $insertIdsAndReceivers[] = array(
+                        'insert_id' => $data->insert_id,
+                        'receiver' => $receiver
+                    );
+                }
+                $conn->commit();
+            } catch (Exception $e) {
+                $conn->rollback();
+            }
             // Gửi tin nhắn cho người nhận và phòng chat
+
             foreach ($this->clients as $client) {
                 if ($client !== $from) {
-                    // Kiểm tra người nhận và phòng chat
-                    if ($receiver === $client->username) {
-                        $client->send($message);
+                    foreach ($insertIdsAndReceivers as $receiver) {
+                        // Kiểm tra người nhận và phòng chat
+                        if ($receiver['receiver'] === $client->username) {
+                            $client->send(json_encode(['content' => $content, 'timestamp' => $timestamp, 'room' => $room, 'id' => $receiver['insert_id']], JSON_UNESCAPED_UNICODE));
+                        }
+                    }
+                } else {
+                    foreach ($insertIdsAndReceivers as $receiver) {
+                        $client->send(json_encode(['content' => $content, 'timestamp' => $timestamp, 'room' => $room, 'self' => true, 'id' => $receiver['insert_id']], JSON_UNESCAPED_UNICODE));
                     }
                 }
             }

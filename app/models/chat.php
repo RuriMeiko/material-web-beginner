@@ -25,7 +25,6 @@ function createChatRoom($amin, $user, $name)
     }
 }
 
-
 function getListChat($username)
 {
     if (!isset($_COOKIE['session'])) {
@@ -36,8 +35,35 @@ function getListChat($username)
     try {
         $iv = substr(md5(md5('huhu')), 0, 16);
         $decryptedUsername = openssl_decrypt(base64_decode($username), 'AES-256-CBC', md5('haha'), OPENSSL_RAW_DATA, $iv);
-        $getQuery = "SELECT chatroom.id as chatId, message.id, message.content, chatroom.name, message.timestamp, message.sender = room_member.user_id AS fromMe FROM message,chatroom,room_member WHERE chatroom.id = room_member.room_id AND room_member.user_id = (?) and message.room_id=chatroom.id   ORDER BY message.timestamp DESC";
-        $data = executeQuery($conn, $getQuery, [$decryptedUsername]);
+        $getQuery = "SELECT 
+                            MIN(msg.id) AS messageId, 
+                            msg.chatId,
+                            msg.content,
+                            msg.name,
+                            msg.timestamp,
+                            msg.sender,
+                            MAX(msg.fromMe) AS fromMe
+                        FROM (
+                            SELECT 
+                                chatroom.id AS chatId,
+                                message.id,
+                                message.content,
+                                chatroom.name,
+                                message.timestamp,
+                                message.sender,
+                                CASE 
+                                    WHEN message.sender = (?) THEN TRUE
+                                    ELSE FALSE
+                                END AS fromMe
+                            FROM chatroom
+                            LEFT JOIN message ON chatroom.id = message.room_id
+                            INNER JOIN room_member ON chatroom.id = room_member.room_id
+                            WHERE room_member.user_id = (?)
+                        ) AS msg
+                        GROUP BY msg.content, msg.timestamp, msg.chatId, msg.name
+                        ORDER BY msg.timestamp DESC;
+                    ";
+        $data = executeQuery($conn, $getQuery, [$decryptedUsername, $decryptedUsername]);
 
         if ($data) {
             return $data;
@@ -45,9 +71,9 @@ function getListChat($username)
             return ["err"];
         }
     } catch (Exception $e) {
+        echo $e;
     }
 }
-
 
 function getRoomMember($username)
 {
@@ -61,15 +87,15 @@ function getRoomMember($username)
         $iv = substr(md5(md5('huhu')), 0, 16);
         $decryptedUsername = openssl_decrypt(base64_decode($username), 'AES-256-CBC', md5('haha'), OPENSSL_RAW_DATA, $iv);
         $getQuery = "SELECT chatroom.id AS chatId, room_member.user_id AS memberId 
-        FROM chatroom 
-        JOIN room_member ON chatroom.id = room_member.room_id 
-        WHERE chatroom.id IN (
-          SELECT room_id 
-          FROM room_member 
-          WHERE user_id = (?)
-        ) 
-        AND room_member.user_id != (?)
-        ";
+                        FROM chatroom 
+                        JOIN room_member ON chatroom.id = room_member.room_id 
+                        WHERE chatroom.id IN (
+                        SELECT room_id 
+                        FROM room_member 
+                        WHERE user_id = (?)
+                        ) 
+                        AND room_member.user_id != (?)
+                    ";
         $data = executeQuery($conn, $getQuery, [$decryptedUsername, $decryptedUsername]);
 
         if ($data) {
@@ -78,6 +104,7 @@ function getRoomMember($username)
             return ["err"];
         }
     } catch (Exception $e) {
+        echo $e;
     }
 }
 
@@ -91,7 +118,7 @@ function deleteChatRoom($id)
     try {
         $conn->begin_transaction();
         $getQuery = "DELETE FROM chatroom WHERE id = ?;
-                    DELETE FROM room_member WHERE id = ?";
+                    DELETE FROM room_member WHERE room_id = ?";
         $data = executeQuery($conn, $getQuery, [$id, $id]);
         $conn->commit();
 
@@ -105,7 +132,30 @@ function deleteChatRoom($id)
     }
 }
 
-function updateChatRoom($name, $id)
+function changeNameChatRoom($name, $id)
+{
+    if (!isset($_COOKIE['session'])) {
+        http_response_code(403);
+        return ["err"];
+    }
+    $conn = createConn();
+    try {
+        $conn->begin_transaction();
+        $getQuery = "UPDATE chat_rooms SET name = ? WHERE id = ?;";
+        $data = executeQuery($conn, $getQuery, [$name, $id]);
+        $conn->commit();
+
+        if ($data) {
+            return $data;
+        } else {
+            return ["err"];
+        }
+    } catch (Exception $e) {
+        $conn->rollback();
+    }
+}
+
+function ChatRoom($name, $id)
 {
     if (!isset($_COOKIE['session'])) {
         http_response_code(403);

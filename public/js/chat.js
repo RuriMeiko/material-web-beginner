@@ -54,10 +54,12 @@ $(document).ready(function () {
         }
         return color;
     }
+
     let chatbox = $('.chatbox');
 
     chatbox.scrollTop(chatbox.prop('scrollHeight'));
     function appendMessage(content, you = false, time = null, id = '') {
+        console.log(you);
         function getCurrentTime() {
             let currentTime = new Date();
             if (time) {
@@ -72,27 +74,33 @@ $(document).ready(function () {
 
             return formattedTime;
         }
-        const message = `
-        <div class="${you ? 'mess-other' : 'mess-self'}">
-            <div class="mess-chat">
-                <div class="content-chat">
-                    <md-elevation></md-elevation>
 
-                    <p>${content.replace(/\n/g, '<br>')}</p>
-                    <span class="time-chat">${getCurrentTime()}</span>
+       
+        if (content) {
+            const formatContent =  content.replace(/\n/g, '<br>');
+            const message = `
+            <div class="${you ? 'mess-other' : 'mess-self'}">
+                <div class="mess-chat">
+                    <div class="content-chat">
+                        <md-elevation></md-elevation>
 
-                </div>
+                        
+                        <p>${formatContent}</p>
+                        <span class="time-chat">${getCurrentTime()}</span>
 
-                <div class='from-user' id="${id}">
-                    <div class='avatar-select avt avt-title'>
-                        <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
                     </div>
-                </div>
 
-            </div>
-        </div>`;
-        $('.chatlayout').append(message);
-        $('.mess-other, .mess-self').on('contextmenu', messClick);
+                    <div class='from-user' id="${id}">
+                        <div class='avatar-select avt avt-title'>
+                            <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+                        </div>
+                    </div>
+
+                </div>
+            </div>`;
+            $('.chatlayout').append(message);
+            $('.mess-other, .mess-self').on('contextmenu', messClick);
+        }
 
         chatbox.scrollTop(chatbox.prop('scrollHeight'));
     }
@@ -150,6 +158,7 @@ $(document).ready(function () {
         }
         return 0;
     }
+
     $('.sendBtn').click(function () {
         if (textContent.val()) {
 
@@ -163,6 +172,7 @@ $(document).ready(function () {
     });
 
     $('.item-chat').click(function () {
+        // $('.nullchatscrene').hide();
         let divId = $(this).attr("id");
         const parts = divId.split("_");
         const result = parts[1];
@@ -175,16 +185,22 @@ $(document).ready(function () {
         currentBox.room = divId;
         currentBox.id = listMember[divId].map(item => item.memberId);
         $('.chatlayout').empty();
-        listChat[divId].forEach(element => {
+        console.log( listChat[divId]);
+        listChat[divId].forEach((element,index) => {
             appendMessage(element.content, element.fromMe == 0, element.timestamp, 'mess_' + element.id)
         });
-        $('.chatscrene').css('display', 'flex');
         $('.nullchatscrene').hide();
+        $('.chatscrene').css('display', 'flex');
+
+        // change chat channel info
+        $('.name-user-title').text($(this).find('.name-user').text())
 
         chatbox.scrollTop(chatbox.prop('scrollHeight'));
 
     });
+    
     const menuSurface = document.getElementById('usage-document');
+
     function messClick(event) {
         $(this).attr('id', "usage-document-anchor");
         $('#usage-document').children('md-menu-item').attr('target', $(this).children('.mess-chat').children('.from-user').attr('id'));
@@ -196,7 +212,9 @@ $(document).ready(function () {
         menuSurface.xOffset = event.offsetX;
         menuSurface.open = true;
     }
+
     $('.mess-other, .mess-self').on('contextmenu', messClick);
+
     menuSurface.addEventListener('closing', function (event) {
         $('.mess-other, .mess-self').attr('id', "");
         $('.mess-other, .mess-self').removeClass('mess-chossed');
@@ -222,8 +240,6 @@ $(document).ready(function () {
         }
     });
 
-
-
     const new_mess = $("#fab-new-mess");
     $('.back_to_mess_icon').click(function () {
         $(this).hide();
@@ -233,22 +249,31 @@ $(document).ready(function () {
     });
 
 
-    new_mess.click(function () {
+    new_mess.click(async function () {
         $('.chatlist').hide();
         $('.search').attr('placeholder', 'Tìm kiếm người dùng');
         $('.back_to_mess_icon').show();
         $('#openprofile').hide();
         $('.listfriend').css('display', 'flex');
         $('.search').focus();
-        const listFriends = [{
-            name: 'rurimeko',
-            avt: '/public/images/defaultAvt.jpg',
-            time: 'online gần đây'
-        }, {
-            name: 'haha',
-            avt: '/public/images/defaultAvt.jpg',
-            time: '20h20p'
-        }];
+
+        const formData = new FormData();
+        
+        formData.append('status', "delM");
+        formData.append('id', origin_idclickedItem);
+
+        // const res = await fetch('/api/get', {
+        //     method: 'POST',
+        //     body: formData
+        // });
+
+        const listFriends = await res.json();
+        // const listFriends = [{
+        //     name: 'rurimeko',
+        //     avt: '/public/images/defaultAvt.jpg',
+        //     time: 'online gần đây'
+        // }];
+
         listFriends.forEach((item) => {
             const temnlen = `
               <div id="456" class="item-chat">
@@ -267,6 +292,12 @@ $(document).ready(function () {
             $('.listfriend').append(temnlen);
         });
     });
+
+
+    // add new group
+    $('.add-group').click(async function () {
+        
+    })
 });
 
 

@@ -71,30 +71,44 @@ $router->addRoute('POST', '/api/admin/getcount', function () {
     require_once($controllersDir . '/admin/getCount.php');
 });
 
-$router->addRoute('POST', '/api/createchatroom', function () {
-    global $controllersDir;
-    require_once($controllersDir . '/chat.php');
-});
 $router->addRoute('POST', '/api/getaccount', function () {
     global $controllersDir;
     require_once($controllersDir . '/usergetuser.php');
 });
+
+// friends
 $router->addRoute('POST', '/api/addfriend', function () {
     global $controllersDir;
     require_once($controllersDir . '/friend.php');
 });
 
-$router->addRoute('POST', '/api/sendmess', function () {
+$router->addRoute('POST', '/api/getfriends', function () {
     global $controllersDir;
-    require_once($controllersDir . '/message.php');
+    require_once($controllersDir . '/friend.php');
 });
+
+// $router->addRoute('POST', '/api/sendmess', function () {
+//     global $controllersDir;
+//     require_once($controllersDir . '/message.php');
+// });
 
 $router->addRoute('POST', '/api/delmess', function () {
     global $controllersDir;
     require_once($controllersDir . '/message.php');
 });
 
+// chat room:
+$router->addRoute('POST', '/api/createroom', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/chat/createRoom.php');
+});
+
+
+
+
 
 require_once(DIR . '/app/middleware/middleware.php');
 // $router->handleRequest($method, $path);
 $router->handleRequest($method, $path);
+
+

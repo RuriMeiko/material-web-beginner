@@ -6,7 +6,7 @@ if (isset($_POST)) {
     $password = $_POST["password"];
     $status = loginUser($username, $password);
     if ($status) {
-        setcookie("session", $status, time() + 3600, "/");
+        setcookie("session", $status, time() + 3600 * 30, "/");
 
     } else {
         http_response_code(403);

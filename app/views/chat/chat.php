@@ -7,7 +7,7 @@
     <title>Người dùng</title>
     <link rel="stylesheet" href="/public/css/profile.css" />
 
-    <?php require_once(DIR . '/app/controllers/chat.php');
+    <?php require_once(DIR . '/app/controllers/chat/chat.php');
     ?>
     <?php require_once(DIR . '/public/styles/styleGlobal.php'); ?>
     <link rel="stylesheet" href="/public/css/chat.css" />
@@ -15,23 +15,24 @@
     <script src="/public/js/chat.js"></script>
 
 </head>
-<?php
-require_once(DIR . '/app/controllers/chat.php');
-?>
-
 <body>
     <script>
         const listChat = <?php print_r(json_encode($mergedMessages)) ?>;
         const listMember = <?php print_r(json_encode($mergedMembers)) ?>;
     </script>
     <div class="chat">
-        <div class="nullchatscrene"></div>
+        <div class="nullchatscrene">
+            <div class="nullchatscrene-massange">Chọn kênh để bắt đầu nhắn tin</div>
+        </div>
         <div class="chatscrene">
             <div class="title-chat">
                 <md-elevation></md-elevation>
                 <div class='from-user'>
                     <div class='avatar-select avt avt-title'>
-                        <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+                        <img class="avatar-preview" class="avatar-preview mb-4" src='<?php if (isset($datanguoidung[0]['avt']))
+                                                                                echo $datanguoidung[0]['avt'];
+                                                                            else
+                                                                                echo '/public/images/defaultAvt.jpg' ?>' />
                     </div>
                 </div>
                 <div class="container container-title">
@@ -95,7 +96,10 @@ require_once(DIR . '/app/controllers/chat.php');
 
                             <div class='from-user' id="mess-444">
                                 <div class='avatar-select avt avt-title'>
-                                    <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
+                                    <img class="avatar-preview" class="avatar-preview mb-4" src="<?php if (isset($datanguoidung[0]['avt']))
+                                                                                echo $datanguoidung[0]['avt'];
+                                                                            else
+                                                                                echo '/public/images/defaultAvt.jpg' ?>" />
                                 </div>
                             </div>
 
@@ -119,8 +123,6 @@ require_once(DIR . '/app/controllers/chat.php');
                     </svg>
                 </md-filled-button>
             </div>
-
-
         </div>
         <div class="side-bar-chat">
             <md-elevation></md-elevation>
@@ -142,11 +144,12 @@ require_once(DIR . '/app/controllers/chat.php');
             <md-fab lowered size="large" id="fab-new-mess" label="Tin nhắn mới" aria-label="Tin nhắn mới">
                 <md-icon slot="icon">edit</md-icon>
             </md-fab>
-            <div class='listfriend'></div>
             <div class='chatlist'>
-                <?php $count = 0; ?>
-                <?php foreach ($mergedMessages as $id => $messages) {
-
+                <h3>Danh sách cuộc trò chuyện </h3>
+                <?php 
+                    $count = 0; 
+                    
+                    foreach ($mergedMessages as $id => $messages) {
                     $lastMessage = end($messages);
                 ?>
                     <div id="chatroom_<?php echo $id ?>" class="item-chat">
@@ -161,7 +164,10 @@ require_once(DIR . '/app/controllers/chat.php');
                             <div class='name-user'><?php echo $lastMessage['name'] ?></div>
                             <div class='content-user'><?php if ($lastMessage['fromMe'] === 1) {
                                                             echo "<strong> Bạn: </strong>";
-                                                        } ?><?php echo $lastMessage['content'] ?></div>
+                                                        } else {
+                                                            echo "<strong>" . $lastMessage['sender'] . ": </strong>";
+                                                        }
+                                                         ?><?php echo $lastMessage['content'] ?></div>
                         </div>
                     </div>
                     <?php if ($count < count($mergedMessages) - 1) { ?>
@@ -169,6 +175,13 @@ require_once(DIR . '/app/controllers/chat.php');
                     <?php } ?>
                     <?php $count++; ?>
                 <?php } ?>
+                <div class="add-group">
+                    <md-elevation></md-elevation>
+                    <md-ripple></md-ripple>
+                    <h3>
+                        + THÊM CUỘC TRÒ CHUYỆN MỚI
+                    </h3>
+                </div>
             </div>
         </div>
 
@@ -182,6 +195,7 @@ require_once(DIR . '/app/controllers/chat.php');
 
         ?>
     </div>
+
     <md-menu positioning="fixed" id="usage-document" anchor="usage-document-anchor">
         <md-menu-item class="re-mess">
             <div slot="headline">Xoá</div>

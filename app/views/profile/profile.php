@@ -19,7 +19,6 @@ require_once(DIR . '/app/controllers/profile.php');
                 </md-filled-tonal-icon-button>
 
             </div>
-
         </div>
         <md-divider inset id='title-divider'></md-divider>
 

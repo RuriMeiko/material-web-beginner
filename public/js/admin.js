@@ -62,11 +62,7 @@ function displayUserData(data) {
     $('#user_data').empty();
     data.forEach(user => {
         const row = `<tr>
-                        <td class="mdc-data-table__cell">
-                        <div class="mdc-data-table__cell-div">
-                            <md-checkbox touch-target="wrapper"></md-checkbox>
-                            </div>
-                        </td>
+                       
                         <td class="mdc-data-table__cell">
                             <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.name}</div>
                         </td>
@@ -100,6 +96,8 @@ function displayUserData(data) {
     });
     $('.checkboxAdmin').click(async function (e) {
         let currentColumn = $(this).closest('td');
+        $('#roleDialog div').eq(0).text(`Confirm change role`);
+
         let previousColumn = currentColumn.prev();
         $('#roleDialog').prop('open', true);
         $('#roleDialog').one('close', async function () {
@@ -108,24 +106,25 @@ function displayUserData(data) {
                 previousColumn.html(`<div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${e.target.checked ? 0 : 1}</div>`);
                 await setRole([e.target.value], e.target.checked);
             } else {
-                e.target.click();
-                this.returnValue = 'cancel'
+                e.target.checked = !e.target.checked;
             }
+            this.returnValue = 'cancel'
         });
     });
     $('.checkboxState').click(async function (e) {
         let currentColumn = $(this).closest('td');
         let previousColumn = currentColumn.prev();
         $('#roleDialog').prop('open', true);
+        $('#roleDialog div').eq(0).text(`Confirm change State`);
+
         $('#roleDialog').one('close', async function () {
             const okClicked = this.returnValue === 'ok';
             if (okClicked) {
                 previousColumn.html(`<div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${e.target.checked ? 0 : 1}</div>`);
                 await setState([e.target.value], e.target.checked);
-            } else {
-                e.target.click();
-                this.returnValue = 'cancel'
-            }
+            } else
+                e.target.checked = !e.target.checked;
+            this.returnValue = 'cancel'
         });
     });
 }

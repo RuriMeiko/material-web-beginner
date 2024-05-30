@@ -45,11 +45,7 @@ function displayUserData(data) {
     $('#user_data').empty();
     data.forEach(room => {
         const row = `<tr>
-                        <td class="mdc-data-table__cell">
-                        <div class="mdc-data-table__cell-div">
-                            <md-checkbox touch-target="wrapper"></md-checkbox>
-                            </div>
-                        </td>
+               
                         <td class="mdc-data-table__cell">
                             <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${room.name}</div>
                         </td>
@@ -57,7 +53,7 @@ function displayUserData(data) {
                             <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${room.member_count}</div>
                         </td>
                         <td class="mdc-data-table__cell">
-                            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${room.state===0 ? "Hoạt Động":"Cấm Truy Cập "}</div>
+                            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${room.state === 0 ? "Hoạt Động" : "Cấm Truy Cập "}</div>
                         </td> 
                         <td class="mdc-data-table__cell">
                             <div class="mdc-data-table__cell-div">  <md-checkbox value="${room.id}" class="checkboxState" ${room.state === 1 && 'checked'} touch-target="wrapper"></md-checkbox> </div>
@@ -69,16 +65,15 @@ function displayUserData(data) {
         let currentColumn = $(this).closest('td');
         let previousColumn = currentColumn.prev();
         $('#roleDialog').prop('open', true);
+
         $('#roleDialog').one('close', async function () {
             const okClicked = this.returnValue === 'ok';
             if (okClicked) {
                 previousColumn.html(`<div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${e.target.checked ? 0 : 1}</div>`);
                 await setState([e.target.value], e.target.checked);
-                console.log([e.target.value], e.target.checked)
-            } else {
-                e.target.click();
-                this.returnValue = 'cancel'
-            }
+            } else
+                e.target.checked = !e.target.checked;
+            this.returnValue = 'cancel'
         });
     });
 }

@@ -11,10 +11,10 @@ require_once(DIR . '/app/controllers/profile.php');
             <div class='title-profile'>
                 <?php if ($datanguoidung[0]['role'] === 0)
                     echo '
-        <md-filled-tonal-icon-button href="/admin">
+        <md-filled-tonal-icon-button id="adminbtn" href="/admin">
             <md-icon>Admin_Panel_Settings</md-icon>
         </md-filled-tonal-icon-button>' ?>
-                <md-filled-tonal-icon-button href="/api/logout">
+                <md-filled-tonal-icon-button id="logoutbtn" href="/api/logout">
                     <md-icon>logout</md-icon>
                 </md-filled-tonal-icon-button>
 

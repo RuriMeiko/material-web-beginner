@@ -11,19 +11,17 @@
     <link rel="stylesheet" href="/public/css/header.css" />
 
     <link rel="stylesheet" href="/public/css/admin.css" />
+    <link rel="stylesheet" href="/public/css/chatroomManager.css" />
     <link rel="stylesheet" href="/public/css/nav.css" />
 
 </head>
 
 <body>
-    <script>
-        const myusername = "<?php echo $datanguoidung[0]['username'] ?>"
-    </script>
 
     <md-dialog id="roleDialog" type="alert">
-        <div slot="headline">Confirm change role</div>
+        <div slot="headline">Confirm change State</div>
         <form slot="content" id="form-id" method="dialog">
-            Bạn có chắc chắn chứ?
+            Hành Động Này Đồng Nghĩa Chặn Toàn Bộ Truy Cập Của User Vào Phòng Chat Bạn có chắc chắn chứ?
         </form>
         <div slot="actions">
             <md-text-button form="form-id" value="cancel">Huỷ</md-text-button>
@@ -45,15 +43,8 @@
                     <thead>
                         <tr>
 
-                            <th class="mdc-data-table__header-cell">
-                                Name
-                            </th>
-                            <th class="mdc-data-table__header-cell">Username</th>
-                            <th class="mdc-data-table__header-cell">Birthdate</th>
-                            <th class="mdc-data-table__header-cell">Gender</th>
-                            <th class="mdc-data-table__header-cell">Location</th>
-                            <th class="mdc-data-table__header-cell">Role</th>
-                            <th class="mdc-data-table__header-cell">Admin</th>
+                            <th class="mdc-data-table__header-cell">chat room name</th>
+                            <th class="mdc-data-table__header-cell">count user</th>
                             <th class="mdc-data-table__header-cell">Current State</th>
                             <th class="mdc-data-table__header-cell">State</th>
                         </tr>
@@ -78,7 +69,7 @@
         </div>
     </div>
 
-    <script src="/public/js/admin.js"></script>
+    <script src="/public/js/admin.chatroom.js"></script>
 </body>
 
 </html>

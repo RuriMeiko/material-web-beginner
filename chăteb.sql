@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2024 at 02:28 AM
+-- Generation Time: May 30, 2024 at 09:55 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -30,16 +30,27 @@ SET time_zone = "+00:00";
 CREATE TABLE `chatroom` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `state` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `chatroom`
 --
 
-INSERT INTO `chatroom` (`id`, `name`, `created_at`) VALUES
-(1, 'hhhh', '2024-05-15 09:13:59'),
-(2, 'tao đây', '2024-05-16 14:24:55');
+INSERT INTO `chatroom` (`id`, `name`, `created_at`, `state`) VALUES
+(1, 'hhhh', '2024-05-15 09:13:59', 1),
+(2, 'tao đây', '2024-05-16 14:24:55', 1),
+(3, 'Phòng Chat 1', '2024-05-30 06:42:03', 1),
+(4, 'Phòng Chat 2', '2024-05-30 06:42:03', 0),
+(5, 'Phòng Chat 3', '2024-05-30 06:42:03', 0),
+(6, 'Phòng Chat 4', '2024-05-30 06:42:03', 0),
+(7, 'Phòng Chat 5', '2024-05-30 06:42:03', 0),
+(8, 'Phòng Chat 6', '2024-05-30 06:42:03', 0),
+(9, 'Phòng Chat 7', '2024-05-30 06:42:03', 0),
+(10, 'Phòng Chat 8', '2024-05-30 06:42:03', 0),
+(11, 'Phòng Chat 9', '2024-05-30 06:42:03', 0),
+(12, 'Phòng Chat 10', '2024-05-30 06:42:03', 0);
 
 -- --------------------------------------------------------
 
@@ -120,10 +131,23 @@ CREATE TABLE `room_member` (
 --
 
 INSERT INTO `room_member` (`id`, `room_id`, `user_id`) VALUES
+(1, 1, 'admin'),
+(2, 1, 'user1'),
+(3, 2, 'admin'),
+(4, 3, 'admin'),
+(5, 4, 'admin'),
+(6, 5, 'admin'),
+(7, 5, 'user1'),
+(8, 6, 'admin'),
+(9, 7, 'admin'),
+(10, 8, 'admin'),
+(11, 8, 'user1'),
+(12, 9, 'admin'),
+(13, 10, 'admin'),
+(14, 10, 'user1'),
 (341, 1, 'user1'),
 (2131, 1, 'admin'),
-(4532, 2, 'admin'),
-(21319, 2, 'user2');
+(4532, 2, 'admin');
 
 -- --------------------------------------------------------
 
@@ -145,7 +169,7 @@ CREATE TABLE `user_info` (
 --
 
 INSERT INTO `user_info` (`username`, `name`, `birthday`, `gender`, `location`, `avt`) VALUES
-('admin', 'NGUYEN TRAN HOANG LONG', '2024-04-03', 1, '753/Tan Phuoc 1', NULL),
+('admin', 'CHÚ CHÓ CÔ ĐỐC ', '2024-04-03', 1, '753/Tan Phuoc 1', NULL),
 ('user1', 'User 1', '1990-01-01', 0, 'Location 1', NULL),
 ('user10', 'User 10', '1990-10-10', 1, 'Location 10', NULL),
 ('user2', 'User 2', '1990-02-02', 1, 'Location 2', NULL),
@@ -167,27 +191,28 @@ INSERT INTO `user_info` (`username`, `name`, `birthday`, `gender`, `location`, `
 CREATE TABLE `user_login` (
   `username` varchar(255) NOT NULL,
   `hashpassword` varchar(255) NOT NULL,
-  `role` int(3) DEFAULT 1
+  `role` int(3) DEFAULT 1,
+  `state` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_login`
 --
 
-INSERT INTO `user_login` (`username`, `hashpassword`, `role`) VALUES
-('admin', '$2y$10$uZOcGsRIz1s.986cQrn5CuNgppIwgPEAo2p9Jl7IjxUmZ0/YxPNWm', 0),
-('dragonccm', '$2y$10$CLqlqDpvG1zuL4VaHqwVjOniOqxznuhCQLaLst1mr4ysNt7/HBY2K', 0),
-('user1', '$2y$10$8qVtUNyLwWZBKne/YpN/V.f8edFl9owddSxRNHW5jxE6ADr3rGo0a', 1),
-('user10', '$2y$10$koP3EdSwvTtMAnA6LJ0nR.nERsD1/5doLQsHuC5Sz3gwL69kcDAua', 0),
-('user2', '$2y$10$4oqRlZq1eIJwBVy4.XksWubw0noNzCy7V50BbeoC9Y693hvcJZP9G', 0),
-('user3', '$2y$10$J/WQf3LDBEMl7y/rOAsCFu9i2tCqyc7XAL2GQEwCdt8E2Wx1GQ4dK', 0),
-('user4', '$2y$10$U8z0bLi/I/C8oST2g1sWte7LLmGQP2fZKcMcuisWTwl5r.VL0ia7e', 0),
-('user5', '$2y$10$YhKKiV2P7HTATDw8PwSXQe2o10rCPXcCJ1Fqf6ph6VmASgANnvL/q', 1),
-('user6', '$2y$10$70HTiRH6YMQTg5m2p8UzFersnLhLvyB81R3a.ACHHJ3A1GU7bUiHC', 1),
-('user7', '$2y$10$1fObQPWL2N8zAzEebwqFouFm6.Ts5WoSCBphSQ2moRJT6fFoV8R8q', 0),
-('user8', '$2y$10$jp2kNX5rKbO3jjVtaOp0xODwlj6rFz8.EqwpzYXgMn/v3KdJdc4tK', 0),
-('user9', '$2y$10$dRuJyBRuW4rKrPjvUfiH1uBb7UBsEbSaJpy8tswBN7xUxIR7R2eUS', 1),
-('xa', '$2y$10$IBhStNo/mv9EBjZ1gNN9M.NQuYll238zACLbYVwbwjDIpD.B1xmMS', 1);
+INSERT INTO `user_login` (`username`, `hashpassword`, `role`, `state`) VALUES
+('admin', '$2y$10$uZOcGsRIz1s.986cQrn5CuNgppIwgPEAo2p9Jl7IjxUmZ0/YxPNWm', 0, 0),
+('dragonccm', '$2y$10$CLqlqDpvG1zuL4VaHqwVjOniOqxznuhCQLaLst1mr4ysNt7/HBY2K', 0, 0),
+('user1', '$2y$10$8qVtUNyLwWZBKne/YpN/V.f8edFl9owddSxRNHW5jxE6ADr3rGo0a', 1, 0),
+('user10', '$2y$10$koP3EdSwvTtMAnA6LJ0nR.nERsD1/5doLQsHuC5Sz3gwL69kcDAua', 0, 0),
+('user2', '$2y$10$4oqRlZq1eIJwBVy4.XksWubw0noNzCy7V50BbeoC9Y693hvcJZP9G', 0, 0),
+('user3', '$2y$10$J/WQf3LDBEMl7y/rOAsCFu9i2tCqyc7XAL2GQEwCdt8E2Wx1GQ4dK', 0, 1),
+('user4', '$2y$10$U8z0bLi/I/C8oST2g1sWte7LLmGQP2fZKcMcuisWTwl5r.VL0ia7e', 0, 1),
+('user5', '$2y$10$YhKKiV2P7HTATDw8PwSXQe2o10rCPXcCJ1Fqf6ph6VmASgANnvL/q', 1, 1),
+('user6', '$2y$10$70HTiRH6YMQTg5m2p8UzFersnLhLvyB81R3a.ACHHJ3A1GU7bUiHC', 1, 0),
+('user7', '$2y$10$1fObQPWL2N8zAzEebwqFouFm6.Ts5WoSCBphSQ2moRJT6fFoV8R8q', 0, 0),
+('user8', '$2y$10$jp2kNX5rKbO3jjVtaOp0xODwlj6rFz8.EqwpzYXgMn/v3KdJdc4tK', 0, 0),
+('user9', '$2y$10$dRuJyBRuW4rKrPjvUfiH1uBb7UBsEbSaJpy8tswBN7xUxIR7R2eUS', 1, 0),
+('xa', '$2y$10$IBhStNo/mv9EBjZ1gNN9M.NQuYll238zACLbYVwbwjDIpD.B1xmMS', 1, 0);
 
 --
 -- Indexes for dumped tables
@@ -244,7 +269,7 @@ ALTER TABLE `user_login`
 -- AUTO_INCREMENT for table `chatroom`
 --
 ALTER TABLE `chatroom`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `friendship`

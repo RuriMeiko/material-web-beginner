@@ -1,0 +1,9 @@
+.mdc-data-table__header-cell:nth-child(1) {
+	width: 400px;
+}
+.mdc-data-table__header-cell:nth-child(2) {
+	width: 80px;
+}
+.mdc-data-table__header-cell:nth-child(4) {
+	width: 80px;
+}

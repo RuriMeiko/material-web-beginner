@@ -40,43 +40,64 @@ async function setRole(selectedAccounts, isAdmin) {
         showToast('❌ Failed to update role!');
     }
 }
+async function setState(selectedAccounts, isBan) {
+    const formData = new FormData();
+    formData.append('accounts', JSON.stringify(selectedAccounts));
+    formData.append('newState', isBan ? 0 : 1);
+
+    const res = await fetch('/api/admin/changestate', {
+        method: 'POST',
+        body: formData
+    });
+
+    const data = await res.json();
+    if (data.success) {
+        showToast(`✔️ ${selectedAccounts[0]}'s State updated successfully!`);
+    } else {
+        showToast('❌ Failed to update State!');
+    }
+}
 
 function displayUserData(data) {
     $('#user_data').empty();
     data.forEach(user => {
         const row = `<tr>
-        <td class="mdc-data-table__cell">
-        <div class="mdc-data-table__cell-div">
-            <md-checkbox touch-target="wrapper"></md-checkbox>
-            </div>
-        </td>
-        <td class="mdc-data-table__cell">
-            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.name}</div>
-        </td>
-        <td class="mdc-data-table__cell">
-            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.username}</div>
-        </td>
-        <td class="mdc-data-table__cell">
-            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.birthday}</div>
-        </td>
-        <td class="mdc-data-table__cell">
-            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.gender === 0 ? 'Male' : 'Female'}</div>
-        </td>
-        <td class="mdc-data-table__cell">
-            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.location}</div>
-        </td>
-        <td class="mdc-data-table__cell">
-            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.role}</div>
-        </td>
-        <td class="mdc-data-table__cell">
-            <div class="mdc-data-table__cell-div"> <md-checkbox value="${user.username}" class="checkboxAdmin" ${user.role === 0 && 'checked'} ${user.username === myusername && 'disabled'} touch-target="wrapper"></md-checkbox> </div>
-        </td>
-
-    </tr>`;
+                       
+                        <td class="mdc-data-table__cell">
+                            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.name}</div>
+                        </td>
+                        <td class="mdc-data-table__cell">
+                            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.username}</div>
+                        </td>
+                        <td class="mdc-data-table__cell">
+                            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.birthday}</div>
+                        </td>
+                        <td class="mdc-data-table__cell">
+                            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.gender === 0 ? 'Male' : 'Female'}</div>
+                        </td>
+                        <td class="mdc-data-table__cell">
+                            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.location}</div>
+                        </td>
+                        <td class="mdc-data-table__cell">
+                            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.role}</div>
+                        </td> 
+                       
+                        <td class="mdc-data-table__cell">
+                            <div class="mdc-data-table__cell-div"> <md-checkbox value="${user.username}" class="checkboxAdmin" ${user.role === 0 && 'checked'} ${user.username === myusername && 'disabled'} touch-target="wrapper"></md-checkbox> </div>
+                        </td>
+                        <td class="mdc-data-table__cell">
+                            <div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${user.State}</div>
+                        </td> 
+                        <td class="mdc-data-table__cell">
+                            <div class="mdc-data-table__cell-div">  <md-checkbox value="${user.username}" class="checkboxState" ${user.State === 0 && 'checked'} ${user.username === myusername && 'disabled'} touch-target="wrapper"></md-checkbox> </div>
+                        </td>
+                    </tr>`;
         $('#user_data').append(row);
     });
     $('.checkboxAdmin').click(async function (e) {
         let currentColumn = $(this).closest('td');
+        $('#roleDialog div').eq(0).text(`Confirm change role`);
+
         let previousColumn = currentColumn.prev();
         $('#roleDialog').prop('open', true);
         $('#roleDialog').one('close', async function () {
@@ -85,9 +106,25 @@ function displayUserData(data) {
                 previousColumn.html(`<div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${e.target.checked ? 0 : 1}</div>`);
                 await setRole([e.target.value], e.target.checked);
             } else {
-                e.target.click();
-                this.returnValue = 'cancel'
+                e.target.checked = !e.target.checked;
             }
+            this.returnValue = 'cancel'
+        });
+    });
+    $('.checkboxState').click(async function (e) {
+        let currentColumn = $(this).closest('td');
+        let previousColumn = currentColumn.prev();
+        $('#roleDialog').prop('open', true);
+        $('#roleDialog div').eq(0).text(`Confirm change State`);
+
+        $('#roleDialog').one('close', async function () {
+            const okClicked = this.returnValue === 'ok';
+            if (okClicked) {
+                previousColumn.html(`<div class="mdc-data-table__cell-div"> <md-elevation></md-elevation> ${e.target.checked ? 0 : 1}</div>`);
+                await setState([e.target.value], e.target.checked);
+            } else
+                e.target.checked = !e.target.checked;
+            this.returnValue = 'cancel'
         });
     });
 }

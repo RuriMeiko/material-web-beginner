@@ -1,3 +1,17 @@
+$(function () {
+    tippy('#logoutbtn', {
+        content: 'Đăng xuất',
+    });
+    tippy('#adminbtn', {
+        content: 'Trang admin',
+    });
+    tippy('#openprofile', {
+        content: 'Trang profile',
+    });
+  
+});
+
+
 function showToast(mess) {
     const divElement = `<div class="toast">
     <md-elevation></md-elevation>

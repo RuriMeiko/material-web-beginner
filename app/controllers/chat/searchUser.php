@@ -2,13 +2,12 @@
 require_once (DIR . '/app/models/chat.php');
 
 if (isset($_POST)) {
-    $room_id = $_POST["room_id"];
-    $status = deleteChatRoom($room_id);
+    $search = $_POST["search"];
+    $status = searchUser($search);
     
-
     if ($status['success']) {
         http_response_code(200);
-        echo "OK";
+        echo json_encode($status['data']);
     }else {
         http_response_code(500);
         echo "Có lỗi xảy ra!" . json_encode($status);

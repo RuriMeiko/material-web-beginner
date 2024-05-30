@@ -5,9 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quản lý bảng đánh giá</title>
-    <?php require_once(DIR . '/app/controllers/profile.php');
+    <?php require_once (DIR . '/app/controllers/profile.php');
     ?>
-    <?php require_once(DIR . '/public/styles/styleGlobal.php'); ?>
+    <?php require_once (DIR . '/public/styles/styleGlobal.php'); ?>
     <link rel="stylesheet" href="/public/css/header.css" />
     <link rel="stylesheet" href="/public/css/admin.css" />
     <link rel="stylesheet" href="/public/css/statistical.css" />
@@ -36,10 +36,10 @@
                 </div>
                 <div class="statistical_wapper">
                     <div class="statistical">
-
-
                         <canvas id="statistical"></canvas>
-
+                    </div>
+                    <div class="statistical">
+                        <canvas id="roomstatistical"></canvas>
                     </div>
                 </div>
 

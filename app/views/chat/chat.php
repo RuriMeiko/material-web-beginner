@@ -94,11 +94,11 @@
         <div class="side-bar-chat">
             <md-elevation></md-elevation>
             <div class="top-side-bar-chat">
-                <div>
+                <!-- <div>
                     <md-icon-button class="back_to_mess_icon">
                         <md-icon>Arrow_Back</md-icon>
                     </md-icon-button>
-                </div>
+                </div> -->
                 <div class='from-user' id="openprofile">
                     <div class='avatar-select avt'>
                         <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
@@ -108,6 +108,8 @@
                     <md-icon slot="leading-icon">search</md-icon>
                 </md-outlined-text-field>
             </div>
+            <md-divider></md-divider>
+
             <md-fab lowered size="large" id="fab-new-mess" label="Tin nhắn mới" aria-label="Tin nhắn mới">
                 <md-icon slot="icon">edit</md-icon>
             </md-fab>
@@ -137,7 +139,26 @@
                                                             ?><?php echo $lastMessage['content'] ?></div>
                             <?php } ?>
                         </div>
+                        <div class="more">
+                            <md-filled-tonal-icon-button id="info_<?php echo $id ?>">
+                                <md-icon>More_Horiz</md-icon>
+                            </md-filled-tonal-icon-button>
+                            <md-menu x-offset="-40" id="menu_chat_item_<?php echo $id ?>" anchor="info_<?php echo $id ?>">
+                                <md-menu-item>
+                                    <div slot="headline">Xoá</div>
+                                </md-menu-item>
 
+                            </md-menu>
+                        </div>
+                        <script type="module">
+                            // This example uses anchor as an ID reference
+                            const anchorEl_<?php echo $id ?> = document.body.querySelector('#info_<?php echo $id ?>');
+                            const menuEl_<?php echo $id ?> = document.body.querySelector('#menu_chat_item_<?php echo $id ?>');
+
+                            anchorEl_<?php echo $id ?>.addEventListener('click', () => {
+                                menuEl_<?php echo $id ?>.open = !menuEl_<?php echo $id ?>.open;
+                            });
+                        </script>
                     </div>
                     <?php if ($count < count($mergedMessages) - 1) { ?>
                         <md-divider class='divider-custom' inset></md-divider>
@@ -161,14 +182,11 @@
         $viewsDir = DIR . '/app/views';
 
         require_once($viewsDir . '/component/profile/profile.php');
+        require_once($viewsDir . '/component/newroom.php');
 
         ?>
     </div>
-    <?php
 
-    require_once($viewsDir . '/component/newroom.php');
-
-    ?>
     <md-menu positioning="fixed" id="usage-document" anchor="usage-document-anchor">
         <md-menu-item class="re-mess">
             <div slot="headline">Xoá</div>

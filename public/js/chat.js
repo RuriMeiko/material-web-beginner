@@ -182,8 +182,8 @@ $(document).ready(function () {
         // Thêm class "choosed" vào phần tử .item-chat được nhấp chuột
         $(this).addClass('choosed');
         $('.chatlayout').empty();
+        
         currentBox.room = divId;
-        console.log(listMember[divId], listMember);
         if (!listMember[divId]) return;
         currentBox.id = listMember[divId].map(item => item.memberId);
         listChat[divId].forEach((element, index) => {
@@ -250,9 +250,21 @@ $(document).ready(function () {
 
 
     new_mess.click(async function () {
-        
+        $('.popupnewfriend').fadeIn(250, () => $('.popupnewfriend').show()); // 400 là thời gian (milliseconds) để hoàn thành hiệu ứng
+
+
     });
-   
+
+    $(document).on('click', function (event) {
+        const target = $(event.target);
+        if (!target.closest('.formInfo').length && !target.closest('.toast').length && !target.closest('#fab-new-mess').length) {
+            if ($('.popupnewfriend').is(':visible')) {
+                $('.popupnewfriend').fadeOut(250, () => $('.popupnewfriend').hide()); // 400 là thời gian (milliseconds) để hoàn thành hiệu ứng
+
+            }
+        }
+    });
+
 });
 
 

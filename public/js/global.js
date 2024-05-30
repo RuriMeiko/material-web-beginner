@@ -6,7 +6,7 @@ $(function () {
         content: 'Trang admin',
     });
     tippy('#openprofile', {
-        content: 'Trang profile',
+        content: 'Trang tin nhắn',
     });
   
 });

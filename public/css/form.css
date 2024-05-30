@@ -53,7 +53,8 @@
 	transform: translate(-50%, -50%);
 }
 
-.popup {
+.popup,
+.popupnewfriend {
 	border-radius: 0px;
 
 	width: 100%;

@@ -2,7 +2,7 @@
 require_once(DIR . '/app/controllers/profile.php');
 ?>
 
-<div class="box popup">
+<div class="box popupnewfriend">
     <form class="formInfo">
 
         <md-divider inset id='title-divider'></md-divider>
@@ -25,26 +25,10 @@ require_once(DIR . '/app/controllers/profile.php');
         </div>
         <!-- <md-divider inset></md-divider> -->
         <h3>Đặt tên cuộc trò chuyện:</h3>
-        <md-outlined-text-field prefix-text="😎" aria-label="name" label="Họ và tên" name="name" autocomplete="name" placeholder="Nhập tên cuộc trò chuyện">
+        <md-outlined-text-field prefix-text="😎" aria-label="name" label="Tên..." name="name" autocomplete="name" placeholder="Nhập tên cuộc trò chuyện">
 
         </md-outlined-text-field>
-        <md-divider inset></md-divider>
-        <h3>Chọn thành viên:</h3>
 
-        <md-outlined-select label="Giới tính" aria-label="Giới tính" name="gender">
-            <md-select-option <?php if ($datanguoidung[0]['gender'] == 0)
-                                    echo 'selected' ?> value="0">
-                <div slot="headline">🤫 Khác</div>
-            </md-select-option>
-            <md-select-option value="1" <?php if ($datanguoidung[0]['gender'] == 1)
-                                            echo 'selected' ?>>
-                <div slot="headline">👨 Nam</div>
-            </md-select-option>
-            <md-select-option value="2" <?php if ($datanguoidung[0]['gender'] == 2)
-                                            echo 'selected' ?>>
-                <div slot="headline">👩 Nữ</div>
-            </md-select-option>
-        </md-outlined-select>
 
         <md-divider inset></md-divider>
         <md-filled-button id="save-btn">Gửi</md-filled-button>

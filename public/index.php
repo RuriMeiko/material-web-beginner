@@ -128,9 +128,25 @@ $router->addRoute('POST', '/api/createroom', function () {
     require_once($controllersDir . '/chat/createRoom.php');
 });
 
+$router->addRoute('POST', '/api/deleteroom', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/chat/deleteRoom.php');
+});
 
+$router->addRoute('POST', '/api/changenameroom', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/chat/changeNameRoom.php');
+});
 
+$router->addRoute('POST', '/api/addmember', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/chat/addMember.php');
+});
 
+$router->addRoute('POST', '/api/outroom', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/chat/outRoom.php');
+});
 
 require_once(DIR . '/app/middleware/middleware.php');
 // $router->handleRequest($method, $path);

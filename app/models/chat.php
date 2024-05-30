@@ -2,28 +2,6 @@
 require_once(DIR . '/config/database.php');
 
 
-function createChatRoom($amin, $user, $name)
-{
-    if (!isset($_COOKIE['session'])) {
-        http_response_code(403);
-        return ["err"];
-    }
-    $conn = createConn();
-    try {
-        $conn->begin_transaction();
-        $getQuery = "INSERT INTO chatroom (name) VALUES (?)";
-        $data = executeQuery($conn, $getQuery, [$amin]);
-        $conn->commit();
-
-        if ($data) {
-            return $data;
-        } else {
-            return ["err"];
-        }
-    } catch (Exception $e) {
-        $conn->rollback();
-    }
-}
 
 function getListChat($username)
 {
@@ -108,8 +86,8 @@ function getRoomMember($username)
     }
 }
 
-function deleteChatRoom($id)
-{
+
+function createRoom($roomname, $members) {
     if (!isset($_COOKIE['session'])) {
         http_response_code(403);
         return ["err"];
@@ -117,23 +95,26 @@ function deleteChatRoom($id)
     $conn = createConn();
     try {
         $conn->begin_transaction();
-        $getQuery = "DELETE FROM chatroom WHERE id = ?;
-                    DELETE FROM room_member WHERE room_id = ?";
-        $data = executeQuery($conn, $getQuery, [$id, $id]);
+        // Insert the chatroom and get its ID.
+        $insertRoomQuery = "INSERT INTO chatroom (name) VALUES (?)";
+        executeQuery($conn, $insertRoomQuery, [$roomname]);
+        $room_id = $conn->insert_id; // Get the inserted ID for the chatroom.
+        
+        // Insert each member with the chatroom ID.
+        $insertMemberQuery = "INSERT INTO room_member (room_id, user_id) VALUES (?, ?)";
+        foreach ($members as $member) {
+            executeQuery($conn, $insertMemberQuery, [$room_id, $member]);
+        }
         $conn->commit();
 
-        if ($data) {
-            return $data;
-        } else {
-            return ["err"];
-        }
+        return ["success" => true, "room_id" => $room_id];
     } catch (Exception $e) {
         $conn->rollback();
+        return ["success" => false, "room_id" => $room_id];
     }
 }
 
-function changeNameChatRoom($name, $id)
-{
+function deleteChatRoom($id) {
     if (!isset($_COOKIE['session'])) {
         http_response_code(403);
         return ["err"];
@@ -141,21 +122,43 @@ function changeNameChatRoom($name, $id)
     $conn = createConn();
     try {
         $conn->begin_transaction();
-        $getQuery = "UPDATE chat_rooms SET name = ? WHERE id = ?;";
-        $data = executeQuery($conn, $getQuery, [$name, $id]);
+        $roomMembersRemoveQuery =  "DELETE FROM room_member WHERE room_id = (?)";
+        executeQuery($conn, $roomMembersRemoveQuery, [$id]);
+        $chatroomRemoveQuery = "DELETE FROM chatroom WHERE id = (?)";
+        executeQuery($conn, $chatroomRemoveQuery, [$id]);
+
         $conn->commit();
 
-        if ($data) {
-            return $data;
-        } else {
-            return ["err"];
-        }
+        return ["success" => true];
     } catch (Exception $e) {
         $conn->rollback();
+        return ["success" => false, 'error' => $e];
+
     }
 }
 
-function ChatRoom($name, $id)
+function changeNameRoom($name, $id)
+{
+    if (!isset($_COOKIE['session'])) {
+        http_response_code(403);
+        return ["err"];
+    }
+
+    $conn = createConn();
+    try {
+        $conn->begin_transaction();
+        $getQuery = "UPDATE chatroom SET name = (?) WHERE id = (?);";
+        $data = executeQuery($conn, $getQuery, [$name, $id]);
+        $conn->commit();
+
+        return ["success" => true];
+    } catch (Exception $e) {
+        $conn->rollback();
+        return ["success" => false, "error" => $e];
+    }
+}
+
+function addMember($room_id, $user_id)
 {
     if (!isset($_COOKIE['session'])) {
         http_response_code(403);
@@ -164,16 +167,39 @@ function ChatRoom($name, $id)
     $conn = createConn();
     try {
         $conn->begin_transaction();
-        $getQuery = "UPDATE chat_rooms SET name = ? WHERE id = ?;";
-        $data = executeQuery($conn, $getQuery, [$name, $id]);
+        $getQuery = "INSERT INTO room_member (room_id, user_id)
+                        SELECT * FROM (SELECT (?) AS temp_room_id, (?) AS temp_user_id) AS tmp
+                        WHERE NOT EXISTS (
+                            SELECT 1 FROM room_member WHERE room_id = (?) AND user_id = (?)
+                        )
+                    ";
+        $data = executeQuery($conn, $getQuery, [$room_id, $user_id, $room_id, $user_id]);
         $conn->commit();
 
-        if ($data) {
-            return $data;
-        } else {
-            return ["err"];
-        }
+        return ["success" => true];
     } catch (Exception $e) {
         $conn->rollback();
+        return ["success" => false, "error" => $e];
+    }
+}
+
+function outRoom($room_id, $user_id)
+{
+    if (!isset($_COOKIE['session'])) {
+        http_response_code(403);
+        return ["err"];
+    }
+    $conn = createConn();
+    try {
+        $conn->begin_transaction();
+        $getQuery = "DELETE FROM room_member WHERE room_id = (?) AND user_id = (?);";
+        $data = executeQuery($conn, $getQuery, [$room_id, $user_id]);
+        $conn->commit();
+
+        return ["success" => true];
+
+    } catch (Exception $e) {
+        $conn->rollback();
+        return ["success" => false, "error" => $e];
     }
 }

@@ -4,12 +4,24 @@ require_once (DIR . '/config/database.php');
 
 function getAllUsers($offset, $limit)
 {
+    
+    if (!isset($_COOKIE['session'])) {
+        http_response_code(403);
+        return false;
+    }
+
+    // Kiểm tra role của người dùng
+    $role = getData($_COOKIE['session']);
+    if ($role[0]['role'] !== 0) {
+        http_response_code(403);
+        return false;
+    }
     if (!isset($_COOKIE['session'])) {
         http_response_code(403);
         return ["err"];
     }
     $conn = createConn();
-    $getQuery = "SELECT user_info.*, user_login.role, user_login.State  FROM user_info, user_login WHERE user_info.username = user_login.username LIMIT ? OFFSET ? ";
+    $getQuery = "SELECT user_info.*, user_login.role, user_login.state  FROM user_info, user_login WHERE user_info.username = user_login.username LIMIT ? OFFSET ? ";
     $data = executeQuery($conn, $getQuery, [$limit, $offset]);
     if ($data) {
         return $data;
@@ -20,6 +32,18 @@ function getAllUsers($offset, $limit)
 
 function getCoutUsers()
 {
+    
+    if (!isset($_COOKIE['session'])) {
+        http_response_code(403);
+        return false;
+    }
+
+    // Kiểm tra role của người dùng
+    $role = getData($_COOKIE['session']);
+    if ($role[0]['role'] !== 0) {
+        http_response_code(403);
+        return false;
+    }
     if (!isset($_COOKIE['session'])) {
         http_response_code(403);
         return ["err"];
@@ -36,6 +60,18 @@ function getCoutUsers()
 
 function updateRoles($accounts, $newRole)
 {
+    
+    if (!isset($_COOKIE['session'])) {
+        http_response_code(403);
+        return false;
+    }
+
+    // Kiểm tra role của người dùng
+    $role = getData($_COOKIE['session']);
+    if ($role[0]['role'] !== 0) {
+        http_response_code(403);
+        return false;
+    }
     if (!isset($_COOKIE['session'])) {
         http_response_code(403);
         return false;
@@ -68,6 +104,18 @@ function updateRoles($accounts, $newRole)
 
 function updateStates($accounts, $newState)
 {
+    
+    if (!isset($_COOKIE['session'])) {
+        http_response_code(403);
+        return false;
+    }
+
+    // Kiểm tra role của người dùng
+    $role = getData($_COOKIE['session']);
+    if ($role[0]['role'] !== 0) {
+        http_response_code(403);
+        return false;
+    }
     if (!isset($_COOKIE['session'])) {
         http_response_code(403);
         return false;
@@ -100,6 +148,18 @@ function updateStates($accounts, $newState)
 
 function getChatRoomCount()
 {
+    
+    if (!isset($_COOKIE['session'])) {
+        http_response_code(403);
+        return false;
+    }
+
+    // Kiểm tra role của người dùng
+    $role = getData($_COOKIE['session']);
+    if ($role[0]['role'] !== 0) {
+        http_response_code(403);
+        return false;
+    }
     if (!isset($_COOKIE['session'])) {
         http_response_code(403);
         return ["err"];
@@ -115,6 +175,18 @@ function getChatRoomCount()
 }
 function getAllChatRooms($offset, $limit)
 {
+    
+    if (!isset($_COOKIE['session'])) {
+        http_response_code(403);
+        return false;
+    }
+
+    // Kiểm tra role của người dùng
+    $role = getData($_COOKIE['session']);
+    if ($role[0]['role'] !== 0) {
+        http_response_code(403);
+        return false;
+    }
     if (!isset($_COOKIE['session'])) {
         http_response_code(403);
         return ["err"];
@@ -135,6 +207,18 @@ function getAllChatRooms($offset, $limit)
 
 function updateRoomStates($rooms, $newState)
 {
+    
+    if (!isset($_COOKIE['session'])) {
+        http_response_code(403);
+        return false;
+    }
+
+    // Kiểm tra role của người dùng
+    $role = getData($_COOKIE['session']);
+    if ($role[0]['role'] !== 0) {
+        http_response_code(403);
+        return false;
+    }
     if (!isset($_COOKIE['session'])) {
         http_response_code(403);
         return false;
@@ -163,4 +247,51 @@ function updateRoomStates($rooms, $newState)
     }
 
     return [$success,$updateResult];
+}
+
+function statistical()
+{
+    if (!isset($_COOKIE['session'])) {
+        http_response_code(403);
+        return false;
+    }
+
+    // Kiểm tra role của người dùng
+    $role = getData($_COOKIE['session']);
+    if ($role[0]['role'] !== 0) {
+        http_response_code(403);
+        return false;
+    }
+
+    $conn = createConn();
+
+    try {
+        $conn->begin_transaction();
+
+        $qr = "SELECT COUNT(DISTINCT username) AS count FROM user_info";
+        $total = executeQuery($conn, $qr);
+
+        $qr = "SELECT COUNT(DISTINCT username) AS count FROM user_login WHERE state = 0";
+        $unban = executeQuery($conn, $qr);
+
+        $qr = "SELECT COUNT(DISTINCT username) AS count FROM user_login WHERE state = 1";
+        $ban = executeQuery($conn, $qr);
+
+        $qr = "SELECT COUNT(DISTINCT name) AS count FROM chatroom";
+        $roomtotal = executeQuery($conn, $qr);
+        $qr = "SELECT COUNT(DISTINCT name) AS count FROM chatroom WHERE state = 1";
+        $roomban = executeQuery($conn, $qr);
+        $qr = "SELECT COUNT(DISTINCT name) AS count FROM chatroom WHERE state = 0";
+        $roomuban = executeQuery($conn, $qr);
+
+        $conn->commit();
+        closeConn($conn);
+
+        return ["total" => $total[0]['count'], "unban" => $unban[0]['count'], "ban" => $ban[0]['count'],"roomtotal" => $roomtotal[0]['count'], "roomuban" => $roomuban[0]['count'], "roomban" => $roomban[0]['count']];
+    } catch (Exception $e) {
+        $conn->rollback();
+        closeConn($conn);
+
+        return false;
+    }
 }

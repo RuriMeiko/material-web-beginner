@@ -71,6 +71,12 @@ $router->addRoute('POST', '/api/register', function () {
     require_once($controllersDir . '/register.php');
 });
 
+$router->addRoute('GET', '/api/admin/statistical', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/admin/getStatistical.php');
+});
+
+
 
 $router->addRoute('GET', '/api/logout', function () {
     global $controllersDir;

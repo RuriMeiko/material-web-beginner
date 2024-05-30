@@ -28,10 +28,14 @@ $router->addRoute('GET', '/admin', function () {
 });
 
 
-$router->addRoute('GET', '/chat', function () {
+$router->addRoute('GET', '/chatroom', function () {
     global $viewsDir;
-    require_once($viewsDir . '/chat/chat.php');
+    require_once($viewsDir . '/admin/chatroom.php');
 });
+
+
+
+
 
 
 // Add API routes
@@ -60,6 +64,23 @@ $router->addRoute('POST', '/api/admin/getuserdata', function () {
     global $controllersDir;
     require_once($controllersDir . '/admin/getUserList.php');
 });
+
+// chatroom
+$router->addRoute('POST', '/api/admin/getallchatroom', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/admin/chatRoom.php');
+});
+$router->addRoute('POST', '/api/admin/getchatroomcount', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/admin/getCount.chatRoom.php');
+});
+$router->addRoute('POST', '/api/admin/roomchangestate', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/admin/room.changeState.php');
+});
+
+
+
 
 $router->addRoute('POST', '/api/admin/changerole', function () {
     global $controllersDir;

@@ -8,7 +8,7 @@
         if ($datanguoidung[0]['role'] === 0 && str_starts_with($_SERVER['REQUEST_URI'], '/admin'))
             echo '
         <md-filled-tonal-icon-button href="/chat" id="openprofile">
-            <md-icon>person</md-icon>
+            <md-icon>Forum</md-icon>
         </md-filled-tonal-icon-button>';
         ?>
 

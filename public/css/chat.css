@@ -181,7 +181,6 @@
 		height: 125vh;
 		background: #fae9ff;
 
-
 		& .chatbox-divider {
 			width: 100%;
 			display: flex;
@@ -233,11 +232,10 @@
 			padding: 10px 18px;
 			border-radius: 999px;
 			background-color: #fff;
-			transform:  translate(-50%, -50%);
+			transform: translate(-50%, -50%);
 		}
 	}
 }
-
 
 body {
 	margin: 0;
@@ -287,14 +285,14 @@ body {
 }
 
 /* itemchat */
-.item-chat,
-.add-group {
+
+.item-chat {
 	--md-ripple-hover-color: #c267ff;
 	--md-ripple-pressed-color: #9d00ff;
 	--md-elevation-level: 0;
 	border-radius: 8px;
 	display: flex;
-	padding: 5px;
+	padding: 12px;
 	position: relative;
 	user-select: none;
 	cursor: pointer;
@@ -302,8 +300,20 @@ body {
 	display: flex;
 	gap: 20px;
 	place-items: center;
-
+	&:hover .more {
+		display: block;
+	}
 	/* background-color: #ede7ff; */
+	& .more {
+		transition: all 0.3s ease;
+
+		display: none;
+		z-index: 20999;
+		position: absolute;
+		right: 10px;
+		top: 50%;
+		transform: translate(-50%, -50%);
+	}
 }
 
 .add-group {
@@ -329,7 +339,7 @@ body {
 	display: flex;
 	gap: 2px;
 	flex-direction: column;
-	padding: 20px 8px 0px 20px;
+	padding: 20px 20px 0px 20px;
 	overflow-y: auto;
 }
 

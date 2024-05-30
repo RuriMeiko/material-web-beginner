@@ -1,6 +1,6 @@
 <?php
-require_once (DIR . '/app/models/profile.php');
-require_once DIR . '/lib/tiktok.php';
+require_once(DIR . '/app/models/profile.php');
+require_once DIR . '/lib/imgbb.php';
 function checkTime()
 {
     $currentHour = date('H') + 7;
@@ -45,11 +45,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Confirm that the uploaded file is an image
             $imageInfo = getimagesize($destination);
             if ($imageInfo !== false) {
-                $uploader = new TiktokUploader('9BrXKhM5zk3UXppyxHP2EtgbdLWZJg9W', '2a531a4abe89d161d0da389f7a4008e7');
+                // $uploader = new TiktokUploader('9BrXKhM5zk3UXppyxHP2EtgbdLWZJg9W', '5ca17b36dce64b6d5409402b0ec8db37');
                 // Upload the image to TikTok
-                $imageUrl = $uploader->uploadImage($destination);
-                $uploader->close();
 
+                $imageUrl = uploadImageAndGetUrl($destination, '453737ca30a98c774a0e36e3e04014b6');
             }
         }
     }

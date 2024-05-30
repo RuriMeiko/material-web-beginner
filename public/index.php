@@ -65,6 +65,10 @@ $router->addRoute('POST', '/api/admin/changerole', function () {
     global $controllersDir;
     require_once($controllersDir . '/admin/changeRole.php');
 });
+$router->addRoute('POST', '/api/admin/changestate', function () {
+    global $controllersDir;
+    require_once($controllersDir . '/admin/changeState.php');
+});
 
 $router->addRoute('POST', '/api/admin/getcount', function () {
     global $controllersDir;

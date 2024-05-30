@@ -39,12 +39,11 @@
 
             </div>
         </div>
-        <table class="mdc-data-ta ble">
+        <table class="mdc-data-table">
             <thead>
                 <tr>
-                    <th class="mdc-data-table__header-cell"><md-checkbox value='all'
-                            touch-target="wrapper"></md-checkbox></th>
-
+                    <th class="mdc-data-table__header-cell">
+                    <md-checkbox value='all'touch-target="wrapper"></md-checkbox></th>
                     <th class="mdc-data-table__header-cell">
                         Name
                     </th>
@@ -54,6 +53,8 @@
                     <th class="mdc-data-table__header-cell">Location</th>
                     <th class="mdc-data-table__header-cell">Role</th>
                     <th class="mdc-data-table__header-cell">Admin</th>
+                    <th class="mdc-data-table__header-cell">Current State</th>
+                    <th class="mdc-data-table__header-cell">State</th>
                 </tr>
             </thead>
             <tbody id="user_data">

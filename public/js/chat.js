@@ -23,13 +23,13 @@ $(document).ready(function () {
                 content: data.content,
                 fromMe: data.self === false ? 1 : 0,
                 id: data.id,
-                name: null,
+                name: data.name,
                 timestamp: data.timestamp,
             })
             $(`#chatroom_${data.room} .container .content-user`).html(`${data.self ? "<strong>Bạn: </strong>" : ""}${data.content}`);
 
             if (currentBox.room === data.room) {
-                appendMessage(data.content, !data.self, data.timestamp, 'mess_' + data.id);
+                appendMessage(data.content, !data.self, data.name, data.timestamp, 'mess_' + data.id.join('|'));
 
             }
 
@@ -58,7 +58,7 @@ $(document).ready(function () {
     let chatbox = $('.chatbox');
 
     chatbox.scrollTop(chatbox.prop('scrollHeight'));
-    function appendMessage(content, you = false, time = null, id = '') {
+    function appendMessage(content, you = false, username = false, time = null, id = '') {
         function getCurrentTime() {
             let currentTime = new Date();
             if (time) {
@@ -79,8 +79,9 @@ $(document).ready(function () {
             const formatContent = content.replace(/\n/g, '<br>');
             const message = `
             <div class="${you ? 'mess-other' : 'mess-self'}">
-                <div class="mess-chat">
+                <div class="mess-chat ${you ? "have-name" : ''}">
                     <div class="content-chat">
+                    ${you ? `<div class="usermessname">${username}</div>` : ''}
                         <md-elevation></md-elevation>
 
                         
@@ -102,12 +103,13 @@ $(document).ready(function () {
         }
 
         chatbox.scrollTop(chatbox.prop('scrollHeight'));
+        // Gán màu ngẫu nhiên cho từng phần tử
+        $('.usermessname').each(function (index, element) {
+            let randomColor = getRandomColor();
+            $(element).css('color', randomColor);
+        });
+
     }
-    // Gán màu ngẫu nhiên cho từng phần tử
-    $('.usermessname').each(function (index, element) {
-        let randomColor = getRandomColor();
-        $(element).css('color', randomColor);
-    });
 
 
     chatbox.scroll(function () {
@@ -162,11 +164,13 @@ $(document).ready(function () {
         if (textContent.val()) {
 
             let currentTime = new Date();
-
+            console.log(currentBox);
             socket.send(JSON.stringify({ room: currentBox.room, receiver: currentBox.id, timestamp: currentTime, content: textContent.val() }));
             // appendMessage(textContent.val());
 
             textContent.val('');
+            textContent.focus();
+
         }
     });
 
@@ -182,12 +186,12 @@ $(document).ready(function () {
         // Thêm class "choosed" vào phần tử .item-chat được nhấp chuột
         $(this).addClass('choosed');
         $('.chatlayout').empty();
-        
+
         currentBox.room = divId;
         if (!listMember[divId]) return;
         currentBox.id = listMember[divId].map(item => item.memberId);
         listChat[divId].forEach((element, index) => {
-            appendMessage(element.content, element.fromMe == 0, element.timestamp, 'mess_' + element.id)
+            appendMessage(element.content, element.fromMe == 0, element.sender, element.timestamp, 'mess_' + element.id)
         });
         $('.nullchatscrene').hide();
         $('.chatscrene').css('display', 'flex');
@@ -222,7 +226,7 @@ $(document).ready(function () {
 
     $('.re-mess').on('click', async function () {
         let idclickedItem = $(this).attr('target');
-        origin_idclickedItem = idclickedItem.split('_')[1];
+        origin_idclickedItem = idclickedItem.split('_')[1].split('|');
         const formData = new FormData();
         formData.append('status', "delM");
         formData.append('id', origin_idclickedItem);
@@ -231,7 +235,6 @@ $(document).ready(function () {
             body: formData
         });
         const data = await res.json();
-        console.log(data);
         if (data.status === 'OK') {
             $(`#${idclickedItem}`).parent().parent().remove();
             // socket.send('')
@@ -250,6 +253,10 @@ $(document).ready(function () {
 
 
     new_mess.click(async function () {
+        $('.item-user').removeClass('choosed');
+        $('#nameroomchat').val("");
+        $('#newroom-info').css('display', 'flex');
+        $('#newroom-member').hide();
         $('.popupnewfriend').fadeIn(250, () => $('.popupnewfriend').show()); // 400 là thời gian (milliseconds) để hoàn thành hiệu ứng
 
 
@@ -259,6 +266,7 @@ $(document).ready(function () {
         const target = $(event.target);
         if (!target.closest('.formInfo').length && !target.closest('.toast').length && !target.closest('#fab-new-mess').length) {
             if ($('.popupnewfriend').is(':visible')) {
+   
                 $('.popupnewfriend').fadeOut(250, () => $('.popupnewfriend').hide()); // 400 là thời gian (milliseconds) để hoàn thành hiệu ứng
 
             }

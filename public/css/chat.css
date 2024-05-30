@@ -8,10 +8,12 @@
 	& .back_to_mess_icon {
 		display: none;
 	}
+	box-shadow: 0 2px 2px #562f612e;
 	display: flex;
+	height: 8.2%;
 	justify-content: center;
 	align-items: center;
-	padding: 0 20px;
+	padding: 3px 20px;
 	gap: 20px;
 	& #openprofile {
 		cursor: pointer;
@@ -72,7 +74,7 @@
 
 .chatbox {
 	overflow: auto;
-	scroll-behavior: smooth;
+	/* scroll-behavior: smooth; */
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -133,7 +135,7 @@
 
 .have-name {
 	& .content-chat {
-		padding: 35px 20px 25px 20px;
+		padding: 10px 20px 10px 20px;
 	}
 }
 .content-chat {
@@ -147,13 +149,16 @@
 	height: fit-content;
 	overflow-wrap: break-word;
 	& .usermessname {
-		position: absolute;
+		/* position: absolute;
 		left: 20px;
-		top: 10px;
+		top: 10px; */
 		font-weight: 600;
+		margin-bottom: 10px;
 	}
 	p {
 		margin: 0;
+		margin-bottom: 10px;
+
 		padding: 0;
 	}
 	& .time-chat {
@@ -286,7 +291,8 @@ body {
 
 /* itemchat */
 
-.item-chat {
+.item-chat,
+.item-user {
 	--md-ripple-hover-color: #c267ff;
 	--md-ripple-pressed-color: #9d00ff;
 	--md-elevation-level: 0;
@@ -340,6 +346,7 @@ body {
 	gap: 2px;
 	flex-direction: column;
 	padding: 20px 20px 0px 20px;
+	height: 100%;
 	overflow-y: auto;
 }
 

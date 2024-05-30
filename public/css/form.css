@@ -11,7 +11,15 @@
 	background-color: #fdf6ff;
 	align-items: stretch;
 }
+#newroom-member{
+	display: none;
+}
 
+.member-container{
+	display: flex;
+	gap: 5px;
+	flex-direction: column;
+}
 .formReg {
 	display: none;
 	width: 500px;

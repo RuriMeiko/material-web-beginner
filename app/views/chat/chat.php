@@ -52,9 +52,7 @@
                             <md-menu-item>
                                 <div slot="headline">Rời khỏi nhóm</div>
                             </md-menu-item>
-                            <md-menu-item>
-                                <div slot="headline">Xoá nhóm</div>
-                            </md-menu-item>
+                          
                         </md-menu>
                     </span>
 
@@ -108,7 +106,6 @@
                     <md-icon slot="leading-icon">search</md-icon>
                 </md-outlined-text-field>
             </div>
-            <md-divider></md-divider>
 
             <md-fab lowered size="large" id="fab-new-mess" label="Tin nhắn mới" aria-label="Tin nhắn mới">
                 <md-icon slot="icon">edit</md-icon>
@@ -145,7 +142,7 @@
                             </md-filled-tonal-icon-button>
                             <md-menu x-offset="-40" id="menu_chat_item_<?php echo $id ?>" anchor="info_<?php echo $id ?>">
                                 <md-menu-item>
-                                    <div slot="headline">Xoá</div>
+                                    <div slot="headline">Rời khỏi</div>
                                 </md-menu-item>
 
                             </md-menu>

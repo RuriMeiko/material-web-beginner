@@ -30,7 +30,6 @@ class ChatServer implements MessageComponentInterface
             $decryptedUsername = openssl_decrypt(base64_decode($data), 'AES-256-CBC', md5('haha'), OPENSSL_RAW_DATA, $iv);
             $from->username = $decryptedUsername;
             echo "Kết nối mới đã được thiết lập: {$from->resourceId}, {$decryptedUsername}\n";
-
         } else {
             // Lấy thông tin từ tin nhắn
             $receivers = $data['receiver'];
@@ -61,13 +60,15 @@ class ChatServer implements MessageComponentInterface
                     foreach ($insertIdsAndReceivers as $receiver) {
                         // Kiểm tra người nhận và phòng chat
                         if ($receiver['receiver'] === $client->username) {
-                            $client->send(json_encode(['content' => $content, 'timestamp' => $timestamp, 'room' => $room, 'id' => $receiver['insert_id']], JSON_UNESCAPED_UNICODE));
+                            $client->send(json_encode(['name' => $from->username, 'content' => $content, 'timestamp' => $timestamp, 'room' => $room, 'id' => [$receiver['insert_id']]], JSON_UNESCAPED_UNICODE));
                         }
                     }
                 } else {
+                    $listID = [];
                     foreach ($insertIdsAndReceivers as $receiver) {
-                        $client->send(json_encode(['content' => $content, 'timestamp' => $timestamp, 'room' => $room, 'self' => true, 'id' => $receiver['insert_id']], JSON_UNESCAPED_UNICODE));
+                        array_push($listID, $receiver['insert_id']);
                     }
+                    $client->send(json_encode(['name' => $from->username, 'content' => $content, 'timestamp' => $timestamp, 'room' => $room, 'self' => true, 'id' => $listID], JSON_UNESCAPED_UNICODE));
                 }
             }
         }

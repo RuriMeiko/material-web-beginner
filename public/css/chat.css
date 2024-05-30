@@ -257,7 +257,7 @@ body {
 	bottom: -80px;
 	right: 30px;
 	--md-sys-color-primary: #000000;
-
+	z-index: 99999;
 	--md-fab-lowered-container-color: #ebc6ff;
 	position: absolute;
 }
@@ -326,7 +326,6 @@ body {
 .chatlist,
 .listfriend {
 	height: fit-content;
-	width: 100%;
 	display: flex;
 	gap: 2px;
 	flex-direction: column;
@@ -365,7 +364,7 @@ body {
 }
 
 .content-user {
-	width: 22em; /* the element needs a fixed width (in px, em, %, etc) */
+	width: 20em; /* the element needs a fixed width (in px, em, %, etc) */
 	overflow: hidden; /* make sure it hides the content that overflows */
 	white-space: nowrap; /* don't break the line */
 	text-overflow: ellipsis; /* give the beautiful '...' effect */

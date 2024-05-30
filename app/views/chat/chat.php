@@ -15,6 +15,7 @@
     <script src="/public/js/chat.js"></script>
 
 </head>
+
 <body>
     <script>
         const listChat = <?php print_r(json_encode($mergedMessages)) ?>;
@@ -30,9 +31,9 @@
                 <div class='from-user'>
                     <div class='avatar-select avt avt-title'>
                         <img class="avatar-preview" class="avatar-preview mb-4" src='<?php if (isset($datanguoidung[0]['avt']))
-                                                                                echo $datanguoidung[0]['avt'];
-                                                                            else
-                                                                                echo '/public/images/defaultAvt.jpg' ?>' />
+                                                                                            echo $datanguoidung[0]['avt'];
+                                                                                        else
+                                                                                            echo '/public/images/defaultAvt.jpg' ?>' />
                     </div>
                 </div>
                 <div class="container container-title">
@@ -70,41 +71,7 @@
             </div>
             <div class="chatbox">
                 <div class="chatlayout">
-                    <div class="mess-other">
-                        <div class="mess-chat">
-                            <div class="content-chat">
-                                <md-elevation></md-elevation>
-                                <p>chào cậu nhé hôm nay tôi sẽ đi ăn gà rán tại công viên sông hậu trên con đường quen thuộc vào buổi chiều tàn, với ánh nắng nhẹ nhàng, cùng nhau ăn bánh sầu riêng, ehehe</p>
-                                <span class="time-chat">20:00</span>
-                            </div>
-                            <div class='from-user' id="mess-123">
-                                <div class='avatar-select avt avt-title'>
-                                    <img class="avatar-preview" class="avatar-preview mb-4" src='/public/images/defaultAvt.jpg' />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mess-self">
-                        <div class="mess-chat">
-                            <div class="content-chat">
-                                <md-elevation></md-elevation>
 
-                                <p>c</p>
-                                <span class="time-chat">20:00</span>
-
-                            </div>
-
-                            <div class='from-user' id="mess-444">
-                                <div class='avatar-select avt avt-title'>
-                                    <img class="avatar-preview" class="avatar-preview mb-4" src="<?php if (isset($datanguoidung[0]['avt']))
-                                                                                echo $datanguoidung[0]['avt'];
-                                                                            else
-                                                                                echo '/public/images/defaultAvt.jpg' ?>" />
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
                 </div>
 
             </div>
@@ -145,11 +112,10 @@
                 <md-icon slot="icon">edit</md-icon>
             </md-fab>
             <div class='chatlist'>
-                <h3>Danh sách cuộc trò chuyện </h3>
-                <?php 
-                    $count = 0; 
-                    
-                    foreach ($mergedMessages as $id => $messages) {
+                <?php
+                $count = 0;
+
+                foreach ($mergedMessages as $id => $messages) {
                     $lastMessage = end($messages);
                 ?>
                     <div id="chatroom_<?php echo $id ?>" class="item-chat">
@@ -162,26 +128,29 @@
                         </div>
                         <div class="container">
                             <div class='name-user'><?php echo $lastMessage['name'] ?></div>
-                            <div class='content-user'><?php if ($lastMessage['fromMe'] === 1) {
-                                                            echo "<strong> Bạn: </strong>";
-                                                        } else {
-                                                            echo "<strong>" . $lastMessage['sender'] . ": </strong>";
-                                                        }
-                                                         ?><?php echo $lastMessage['content'] ?></div>
+                            <?php if ($lastMessage['content']) { ?>
+                                <div class='content-user'><?php if ($lastMessage['fromMe'] === 1) {
+                                                                echo "<strong> Bạn: </strong>";
+                                                            } else {
+                                                                echo "<strong>" . $lastMessage['sender'] . ": </strong>";
+                                                            }
+                                                            ?><?php echo $lastMessage['content'] ?></div>
+                            <?php } ?>
                         </div>
+
                     </div>
                     <?php if ($count < count($mergedMessages) - 1) { ?>
                         <md-divider class='divider-custom' inset></md-divider>
                     <?php } ?>
                     <?php $count++; ?>
                 <?php } ?>
-                <div class="add-group">
+                <!-- <div class="add-group">
                     <md-elevation></md-elevation>
                     <md-ripple></md-ripple>
                     <h3>
                         + THÊM CUỘC TRÒ CHUYỆN MỚI
                     </h3>
-                </div>
+                </div> -->
             </div>
         </div>
 
@@ -191,11 +160,15 @@
 
         $viewsDir = DIR . '/app/views';
 
-        require_once($viewsDir . '/profile/profile.php');
+        require_once($viewsDir . '/component/profile/profile.php');
 
         ?>
     </div>
+    <?php
 
+    require_once($viewsDir . '/component/newroom.php');
+
+    ?>
     <md-menu positioning="fixed" id="usage-document" anchor="usage-document-anchor">
         <md-menu-item class="re-mess">
             <div slot="headline">Xoá</div>

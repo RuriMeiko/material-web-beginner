@@ -29,11 +29,16 @@ $router->addRoute('GET', '/admin', function () {
 
 
 
-$router->addRoute('GET', '/chatroom', function () {
+$router->addRoute('GET', '/admin/chatroom', function () {
     global $viewsDir;
     require_once($viewsDir . '/admin/chatroom.php');
 });
 
+
+$router->addRoute('GET', '/admin/statistical', function () {
+    global $viewsDir;
+    require_once($viewsDir . '/admin/statistical.php');
+});
 
 $router->addRoute('GET', '/chat', function () {
     global $viewsDir;

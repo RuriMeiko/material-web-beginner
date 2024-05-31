@@ -11,6 +11,9 @@ if (!isset($_COOKIE['session']) && $path !== '/' && $path !== '/term') {
 if (isset($_COOKIE['session']))
     $user = getData($_COOKIE['session']);
 
-if (isset($user) && $path == '/admin' && $user[0]['role'] !== 0) {
+if (isset($user) && $path == '/admin' && $user[0]['role'] !== 0 ) {
     header('Location: /');
+}
+if (isset($user) && $path == '/chat' && $user[0]['state'] !== 0 ) {
+    header('Location: /login');
 }

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2024 at 09:55 AM
+-- Generation Time: May 31, 2024 at 02:00 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `member_manager`
+-- Database: `chatweb`
 --
 
 -- --------------------------------------------------------
@@ -31,26 +31,28 @@ CREATE TABLE `chatroom` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `state` int(11) NOT NULL
+  `state` int(11) NOT NULL,
+  `avt` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `chatroom`
 --
 
-INSERT INTO `chatroom` (`id`, `name`, `created_at`, `state`) VALUES
-(1, 'hhhh', '2024-05-15 09:13:59', 1),
-(2, 'tao đây', '2024-05-16 14:24:55', 1),
-(3, 'Phòng Chat 1', '2024-05-30 06:42:03', 1),
-(4, 'Phòng Chat 2', '2024-05-30 06:42:03', 0),
-(5, 'Phòng Chat 3', '2024-05-30 06:42:03', 0),
-(6, 'Phòng Chat 4', '2024-05-30 06:42:03', 0),
-(7, 'Phòng Chat 5', '2024-05-30 06:42:03', 0),
-(8, 'Phòng Chat 6', '2024-05-30 06:42:03', 0),
-(9, 'Phòng Chat 7', '2024-05-30 06:42:03', 0),
-(10, 'Phòng Chat 8', '2024-05-30 06:42:03', 0),
-(11, 'Phòng Chat 9', '2024-05-30 06:42:03', 0),
-(12, 'Phòng Chat 10', '2024-05-30 06:42:03', 0);
+INSERT INTO `chatroom` (`id`, `name`, `created_at`, `state`, `avt`) VALUES
+(1, 'hhhh', '2024-05-15 09:13:59', 1, ''),
+(2, 'tao đây', '2024-05-16 14:24:55', 1, ''),
+(3, 'Phòng Chat 1', '2024-05-30 06:42:03', 1, ''),
+(4, 'Phòng Chat 2', '2024-05-30 06:42:03', 0, ''),
+(5, 'Phòng Chat 3', '2024-05-30 06:42:03', 0, ''),
+(6, 'Phòng Chat 4', '2024-05-30 06:42:03', 0, ''),
+(7, 'Phòng Chat 5', '2024-05-30 06:42:03', 0, ''),
+(8, 'Phòng Chat 6', '2024-05-30 06:42:03', 0, ''),
+(9, 'Phòng Chat 7', '2024-05-30 06:42:03', 0, ''),
+(10, 'Phòng Chat 8', '2024-05-30 06:42:03', 0, ''),
+(11, 'Phòng Chat 9', '2024-05-30 06:42:03', 0, ''),
+(12, 'Phòng Chat 10', '2024-05-30 06:42:03', 0, ''),
+(13, 'aaa', '2024-05-30 23:58:08', 0, '');
 
 -- --------------------------------------------------------
 
@@ -97,6 +99,7 @@ INSERT INTO `friendship` (`id`, `user1_id`, `user2_id`, `status`) VALUES
 
 CREATE TABLE `message` (
   `id` int(11) NOT NULL,
+  `id_mess` varchar(255) NOT NULL,
   `sender` varchar(255) NOT NULL,
   `receiver` varchar(255) NOT NULL,
   `content` text NOT NULL,
@@ -108,11 +111,11 @@ CREATE TABLE `message` (
 -- Dumping data for table `message`
 --
 
-INSERT INTO `message` (`id`, `sender`, `receiver`, `content`, `room_id`, `timestamp`) VALUES
-(342, 'admin', 'user2', '432', 2, '2024-05-16 14:25:23'),
-(2121, 'admin', 'user1', 'haha e iu', 1, '2024-05-16 13:49:07'),
-(3127, 'admin', 'user2', 'huhu', 2, '2024-05-16 14:25:46'),
-(3221, 'user1', 'admin', 'gádasdasdas', 1, '2024-05-16 13:54:04');
+INSERT INTO `message` (`id`, `id_mess`, `sender`, `receiver`, `content`, `room_id`, `timestamp`) VALUES
+(342, '', 'admin', 'user2', '432', 2, '2024-05-16 14:25:23'),
+(2121, '', 'admin', 'user1', 'haha e iu', 1, '2024-05-16 13:49:07'),
+(3127, '', 'admin', 'user2', 'huhu', 2, '2024-05-16 14:25:46'),
+(3221, '', 'user1', 'admin', 'gádasdasdas', 1, '2024-05-16 13:54:04');
 
 -- --------------------------------------------------------
 
@@ -147,7 +150,9 @@ INSERT INTO `room_member` (`id`, `room_id`, `user_id`) VALUES
 (14, 10, 'user1'),
 (341, 1, 'user1'),
 (2131, 1, 'admin'),
-(4532, 2, 'admin');
+(4532, 2, 'admin'),
+(21324, 13, 'admin'),
+(21325, 13, 'hn');
 
 -- --------------------------------------------------------
 
@@ -170,6 +175,7 @@ CREATE TABLE `user_info` (
 
 INSERT INTO `user_info` (`username`, `name`, `birthday`, `gender`, `location`, `avt`) VALUES
 ('admin', 'CHÚ CHÓ CÔ ĐỐC ', '2024-04-03', 1, '753/Tan Phuoc 1', NULL),
+('hn', 'Nguyễn Thị Hồng Nguyên', '2024-05-02', 2, 'xa', NULL),
 ('user1', 'User 1', '1990-01-01', 0, 'Location 1', NULL),
 ('user10', 'User 10', '1990-10-10', 1, 'Location 10', NULL),
 ('user2', 'User 2', '1990-02-02', 1, 'Location 2', NULL),
@@ -202,6 +208,7 @@ CREATE TABLE `user_login` (
 INSERT INTO `user_login` (`username`, `hashpassword`, `role`, `state`) VALUES
 ('admin', '$2y$10$uZOcGsRIz1s.986cQrn5CuNgppIwgPEAo2p9Jl7IjxUmZ0/YxPNWm', 0, 0),
 ('dragonccm', '$2y$10$CLqlqDpvG1zuL4VaHqwVjOniOqxznuhCQLaLst1mr4ysNt7/HBY2K', 0, 0),
+('hn', '$2y$10$3F4YEu3MRKU8D4K.yEvaIOC6rhjeYbkeyoHB8QEWoL4chMhSGlzQi', 1, 0),
 ('user1', '$2y$10$8qVtUNyLwWZBKne/YpN/V.f8edFl9owddSxRNHW5jxE6ADr3rGo0a', 1, 0),
 ('user10', '$2y$10$koP3EdSwvTtMAnA6LJ0nR.nERsD1/5doLQsHuC5Sz3gwL69kcDAua', 0, 0),
 ('user2', '$2y$10$4oqRlZq1eIJwBVy4.XksWubw0noNzCy7V50BbeoC9Y693hvcJZP9G', 0, 0),
@@ -269,7 +276,7 @@ ALTER TABLE `user_login`
 -- AUTO_INCREMENT for table `chatroom`
 --
 ALTER TABLE `chatroom`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `friendship`
@@ -287,7 +294,7 @@ ALTER TABLE `message`
 -- AUTO_INCREMENT for table `room_member`
 --
 ALTER TABLE `room_member`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21320;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21326;
 
 --
 -- Constraints for dumped tables

@@ -51,13 +51,6 @@ This project was developed between April 24, 2024, and May 31, 2024, as a web-ba
 - Register a new account or log in with existing credentials.
 - Start sending and receiving messages in real-time.
 
-## Project Structure
-- `.htaccess`: Configures URL routing for clean URLs
-- `index.php`: Main entry point for the chat application
-- `config.php`: Configuration for database and server settings
-- `css/`: Stylesheets for responsive design
-- `js/`: JavaScript files for real-time messaging
-- `includes/`: PHP scripts for backend functionality
 
 ## Contributing
 Contributions are welcome! Please:
